@@ -14,7 +14,7 @@ const app = {
         console.log("🚀 App Starting...");
         try {
             this.sanity = createClient({
-                projectId: 'l1760iss',
+                projectId: '2aveaa71',
                 dataset: 'production',
                 useCdn: true,
                 apiVersion: '2023-01-01'
