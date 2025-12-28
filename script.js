@@ -4,7 +4,7 @@ import { createClient } from 'https://esm.sh/@sanity/client'
 const client = createClient({
     projectId: '2aveaa71', 
     dataset: 'production',
-    useCdn: true, // MUST be true for fast images
+    useCdn: true, 
     apiVersion: '2023-01-01'
 })
 
@@ -33,6 +33,8 @@ window.app = {
         
         try {
             this.products = await client.fetch(query);
+            // --- NEW: Auto-fill BOTH filters ---
+            this.populateFilters(); 
             this.renderProducts(this.products);
         } catch (err) {
             console.error(err);
@@ -40,10 +42,35 @@ window.app = {
         }
     },
 
+    // --- POPULATE DROPDOWNS AUTOMATICALLY ---
+    populateFilters() {
+        // 1. Setup Brands
+        const brandSelect = document.getElementById('filter-brand');
+        if (brandSelect) {
+            const brands = [...new Set(this.products.map(p => p.brand))].sort();
+            brandSelect.innerHTML = '<option value="all">Brand: All</option>';
+            brands.forEach(brand => {
+                brandSelect.innerHTML += `<option value="${brand}">${brand}</option>`;
+            });
+        }
+
+        // 2. Setup Puff Counts (Sorted by number)
+        const puffSelect = document.getElementById('filter-puffs');
+        if (puffSelect) {
+            const puffs = [...new Set(this.products.map(p => p.puffCount))].sort((a, b) => a - b);
+            puffSelect.innerHTML = '<option value="all">Puffs: All</option>';
+            puffs.forEach(puff => {
+                puffSelect.innerHTML += `<option value="${puff}">${puff} Puffs</option>`;
+            });
+        }
+    },
+
     renderProducts(items) {
         const grid = document.getElementById('product-grid');
         const empty = document.getElementById('empty-state');
         
+        if (!grid || !empty) return;
+
         if (items.length === 0) {
             grid.classList.add('hidden');
             empty.classList.replace('hidden', 'flex');
@@ -57,8 +84,6 @@ window.app = {
             const onSale = product.discount > 0;
             const finalPrice = onSale ? Math.round(product.price * ((100 - product.discount) / 100)) : product.price;
             
-            // --- NEW: SPEED OPTIMIZATION ---
-            // This requests a smaller, web-ready version of your photo
             const optimizedImage = product.imageUrl 
                 ? product.imageUrl + '?w=600&h=600&fit=crop&auto=format&q=80' 
                 : 'https://placehold.co/400x400?text=No+Image';
@@ -115,6 +140,62 @@ window.app = {
         }).join('');
     },
 
+    // --- FILTER LOGIC (UPDATED) ---
+    handleFilter() {
+        const brandSelect = document.getElementById('filter-brand');
+        const puffSelect = document.getElementById('filter-puffs');
+        const priceSelect = document.getElementById('filter-price');
+        
+        const brand = brandSelect ? brandSelect.value : 'all';
+        const puff = puffSelect ? puffSelect.value : 'all';
+        const price = priceSelect ? priceSelect.value : 'all';
+
+        let filtered = this.products;
+
+        // 1. Filter Brand
+        if (brand !== 'all') {
+            filtered = filtered.filter(p => p.brand === brand);
+        }
+
+        // 2. Filter Puffs (Convert string to number for comparison)
+        if (puff !== 'all') {
+            filtered = filtered.filter(p => p.puffCount == puff);
+        }
+
+        // 3. Filter Price
+        if (price === 'low') filtered = filtered.filter(p => p.price < 1500);
+        if (price === 'mid') filtered = filtered.filter(p => p.price >= 1500 && p.price <= 2500);
+        if (price === 'high') filtered = filtered.filter(p => p.price > 2500);
+        if (price === 'sale') filtered = filtered.filter(p => p.discount > 0);
+
+        this.renderProducts(filtered);
+    },
+
+    handleSearch(query) {
+        const lower = query.toLowerCase();
+        const filtered = this.products.filter(p => 
+            p.name.toLowerCase().includes(lower) || 
+            p.brand.toLowerCase().includes(lower) ||
+            (p.flavors && p.flavors.some(f => f.toLowerCase().includes(lower)))
+        );
+        this.renderProducts(filtered);
+    },
+
+    resetFilters() {
+        const search = document.getElementById('search');
+        const brand = document.getElementById('filter-brand');
+        const puff = document.getElementById('filter-puffs');
+        const price = document.getElementById('filter-price');
+
+        if(search) search.value = '';
+        if(brand) brand.value = 'all';
+        if(puff) puff.value = 'all';
+        if(price) price.value = 'all';
+        
+        this.renderProducts(this.products);
+    },
+
+    // --- CART & UI ---
     addToCart(id) {
         const product = this.products.find(p => p._id === id);
         if (!product) return;
@@ -135,7 +216,6 @@ window.app = {
                 ? Math.round(product.price * ((100 - product.discount) / 100)) 
                 : product.price;
             
-            // Use small thumbnail for cart
             const cartImage = product.imageUrl 
                 ? product.imageUrl + '?w=100&h=100&fit=crop&auto=format'
                 : 'https://placehold.co/100x100';
@@ -148,7 +228,7 @@ window.app = {
                 flavor: selectedFlavor,
                 price: finalPrice,
                 qty: 1,
-                image: cartImage 
+                image: cartImage
             });
         }
 
@@ -167,11 +247,15 @@ window.app = {
         const totalEl = document.getElementById('cart-total');
         
         const totalQty = this.cart.reduce((sum, item) => sum + item.qty, 0);
-        countBadge.innerText = totalQty;
-        countBadge.classList.toggle('hidden', totalQty === 0);
+        if (countBadge) {
+            countBadge.innerText = totalQty;
+            countBadge.classList.toggle('hidden', totalQty === 0);
+        }
 
         const totalPrice = this.cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
-        totalEl.innerText = `KES ${totalPrice.toLocaleString()}`;
+        if (totalEl) totalEl.innerText = `KES ${totalPrice.toLocaleString()}`;
+
+        if (!cartContainer) return;
 
         if (this.cart.length === 0) {
             cartContainer.innerHTML = '<p class="text-center text-gray-400 text-xs uppercase tracking-widest mt-10">Your bag is empty</p>';
@@ -222,44 +306,14 @@ window.app = {
             document.body.classList.add('modal-open');
         }
     },
-
+    
     toggleContact() { document.getElementById('contact-modal').classList.toggle('hidden'); },
     toggleFAQ() { document.getElementById('faq-modal').classList.toggle('hidden'); },
     toggleTerms() { document.getElementById('terms-modal').classList.toggle('hidden'); },
-
-    handleSearch(query) {
-        const lower = query.toLowerCase();
-        const filtered = this.products.filter(p => 
-            p.name.toLowerCase().includes(lower) || 
-            p.brand.toLowerCase().includes(lower) ||
-            (p.flavors && p.flavors.some(f => f.toLowerCase().includes(lower)))
-        );
-        this.renderProducts(filtered);
-    },
-
-    handleFilter() {
-        const brand = document.getElementById('filter-brand').value;
-        const price = document.getElementById('filter-price').value;
-        let filtered = this.products;
-
-        if (brand !== 'all') filtered = filtered.filter(p => p.brand === brand);
-        if (price === 'low') filtered = filtered.filter(p => p.price < 1500);
-        if (price === 'mid') filtered = filtered.filter(p => p.price >= 1500 && p.price <= 2500);
-        if (price === 'high') filtered = filtered.filter(p => p.price > 2500);
-        if (price === 'sale') filtered = filtered.filter(p => p.discount > 0);
-
-        this.renderProducts(filtered);
-    },
     
-    resetFilters() {
-        document.getElementById('search').value = '';
-        document.getElementById('filter-brand').value = 'all';
-        document.getElementById('filter-price').value = 'all';
-        this.renderProducts(this.products);
-    },
-
     showToast() {
         const toast = document.getElementById('toast');
+        if(!toast) return;
         toast.style.opacity = '1';
         toast.style.transform = 'translate(-50%, 0)';
         setTimeout(() => {
@@ -291,16 +345,27 @@ window.app = {
 
 document.addEventListener('DOMContentLoaded', () => {
     window.app.init();
-    if (!localStorage.getItem('age_verified')) {
-        document.getElementById('age-gate').classList.remove('hidden');
-    } else {
-        document.getElementById('age-gate').classList.add('hidden');
+    
+    // Listeners for filters (redundancy for safety)
+    document.getElementById('filter-brand')?.addEventListener('change', () => window.app.handleFilter());
+    document.getElementById('filter-puffs')?.addEventListener('change', () => window.app.handleFilter());
+    document.getElementById('filter-price')?.addEventListener('change', () => window.app.handleFilter());
+    document.getElementById('search')?.addEventListener('input', (e) => window.app.handleSearch(e.target.value));
+
+    // Age Gate
+    const ageGate = document.getElementById('age-gate');
+    if (ageGate) {
+        if (!localStorage.getItem('age_verified')) {
+            ageGate.classList.remove('hidden');
+        } else {
+            ageGate.classList.add('hidden');
+        }
+        document.getElementById('btn-yes')?.addEventListener('click', () => {
+            localStorage.setItem('age_verified', 'true');
+            ageGate.classList.add('hidden');
+        });
+        document.getElementById('btn-no')?.addEventListener('click', () => {
+            document.getElementById('age-error')?.classList.remove('hidden');
+        });
     }
-    document.getElementById('btn-yes').addEventListener('click', () => {
-        localStorage.setItem('age_verified', 'true');
-        document.getElementById('age-gate').classList.add('hidden');
-    });
-    document.getElementById('btn-no').addEventListener('click', () => {
-        document.getElementById('age-error').classList.remove('hidden');
-    });
 });
