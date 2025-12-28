@@ -1,276 +1,334 @@
-import { createClient } from 'https://esm.sh/@sanity/client';
+import { createClient } from 'https://esm.sh/@sanity/client'
 
-const app = {
-    data: [],
+// 1. CONFIGURATION
+const client = createClient({
+    projectId: '2aveaa71', // Your Project ID
+    dataset: 'production',
+    useCdn: true,
+    apiVersion: '2023-01-01'
+})
+
+// 2. STATE MANAGEMENT
+window.app = {
+    products: [],
     cart: [],
-    sanity: null,
     
-    filter: { search: '', brand: 'all', puffs: 'all', price: 'all' },
-    // NOTE: WhatsApp requires international format (254...) without the '+'
-    config: { phone: '254741658556' }, 
-
-    // ===== 1. INIT =====
+    // --- INITIALIZATION ---
     async init() {
-        console.log("🚀 App Starting...");
+        await this.fetchProducts();
+        this.loadCart();
+    },
+
+    // --- FETCH DATA (Updated for Flavors & Nicotine) ---
+    async fetchProducts() {
+        const query = `*[_type == "disposable"] {
+            _id,
+            name,
+            brand,
+            puffCount,
+            nicotine,
+            flavors,
+            price,
+            discount,
+            "imageUrl": image.asset->url
+        }`;
+        
         try {
-            this.sanity = createClient({
-                projectId: '2aveaa71',
-                dataset: 'production',
-                useCdn: true,
-                apiVersion: '2023-01-01'
-            });
-
-            const query = `*[_type == "disposable"]{
-                "id": _id,
-                name,
-                brand,
-                "puffs": string(puffCount), 
-                price,
-                discount,
-                "img": image.asset->url
-            }`;
-
-            const result = await this.sanity.fetch(query);
-            console.log("☁️ Data Received:", result.length);
-            this.data = result;
-            this.populateDropdowns();
-            this.renderStore();
-
+            this.products = await client.fetch(query);
+            this.renderProducts(this.products);
         } catch (err) {
-            console.error("❌ Error:", err);
-            document.getElementById('product-grid').innerHTML = 
-                `<p class="text-red-500 text-xs font-bold uppercase">System Offline. Check Connection.</p>`;
+            console.error(err);
+            document.getElementById('product-grid').innerHTML = '<p class="text-red-500 text-center col-span-full">Error loading products.</p>';
         }
     },
 
-    // ===== 2. RENDER STORE =====
-    renderStore() {
+    // --- RENDER GRID ---
+    renderProducts(items) {
         const grid = document.getElementById('product-grid');
         const empty = document.getElementById('empty-state');
-        if(!grid) return;
-
-        const filtered = this.data.filter(p => {
-            const matchSearch = (p.name + p.brand).toLowerCase().includes(this.filter.search.toLowerCase());
-            const matchBrand = this.filter.brand === 'all' || p.brand === this.filter.brand;
-            const matchPuffs = this.filter.puffs === 'all' || p.puffs === this.filter.puffs;
-            const finalPrice = p.discount ? Math.round(p.price * (1 - p.discount/100)) : p.price;
-            
-            let matchPrice = true;
-            if(this.filter.price === 'low') matchPrice = finalPrice < 1500;
-            if(this.filter.price === 'mid') matchPrice = finalPrice >= 1500 && finalPrice <= 2500;
-            if(this.filter.price === 'high') matchPrice = finalPrice > 2500;
-            if(this.filter.price === 'sale') matchPrice = p.discount > 0;
-            
-            return matchSearch && matchBrand && matchPuffs && matchPrice;
-        });
-
-        if (filtered.length === 0) {
-            grid.innerHTML = '';
-            if(empty) { empty.classList.remove('hidden'); empty.classList.add('flex'); }
+        
+        if (items.length === 0) {
+            grid.classList.add('hidden');
+            empty.classList.replace('hidden', 'flex');
             return;
         }
 
-        if(empty) empty.classList.add('hidden');
+        grid.classList.remove('hidden');
+        empty.classList.replace('flex', 'hidden');
 
-        grid.innerHTML = filtered.map(p => {
-            const hasDiscount = p.discount && p.discount > 0;
-            const finalPrice = hasDiscount ? Math.round(p.price * (1 - p.discount/100)) : p.price;
+        grid.innerHTML = items.map(product => {
+            // Calculate Logic
+            const onSale = product.discount > 0;
+            const finalPrice = onSale ? Math.round(product.price * ((100 - product.discount) / 100)) : product.price;
             
-            return `
-            <div class="group relative cursor-pointer fade-enter">
-                <div class="aspect-[4/5] bg-brand-gray overflow-hidden mb-4 relative rounded-sm">
-                    <img src="${p.img || 'https://via.placeholder.com/400x500?text=No+Image'}" 
-                         class="w-full h-full object-cover mix-blend-multiply transition duration-700 group-hover:scale-110 grayscale group-hover:grayscale-0">
-                    <div class="absolute top-2 left-2 flex flex-col items-start gap-1">
-                        <span class="bg-white px-2 py-1 text-[10px] font-bold uppercase tracking-wider shadow-sm border border-gray-100">${p.brand}</span>
-                        <span class="bg-black text-white px-2 py-1 text-[10px] font-bold uppercase tracking-wider shadow-sm">${p.puffs} PUFFS</span>
+            // Build Flavor Dropdown HTML
+            let flavorHtml = '';
+            if (product.flavors && product.flavors.length > 0) {
+                const options = product.flavors.map(f => `<option value="${f}">${f}</option>`).join('');
+                flavorHtml = `
+                    <div class="mt-3">
+                        <label class="text-[10px] font-bold uppercase text-gray-400">Select Flavor:</label>
+                        <select id="flavor-${product._id}" class="w-full mt-1 bg-gray-50 border border-gray-200 text-xs font-bold uppercase p-2 rounded-none focus:border-black outline-none">
+                            ${options}
+                        </select>
                     </div>
-                    ${hasDiscount ? `<div class="absolute top-2 right-2 bg-brand-sale text-white px-2 py-1 text-[10px] font-bold uppercase tracking-wider shadow-sm">-${p.discount}%</div>` : ''}
-                    <button onclick="window.app.addToCart('${p.id}')" class="absolute bottom-0 right-0 w-12 h-12 bg-black text-white flex items-center justify-center translate-y-full group-hover:translate-y-0 transition duration-300 z-10 hover:bg-gray-800">
-                        <i class="fa-solid fa-plus text-xl"></i>
+                `;
+            } else {
+                flavorHtml = `<p class="mt-3 text-[10px] text-gray-400 uppercase font-bold">Standard Flavor</p>`;
+            }
+
+            return `
+            <div class="group relative fade-enter">
+                <div class="aspect-square bg-brand-gray overflow-hidden relative mb-4">
+                    <img src="${product.imageUrl || 'https://placehold.co/400x400?text=No+Image'}" 
+                         class="w-full h-full object-cover object-center group-hover:scale-105 transition duration-500"
+                         alt="${product.name}">
+                    
+                    ${onSale ? `<span class="absolute top-2 right-2 bg-brand-sale text-white text-[10px] font-bold px-2 py-1 uppercase tracking-widest">-${product.discount}%</span>` : ''}
+                </div>
+
+                <div class="space-y-1">
+                    <div class="flex justify-between items-start">
+                        <h3 class="font-black text-sm uppercase tracking-tight leading-none">${product.name}</h3>
+                        <div class="text-right">
+                             ${onSale ? `<span class="text-xs text-gray-400 line-through block">KES ${product.price}</span>` : ''}
+                             <span class="font-bold text-sm">KES ${finalPrice}</span>
+                        </div>
+                    </div>
+                    
+                    <p class="text-xs text-gray-500 font-medium uppercase tracking-wide">
+                        ${product.brand} • ${product.puffCount} Puffs
+                        ${product.nicotine ? `• <span class="text-black">${product.nicotine}</span>` : ''}
+                    </p>
+
+                    ${flavorHtml}
+
+                    <button onclick="window.app.addToCart('${product._id}')" 
+                            class="w-full mt-4 bg-brand-black text-white py-3 text-xs font-bold uppercase tracking-widest hover:bg-gray-800 transition active:scale-95">
+                        Add to Bag
                     </button>
                 </div>
-                <h3 class="text-sm font-bold uppercase tracking-wider truncate mt-3">${p.name}</h3>
-                <div class="flex items-center gap-2 mt-1">
-                    <p class="text-xs ${hasDiscount ? 'text-brand-sale' : 'text-gray-500'} font-bold">KES ${finalPrice.toLocaleString()}</p>
-                    ${hasDiscount ? `<p class="text-[10px] text-gray-400 font-bold line-through">KES ${p.price.toLocaleString()}</p>` : ''}
-                </div>
-            </div>`;
+            </div>
+            `;
         }).join('');
     },
 
-    // ===== 3. FILTERS =====
-    populateDropdowns() {
-        const brands = [...new Set(this.data.map(i => i.brand))].sort();
-        const puffs = [...new Set(this.data.map(i => i.puffs))].sort((a,b) => parseInt(a)-parseInt(b));
-        const bSel = document.getElementById('filter-brand');
-        const pSel = document.getElementById('filter-puffs');
-        if(bSel) bSel.innerHTML = '<option value="all">Brand: All</option>' + brands.map(b => `<option value="${b}">${b}</option>`).join('');
-        if(pSel) pSel.innerHTML = '<option value="all">Puffs: All</option>' + puffs.map(p => `<option value="${p}">${p}</option>`).join('');
+    // --- CART FUNCTIONS ---
+    addToCart(id) {
+        const product = this.products.find(p => p._id === id);
+        if (!product) return;
+
+        // Get Selected Flavor
+        let selectedFlavor = 'Default';
+        const flavorSelect = document.getElementById(`flavor-${id}`);
+        if (flavorSelect) {
+            selectedFlavor = flavorSelect.value;
+        }
+
+        // Create Unique ID based on Product + Flavor
+        const cartItemId = `${id}-${selectedFlavor}`;
+        const existingItem = this.cart.find(item => item.cartId === cartItemId);
+
+        if (existingItem) {
+            existingItem.qty++;
+        } else {
+            const finalPrice = product.discount > 0 
+                ? Math.round(product.price * ((100 - product.discount) / 100)) 
+                : product.price;
+
+            this.cart.push({
+                cartId: cartItemId,
+                productId: product._id,
+                name: product.name,
+                brand: product.brand,
+                flavor: selectedFlavor, // Save the flavor
+                price: finalPrice,
+                qty: 1,
+                image: product.imageUrl
+            });
+        }
+
+        this.updateCartUI();
+        this.showToast();
     },
-    handleSearch(val) { this.filter.search = val; this.renderStore(); },
+
+    removeFromCart(cartId) {
+        this.cart = this.cart.filter(item => item.cartId !== cartId);
+        this.updateCartUI();
+    },
+
+    updateCartUI() {
+        const cartContainer = document.getElementById('cart-items');
+        const countBadge = document.getElementById('cart-count');
+        const totalEl = document.getElementById('cart-total');
+        
+        // Update Count
+        const totalQty = this.cart.reduce((sum, item) => sum + item.qty, 0);
+        countBadge.innerText = totalQty;
+        countBadge.classList.toggle('hidden', totalQty === 0);
+
+        // Update Total
+        const totalPrice = this.cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
+        totalEl.innerText = `KES ${totalPrice.toLocaleString()}`;
+
+        // Render Items
+        if (this.cart.length === 0) {
+            cartContainer.innerHTML = '<p class="text-center text-gray-400 text-xs uppercase tracking-widest mt-10">Your bag is empty</p>';
+            return;
+        }
+
+        cartContainer.innerHTML = this.cart.map(item => `
+            <div class="flex gap-4">
+                <div class="w-16 h-16 bg-gray-100 flex-shrink-0">
+                    <img src="${item.image}" class="w-full h-full object-cover">
+                </div>
+                <div class="flex-1">
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <h4 class="font-bold text-xs uppercase">${item.name}</h4>
+                            <p class="text-[10px] text-gray-500 uppercase mt-1">Flavor: ${item.flavor}</p>
+                            <p class="text-[10px] text-gray-500 uppercase">${item.brand}</p>
+                        </div>
+                        <button onclick="window.app.removeFromCart('${item.cartId}')" class="text-gray-300 hover:text-red-500">
+                            <i class="fa-solid fa-times"></i>
+                        </button>
+                    </div>
+                    <div class="flex justify-between items-end mt-2">
+                        <span class="text-xs font-bold">x${item.qty}</span>
+                        <span class="text-xs font-bold">KES ${(item.price * item.qty).toLocaleString()}</span>
+                    </div>
+                </div>
+            </div>
+        `).join('');
+
+        this.saveCart();
+    },
+
+    // --- UI HELPERS ---
+    toggleCart() {
+        const drawer = document.getElementById('cart-drawer');
+        const overlay = document.getElementById('cart-overlay');
+        const isOpen = !drawer.classList.contains('translate-x-full');
+        
+        if (isOpen) {
+            drawer.classList.add('translate-x-full');
+            overlay.classList.add('hidden');
+            overlay.classList.remove('opacity-100');
+            document.body.classList.remove('modal-open');
+        } else {
+            drawer.classList.remove('translate-x-full');
+            overlay.classList.remove('hidden');
+            setTimeout(() => overlay.classList.add('opacity-100'), 10);
+            document.body.classList.add('modal-open');
+        }
+    },
+
+    toggleContact() {
+        document.getElementById('contact-modal').classList.toggle('hidden');
+    },
+
+    toggleFAQ() {
+        document.getElementById('faq-modal').classList.toggle('hidden');
+    },
+
+    toggleTerms() {
+        document.getElementById('terms-modal').classList.toggle('hidden');
+    },
+
+    handleSearch(query) {
+        const lower = query.toLowerCase();
+        const filtered = this.products.filter(p => 
+            p.name.toLowerCase().includes(lower) || 
+            p.brand.toLowerCase().includes(lower) ||
+            (p.flavors && p.flavors.some(f => f.toLowerCase().includes(lower)))
+        );
+        this.renderProducts(filtered);
+    },
+
     handleFilter() {
-        this.filter.brand = document.getElementById('filter-brand').value;
-        this.filter.puffs = document.getElementById('filter-puffs').value;
-        this.filter.price = document.getElementById('filter-price').value;
-        this.renderStore();
+        const brand = document.getElementById('filter-brand').value;
+        const puff = document.getElementById('filter-puffs').value;
+        const price = document.getElementById('filter-price').value;
+
+        let filtered = this.products;
+
+        if (brand !== 'all') filtered = filtered.filter(p => p.brand === brand);
+        // Add more logic if needed
+        
+        // Simple price filter
+        if (price === 'low') filtered = filtered.filter(p => p.price < 1500);
+        if (price === 'mid') filtered = filtered.filter(p => p.price >= 1500 && p.price <= 2500);
+        if (price === 'high') filtered = filtered.filter(p => p.price > 2500);
+        if (price === 'sale') filtered = filtered.filter(p => p.discount > 0);
+
+        this.renderProducts(filtered);
     },
+    
     resetFilters() {
         document.getElementById('search').value = '';
         document.getElementById('filter-brand').value = 'all';
-        document.getElementById('filter-puffs').value = 'all';
         document.getElementById('filter-price').value = 'all';
-        this.filter = { search: '', brand: 'all', puffs: 'all', price: 'all' };
-        this.renderStore();
+        this.renderProducts(this.products);
     },
 
-    // ===== 4. CART & CHECKOUT =====
-    addToCart(id) {
-        const item = this.data.find(i => i.id === id);
-        const existing = this.cart.find(i => i.id === id);
-        if (existing) existing.qty++;
-        else this.cart.push({ ...item, qty: 1 });
-        this.renderCart();
-        this.toast(`Added ${item.name}`);
-        // Auto open cart
-        const drawer = document.getElementById('cart-drawer');
-        if (drawer && drawer.classList.contains('translate-x-full')) this.toggleCart();
-    },
-    updateQty(id, delta) {
-        const idx = this.cart.findIndex(i => i.id === id);
-        if (idx === -1) return;
-        this.cart[idx].qty += delta;
-        if (this.cart[idx].qty <= 0) this.cart.splice(idx, 1);
-        this.renderCart();
-    },
-    renderCart() {
-        const list = document.getElementById('cart-items');
-        const totalEl = document.getElementById('cart-total');
-        const countEl = document.getElementById('cart-count');
-        const totalQty = this.cart.reduce((a,b) => a+b.qty, 0);
-
-        if(countEl) {
-            countEl.innerText = totalQty;
-            totalQty > 0 ? countEl.classList.remove('hidden') : countEl.classList.add('hidden');
-        }
-
-        if (this.cart.length === 0) {
-            if(list) list.innerHTML = '<div class="h-full flex items-center justify-center text-gray-400 text-xs font-bold uppercase tracking-widest">Bag is Empty</div>';
-            if(totalEl) totalEl.innerText = 'KES 0';
-            return;
-        }
-
-        let total = 0;
-        list.innerHTML = this.cart.map(i => {
-            const finalPrice = i.discount ? Math.round(i.price * (1 - i.discount/100)) : i.price;
-            total += finalPrice * i.qty;
-            return `
-            <div class="flex gap-4">
-                <img src="${i.img}" class="w-16 h-20 object-cover bg-brand-gray mix-blend-multiply rounded-sm">
-                <div class="flex-1 flex flex-col justify-between py-1">
-                    <div>
-                        <h4 class="text-xs font-bold uppercase tracking-wider">${i.name}</h4>
-                        <p class="text-[10px] text-gray-400 font-bold uppercase">${i.brand} / ${i.puffs}</p>
-                    </div>
-                    <div class="flex justify-between items-end">
-                        <div class="flex items-center border border-gray-200">
-                            <button onclick="window.app.updateQty('${i.id}', -1)" class="px-2 py-1 text-xs hover:bg-gray-100">-</button>
-                            <span class="text-xs font-bold px-1">${i.qty}</span>
-                            <button onclick="window.app.updateQty('${i.id}', 1)" class="px-2 py-1 text-xs hover:bg-gray-100">+</button>
-                        </div>
-                        <span class="text-xs font-bold">KES ${(finalPrice * i.qty).toLocaleString()}</span>
-                    </div>
-                </div>
-            </div>`;
-        }).join('');
-        if(totalEl) totalEl.innerText = `KES ${total.toLocaleString()}`;
-    },
-    toggleCart() {
-        const overlay = document.getElementById('cart-overlay');
-        const drawer = document.getElementById('cart-drawer');
-        if (!overlay || !drawer) return;
-        if (overlay.classList.contains('hidden')) {
-            overlay.classList.remove('hidden');
-            setTimeout(() => overlay.classList.remove('opacity-0'), 10);
-            drawer.classList.remove('translate-x-full');
-        } else {
-            overlay.classList.add('opacity-0');
-            drawer.classList.add('translate-x-full');
-            setTimeout(() => overlay.classList.add('hidden'), 300);
-        }
-    },
-    checkout() {
-        if(this.cart.length === 0) return;
-        let msg = "ORDER REQUEST - J_VAPES.KE\n------------------------\n";
-        let total = 0;
-        this.cart.forEach(i => {
-            const finalPrice = i.discount ? Math.round(i.price * (1 - i.discount/100)) : i.price;
-            const sub = finalPrice*i.qty;
-            total += sub;
-            msg += `• ${i.qty}x ${i.brand} ${i.name} (${i.puffs}) - KES ${sub.toLocaleString()}\n`;
-        });
-        msg += `------------------------\nTOTAL: KES ${total.toLocaleString()}\n\nPAYMENT: M-Pesa / Cash on Delivery\nLOCATION: `;
-        window.open(`https://wa.me/${this.config.phone}?text=${encodeURIComponent(msg)}`, '_blank');
-    },
-
-    // ===== 5. MODAL HELPERS =====
-    toggleTerms() {
-        const m = document.getElementById('terms-modal');
-        if(m) m.classList.toggle('hidden');
-    },
-    toggleFAQ() {
-        const m = document.getElementById('faq-modal');
-        if(m) m.classList.toggle('hidden');
-    },
-    toggleContact() {
-        const m = document.getElementById('contact-modal');
-        if(m) m.classList.toggle('hidden');
-    },
-
-    toast(msg) {
-        const t = document.getElementById('toast');
-        if(!t) return;
-        t.innerText = msg;
-        t.classList.remove('opacity-0', 'translate-y-4');
-        t.classList.add('opacity-100', 'translate-y-0');
+    showToast() {
+        const toast = document.getElementById('toast');
+        toast.style.opacity = '1';
+        toast.style.transform = 'translate(-50%, 0)';
         setTimeout(() => {
-            t.classList.add('opacity-0', 'translate-y-4');
-            t.classList.remove('opacity-100', 'translate-y-0');
+            toast.style.opacity = '0';
+            toast.style.transform = 'translate(-50%, 20px)';
         }, 2000);
+    },
+
+    saveCart() {
+        localStorage.setItem('jvapes_cart', JSON.stringify(this.cart));
+    },
+
+    loadCart() {
+        const saved = localStorage.getItem('jvapes_cart');
+        if (saved) {
+            this.cart = JSON.parse(saved);
+            this.updateCartUI();
+        }
+    },
+
+    checkout() {
+        if (this.cart.length === 0) return;
+
+        let message = `*NEW ORDER - J_VAPES.KE*\n\n`;
+        this.cart.forEach(item => {
+            message += `▫️ ${item.name}\n   Flavor: ${item.flavor}\n   Qty: ${item.qty} x ${item.price}\n\n`;
+        });
+
+        const total = this.cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
+        message += `*TOTAL ESTIMATE: KES ${total.toLocaleString()}*\n`;
+        message += `--------------------------\n`;
+        message += `📍 Location: \n`;
+        message += `Delivery is approx 100-400 KES depending on location.`;
+
+        const url = `https://wa.me/254741658556?text=${encodeURIComponent(message)}`;
+        window.open(url, '_blank');
     }
 };
 
-// EXPOSE TO WINDOW
-window.app = app;
-
-// ===== 6. AGE GATE =====
-function setupAgeGate() {
-    const ageGate = document.getElementById('age-gate');
-    const ageError = document.getElementById('age-error');
-    const btnYes = document.getElementById('btn-yes');
-    const btnNo = document.getElementById('btn-no');
-
-    if (localStorage.getItem('age_verified') === 'true') {
-        if(ageGate) ageGate.classList.add('hidden');
-        app.init(); 
-        return;
-    }
-
-    if (btnYes) {
-        btnYes.addEventListener('click', () => {
-            if(ageGate) ageGate.classList.add('hidden');
-            localStorage.setItem('age_verified', 'true');
-            app.init(); 
-        });
-    }
-
-    if (btnNo) {
-        btnNo.addEventListener('click', () => {
-            if(ageError) ageError.classList.remove('hidden');
-        });
-    }
-}
-
+// Start
 document.addEventListener('DOMContentLoaded', () => {
-    setupAgeGate();
+    window.app.init();
+    
+    // Age Gate Logic
+    if (!localStorage.getItem('age_verified')) {
+        document.getElementById('age-gate').classList.remove('hidden');
+    } else {
+        document.getElementById('age-gate').classList.add('hidden');
+    }
+
+    document.getElementById('btn-yes').addEventListener('click', () => {
+        localStorage.setItem('age_verified', 'true');
+        document.getElementById('age-gate').classList.add('hidden');
+    });
+
+    document.getElementById('btn-no').addEventListener('click', () => {
+        document.getElementById('age-error').classList.remove('hidden');
+    });
 });
