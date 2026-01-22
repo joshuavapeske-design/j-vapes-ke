@@ -2,7 +2,7 @@ import { createClient } from 'https://esm.sh/@sanity/client'
 
 // 1. CONFIGURATION
 const client = createClient({
-    projectId: '2aveaa71', 
+    projectId: 'cz4k1rdz', 
     dataset: 'production',
     useCdn: false, // Set to FALSE for instant updates
     apiVersion: '2023-01-01'
