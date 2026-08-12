@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JVapes Kenya | Legal Hub & Regulatory Disclosures</title>
+    <style>
+        :root {
+            --bg-color: #0a0b0e;
+            --surface-glass: rgba(20, 22, 28, 0.6);
+            --border-glass: rgba(214, 175, 55, 0.15);
+            --border-subtle: rgba(255, 255, 255, 0.05);
+            --gold: #d4af37;
+            --gold-bright: #f3e5ab;
+            --text-primary: #f1f5f9;
+            --text-secondary: #94a3b8;
+            --glow: rgba(214, 175, 55, 0.03);
+            --danger-glow: rgba(239, 68, 68, 0.05);
+            --danger-border: rgba(239, 68, 68, 0.2);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            line-height: 1.75;
+            overflow-x: hidden;
+        }
+
+        /* Luxury Ambient Glow Layers */
+        .ambient-glow-top {
+            position: absolute;
+            top: 0;
+            right: 15%;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, var(--glow) 0%, transparent 70%);
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        .ambient-glow-bottom {
+            position: fixed;
+            bottom: -10%;
+            left: 5%;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.01) 0%, transparent 60%);
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        .legal-wrapper {
+            max-width: 1100px;
+            margin: 60px auto;
+            padding: 0 24px;
+        }
+
+        /* Glassmorphism Header Hub */
+        .legal-hub-header {
+            background: var(--surface-glass);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--border-glass);
+            border-radius: 24px;
+            padding: 60px 40px;
+            text-align: center;
+            margin-bottom: 40px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .hub-tag {
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            color: var(--gold);
+            font-weight: 700;
+            margin-bottom: 12px;
+            display: inline-block;
+        }
+
+        .legal-hub-header h1 {
+            font-size: 38px;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            color: #ffffff;
+            margin-bottom: 16px;
+        }
+
+        .legal-hub-header p {
+            color: var(--text-secondary);
+            max-width: 700px;
+            margin: 0 auto 30px auto;
+            font-size: 16px;
+        }
+
+        /* Quick Navigation Tiles */
+        .hub-nav-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 16px;
+        }
+
+        .nav-tile {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--border-subtle);
+            border-radius: 12px;
+            padding: 16px;
+            color: var(--text-primary);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 600;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            text-align: left;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .nav-tile:hover {
+            border-color: var(--gold);
+            background: rgba(214, 175, 55, 0.03);
+            transform: translateY(-2px);
+            color: var(--gold-bright);
+        }
+
+        .nav-tile span::after {
+            content: ' →';
+            color: var(--gold);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .nav-tile:hover span::after {
+            opacity: 1;
+        }
+
+        /* Main Structured Document Canvas */
+        .legal-canvas {
+            background: var(--surface-glass);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--border-glass);
+            border-radius: 24px;
+            padding: 60px 50px;
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4);
+        }
+
+        .canvas-section {
+            scroll-margin-top: 40px;
+            margin-bottom: 60px;
+        }
+
+        .canvas-section:last-of-type {
+            margin-bottom: 0;
+        }
+
+        .section-meta {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--gold);
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .canvas-section h2 {
+            font-size: 24px;
+            font-weight: 700;
+            color: #ffffff;
+            margin-bottom: 20px;
+            letter-spacing: -0.3px;
+        }
+
+        .canvas-section h3 {
+            font-size: 16px;
+            font-weight: 600;
+            color: #ffffff;
+            margin: 24px 0 12px 0;
+        }
+
+        .canvas-section p {
+            font-size: 15px;
+            color: var(--text-primary);
+            margin-bottom: 18px;
+            text-align: justify;
+        }
+
+        .canvas-section ul, .canvas-section ol {
+            padding-left: 24px;
+            margin-bottom: 20px;
+            font-size: 15px;
+        }
+
+        .canvas-section li {
+            margin-bottom: 10px;
+        }
+
+        .canvas-section strong {
+            color: #ffffff;
+        }
+
+        /* Callout & Hazard Panels */
+        .hazard-panel {
+            background: var(--danger-glow);
+            border: 1px solid var(--danger-border);
+            border-radius: 16px;
+            padding: 24px;
+            margin: 30px 0;
+        }
+
+        .hazard-panel h4 {
+            color: #ef4444;
+            font-size: 15px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 8px;
+            font-weight: 700;
+        }
+
+        .hazard-panel p {
+            margin-bottom: 0;
+            font-size: 14px;
+            color: #fca5a5;
+        }
+
+        .compliance-badge {
+            display: inline-flex;
+            align-items: center;
+            background: rgba(34, 197, 94, 0.1);
+            border: 1px solid rgba(34, 197, 94, 0.2);
+            color: #4ade80;
+            padding: 4px 12px;
+            border-radius: 9999px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+
+        /* Institutional Corporate Footer block inside canvas */
+        .hub-corporate-footer {
+            border-top: 1px solid var(--border-subtle);
+            margin-top: 60px;
+            padding-top: 40px;
+        }
+
+        .corporate-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 24px;
+        }
+
+        .corp-node h5 {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: var(--text-secondary);
+            margin-bottom: 6px;
+        }
+
+        .corp-node p {
+            font-size: 14px;
+            color: #ffffff;
+            margin-bottom: 0;
+        }
+
+        /* Seamless Back to Top Indicator Layout */
+        .doc-divider {
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--border-glass), transparent);
+            margin: 40px 0;
+        }
+
+        /* Responsive Mechanics */
+        @media (max-width: 768px) {
+            .legal-hub-header {
+                padding: 40px 24px;
+            }
+            .legal-hub-header h1 {
+                font-size: 28px;
+            }
+            .legal-canvas {
+                padding: 40px 24px;
+            }
+            .hub-nav-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="ambient-glow-top"></div>
+    <div class="ambient-glow-bottom"></div>
+
+    <div class="legal-wrapper">
+        
+        <!-- Premium Header Navigation Matrix Hub -->
+        <header class="legal-hub-header">
+            <span class="hub-tag">Compliance Matrix</span>
+            <h1>JVapes Central Legal Hub</h1>
+            <p>Access the unified statutory disclosures, computational data frameworks, compliance mandates, and operational guidelines governing the digital interface of JVapes Kenya.</p>
+            
+            <div class="hub-nav-grid">
+                <a href="#privacy-policy" class="nav-tile"><span>Privacy Policy</span></a>
+                <a href="#cookie-policy" class="nav-tile"><span>Cookie Policy</span></a>
+                <a href="#age-verification" class="nav-tile"><span>Age Verification</span></a>
+                <a href="#disclaimers" class="nav-tile"><span>Safety Disclaimers</span></a>
+                <a href="#intellectual-property" class="nav-tile"><span>Intellectual Property</span></a>
+                <a href="#consignment- B2B" class="nav-tile"><span>Consignment Terms</span></a>
+            </div>
+        </header>
+
+        <!-- Main Formal Document Canvas -->
+        <main class="legal-canvas">
+
+            <!-- PRIVACY POLICY SECTION -->
+            <section id="privacy-policy" class="canvas-section">
+                <span class="section-meta">Directive 01 / Data Protection</span>
+                <h2>Privacy Policy</h2>
+                <div class="compliance-badge">Aligned with Kenya Data Protection Act, 2019</div>
+                <p>JVapes operates as the authorized data controller responsible for the intake, processing, storage, and erasure workflows of your personal data structures. We execute data collection routines strictly under the legal paradigms established within the Republic of Kenya.</p>
+                
+                <h3>Data Intake Parameters</h3>
+                <p>We process data categories fundamentally essential to executing trade agreements and protecting system boundary states:</p>
+                <ul>
+                    <li><strong>Identified Demographics:</strong> First name, surname, numerical date of birth, and identity assertions from scanned National IDs or Passports.</li>
+                    <li><strong>Logistics Context:</strong> Complete localized physical delivery coordinates within Kilimani, Nairobi, or external nationwide destinations, operational telephone line mappings, and transactional email locations.</li>
+                    <li><strong>Transactional Telemetry:</strong> Systemic transaction identifiers generated via Lipa na M-Pesa protocols, cart value logs, and historical product access trends.</li>
+                </ul>
+
+                <h3>Execution Framework</h3>
+                <p>Data processing operations depend on three foundational legal channels: the fulfillment of structural purchasing contracts, absolute compliance with statutory tobacco gate laws, and the tracking of internal system telemetry to mitigate transaction risks and mobile payment fraud schemes.</p>
+            </section>
+
+            <div class="doc-divider"></div>
+
+            <!-- COOKIE POLICY SECTION -->
+            <section id="cookie-policy" class="canvas-section">
+                <span class="section-meta">Directive 02 / Token Analytics</span>
+                <h2>Cookie Policy</h2>
+                <p>The JVapes interface deploys local storage structures, session identification arrays, and browser cookies to maintain continuous state security, authenticate authorization states, and fine-tune operational speeds.</p>
+                
+                <h3>Operational Categories</h3>
+                <p>Cookies utilized across our domain are classified under three distinct fields:</p>
+                <ol>
+                    <li><strong>System-Critical Sessions:</strong> Temporary structures that lock product collections inside your cart architecture and secure automated transactional handshakes with mobile money APIs.</li>
+                    <li><strong>Verification Preservation Tags:</strong> Local flags set to track your validation path through our mandatory age gateway, neutralizing the requirement for redundant entries within a single session timeline.</li>
+                    <li><strong>Aggregated Site Optimization Metrics:</strong> Trackers that follow item demand shifts and platform navigation speed to help optimize resource allocations and cloud infrastructure paths.</li>
+                </ol>
+            </section>
+
+            <div class="doc-divider"></div>
+
+            <!-- AGE VERIFICATION SECTION -->
+            <section id="age-verification" class="canvas-section">
+                <span class="section-meta">Directive 03 / Minor Intercept</span>
+                <h2>Age Verification Policy</h2>
+                <div class="hazard-panel">
+                    <h4>Strict Statutory Notice: Underage Access Barred</h4>
+                    <p>JVapes enforces zero-tolerance measures regarding transactions involving minors. In strict adherence to Kenyan Statutory Law, individuals below the legal boundary of 18 years are entirely prohibited from entering, creating profiles, or triggering transactions on this platform.</p>
+                </div>
+                <p>To preserve complete structural safety, we utilize a three-stage tracking framework:</p>
+                <ul>
+                    <li><strong>Digital Gateway Intercept:</strong> A front-facing interactive verification wall that locks out core asset rendering until chronological parameters are verified.</li>
+                    <li><strong>Mobile Identity Cross-Reference:</strong> Validation layers that verify registration attributes against mobile money verification vectors during the checkout process.</li>
+                    <li><strong>Visual Document Attestation:</strong> Logistics riders are strictly prohibited from dropping products at unattended destinations. At the point of physical delivery within Kilimani or any nationwide location, the recipient must provide a physical National Identification Card or Passport matching the customer system parameters. Failure to produce a matching ID results in immediate cancellation and delivery fee forfeiture.</li>
+                </ul>
+            </section>
+
+            <div class="doc-divider"></div>
+
+            <!-- DISCLAIMERS SECTION -->
+            <section id="disclaimers" class="canvas-section">
+                <span class="section-meta">Directive 04 / Liability Exclusions</span>
+                <h2>Safety &amp; Regulatory Disclaimers</h2>
+                
+                <div class="hazard-panel">
+                    <h4>Warning: Chemical Dependance Indicator</h4>
+                    <p>Consumable compounds distributed via this interface may contain nicotine. Nicotine is an established, highly potent chemical stimulant known to generate strong dependency patterns. These items are created strictly for adult consumers seeking alternative methods and do not serve as therapeutic formulas or medical health solutions.</p>
+                </div>
+
+                <h3>Advanced Lithium-Ion Hardware Metrics</h3>
+                <p>Modern electronic modular vaporizers derive power capabilities from sensitive high-drain lithium-ion energy cells. By integrating these units into your ownership, you assume total operational liability. You explicitly agree to bypass fast-charging configurations that breach recommended power thresholds, avoid unmonitored overnight charging routines, and immediately take damaged cells out of service. JVapes is entirely exempt from liability for property damage or physical injuries caused by battery thermal runaway due to user error or neglect.</p>
+            </section>
+
+            <div class="doc-divider"></div>
+
+            <!-- INTELLECTUAL PROPERTY SECTION -->
+            <section id="intellectual-property" class="canvas-section">
+                <span class="section-meta">Directive 05 / Asset Protection</span>
+                <h2>Intellectual Property Notice</h2>
+                <p>The entire system ecosystem presented within this portal—incorporating interface layouts, custom text structures, visual graphics, vector iconography, data logs, trade layouts, and underlying software models—constitutes the exclusive intellectual property of <strong>JVapes</strong>.</p>
+                <p>These assets are fully protected under the Copyright Act (Cap 130) and the Industrial Property Act of the Laws of Kenya. Any unauthorized replication, automatic system scraping, data mining, code duplication, or unauthorized commercial use of our branding structures will result in immediate legal enforcement actions through competent judicial systems.</p>
+            </section>
+
+            <div class="doc-divider"></div>
+
+            <!-- CONSIGNMENT & B2B SECTION -->
+            <section id="consignment- B2B" class="canvas-section">
+                <span class="section-meta">Directive 06 / Commercial Distribution</span>
+                <h2>Consignment Inventory Framework (B2B)</h2>
+                <p>These terms govern all inventory placements, stock movements, and merchant supply lines established between third-party vendors and JVapes on a consignment layout:</p>
+                <ul>
+                    <li><strong>Inventory Title Retention:</strong> Legal ownership of consigned kits, components, and items remains with the Consignor until a retail checkout transaction is fully cleared and executed by our payment systems.</li>
+                    <li><strong>Custodial Risk Allocations:</strong> The party holding physical custody of the consigned stock assumes complete responsibility for its preservation. Any stock degradation resulting from improper storage environment shifts, fluid leaking, or internal inventory shrinkage must be reimbursed at the agreed wholesale price.</li>
+                    <li><strong>Financial Auditing &amp; Clearing:</strong> Reconciliation cycles close on the final day of each calendar month. Balances are audited and dispatched within seven business days via secure mobile money channels or bank transfers.</li>
+                </ul>
+            </section>
+
+            <!-- CANVAS CORPORATE FOOTER BLOCK -->
+            <footer class="hub-corporate-footer">
+                <div class="corporate-grid">
+                    <div class="corp-node">
+                        <h5>Corporate Identity</h5>
+                        <p>JVapes Kenya</p>
+                    </div>
+                    <div class="corp-node">
+                        <h5>Compliance Controller</h5>
+                        <p>joshuavapes@gmail.com</p>
+                    </div>
+                    <div class="corp-node">
+                        <h5>Corporate Domicile</h5>
+                        <p>Kilimani, Nairobi, Kenya</p>
+                    </div>
+                </div>
+            </footer>
+
+        </main>
+    </div>
+
+</body>
+</html>

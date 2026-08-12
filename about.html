@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JVapes Kenya | Premium iOS Glass Architecture</title>
+    <style>
+        :root {
+            --ios-bg: #000000;
+            --ios-glass-bg: rgba(255, 255, 255, 0.05);
+            --ios-glass-bright: rgba(255, 255, 255, 0.09);
+            --ios-border: rgba(255, 255, 255, 0.12);
+            --ios-gold-border: rgba(212, 175, 55, 0.25);
+            --gold-accent: #e5c158;
+            --gold-light: #f3e5ab;
+            --text-main: #f5f5f7;
+            --text-secondary: #86868b;
+            --sf-font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: var(--sf-font);
+            -webkit-font-smoothing: antialiased;
+        }
+
+        body {
+            background-color: var(--ios-bg);
+            color: var(--text-main);
+            line-height: 1.6;
+            overflow-x: hidden;
+            padding-bottom: 80px;
+        }
+
+        /* iOS-Style Vibrant Fluid Blurred Background Orbs */
+        .ambient-sphere-1 {
+            position: absolute;
+            top: -150px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 800px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(214, 175, 55, 0.08) 0%, transparent 65%);
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        .ambient-sphere-2 {
+            position: fixed;
+            bottom: 10%;
+            left: -200px;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.02) 0%, transparent 60%);
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        .ambient-sphere-3 {
+            position: fixed;
+            top: 40%;
+            right: -200px;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(214, 175, 55, 0.03) 0%, transparent 60%);
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        .main-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 80px 24px 0 24px;
+        }
+
+        /* Premium iOS Squircle Hero Module */
+        .hero-canvas {
+            background: var(--ios-glass-bg);
+            backdrop-filter: blur(35px);
+            -webkit-backdrop-filter: blur(35px);
+            border: 1px solid var(--ios-gold-border);
+            border-radius: 32px; /* Smooth Apple-style corner curvature */
+            padding: 100px 40px;
+            text-align: center;
+            box-shadow: 0 40px 100px rgba(0, 0, 0, 0.8), inset 0 1px 1px rgba(255,255,255,0.1);
+            margin-bottom: 30px;
+            position: relative;
+        }
+
+        .hero-canvas::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 32px;
+            padding: 1px;
+            background: linear-gradient(to bottom, rgba(255,255,255,0.1), transparent);
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            pointer-events: none;
+        }
+
+        .premium-tag {
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            color: var(--gold-accent);
+            font-weight: 700;
+            margin-bottom: 24px;
+            display: inline-block;
+        }
+
+        .hero-canvas h1 {
+            font-size: 52px;
+            font-weight: 700;
+            letter-spacing: -2px;
+            color: #ffffff;
+            line-height: 1.15;
+            margin-bottom: 24px;
+        }
+
+        .hero-canvas h1 span {
+            background: linear-gradient(180deg, #ffffff 30%, var(--gold-accent) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero-canvas p {
+            font-size: 19px;
+            color: var(--text-secondary);
+            max-width: 820px;
+            margin: 0 auto;
+            font-weight: 400;
+        }
+
+        /* Infinite Horizontal iOS Brand Shelf */
+        .brand-scroller-canvas {
+            background: var(--ios-glass-bg);
+            backdrop-filter: blur(30px);
+            -webkit-backdrop-filter: blur(30px);
+            border: 1px solid var(--ios-border);
+            border-radius: 20px;
+            padding: 24px;
+            margin-bottom: 40px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .scroller-label {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--text-secondary);
+            text-align: center;
+            margin-bottom: 16px;
+            font-weight: 600;
+        }
+
+        .brand-capsule-flex {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .brand-capsule {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            color: #ffffff;
+            padding: 8px 20px;
+            border-radius: 9999px; /* Pill layout */
+            font-size: 14px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+
+        .brand-capsule.highlight {
+            border-color: var(--ios-gold-border);
+            color: var(--gold-accent);
+            background: rgba(214, 175, 55, 0.05);
+        }
+
+        .brand-capsule:hover {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(255, 255, 255, 0.2);
+            transform: scale(1.03);
+        }
+
+        /* Core Information Grid Map */
+        .grid-layout {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        @media (max-width: 600px) {
+            .grid-layout {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .glass-panel {
+            background: var(--ios-glass-bg);
+            backdrop-filter: blur(30px);
+            -webkit-backdrop-filter: blur(30px);
+            border: 1px solid var(--ios-border);
+            border-radius: 24px;
+            padding: 45px;
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4);
+            transition: transform 0.4s cubic-bezier(0.15, 1, 0.3, 1), border-color 0.4s;
+            position: relative;
+        }
+
+        .glass-panel:hover {
+            transform: translateY(-2px);
+            border-color: rgba(255, 255, 255, 0.2);
+            background: var(--ios-glass-bright);
+        }
+
+        .panel-icon-shield {
+            width: 50px;
+            height: 50px;
+            border-radius: 14px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--ios-border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            margin-bottom: 24px;
+        }
+
+        .glass-panel h2 {
+            font-size: 24px;
+            font-weight: 600;
+            color: #ffffff;
+            margin-bottom: 16px;
+            letter-spacing: -0.5px;
+        }
+
+        .glass-panel h2 span {
+            color: var(--gold-accent);
+        }
+
+        .glass-panel p {
+            font-size: 15.5px;
+            color: #d2d2d7; /* Apple secondary white body text */
+            text-align: justify;
+            font-weight: 400;
+            line-height: 1.7;
+        }
+
+        /* Process Architecture Stream Block */
+        .process-canvas {
+            background: var(--ios-glass-bg);
+            backdrop-filter: blur(30px);
+            -webkit-backdrop-filter: blur(30px);
+            border: 1px solid var(--ios-border);
+            border-radius: 28px;
+            padding: 50px;
+            margin-bottom: 40px;
+        }
+
+        .process-title-row {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .process-title-row h2 {
+            font-size: 28px;
+            font-weight: 600;
+            letter-spacing: -0.5px;
+        }
+
+        .process-flex-row {
+            display: flex;
+            gap: 24px;
+            flex-wrap: wrap;
+        }
+
+        .process-node {
+            flex: 1;
+            min-width: 250px;
+            background: rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.03);
+            border-radius: 18px;
+            padding: 30px;
+            text-align: center;
+            position: relative;
+        }
+
+        .node-badge-counter {
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--gold-accent);
+            background: rgba(214, 175, 55, 0.1);
+            border: 1px solid var(--ios-gold-border);
+            width: 28px;
+            height: 28px;
+            line-height: 26px;
+            border-radius: 50%;
+            display: inline-block;
+            margin-bottom: 16px;
+        }
+
+        .process-node h3 {
+            font-size: 17px;
+            font-weight: 600;
+            color: #ffffff;
+            margin-bottom: 12px;
+        }
+
+        .process-node p {
+            font-size: 13.5px;
+            color: var(--text-secondary);
+            margin-bottom: 0;
+        }
+
+        /* Global Security Trust Indicators */
+        .security-strip {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
+            text-align: center;
+        }
+
+        .security-badge-cell h4 {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--gold-accent);
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-bottom: 6px;
+        }
+
+        .security-badge-cell p {
+            font-size: 12px;
+            color: var(--text-secondary);
+            margin-bottom: 0;
+        }
+
+        /* Apple Clean Footer Parameter */
+        .ios-footer {
+            margin-top: 80px;
+            border-top: 1px solid var(--ios-border);
+            padding-top: 30px;
+            text-align: center;
+            font-size: 12px;
+            color: var(--text-secondary);
+            letter-spacing: 0.2px;
+        }
+
+        .ios-footer a {
+            color: var(--gold-accent);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .ios-footer a:hover {
+            color: var(--gold-light);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="ambient-sphere-1"></div>
+    <div class="ambient-sphere-2"></div>
+    <div class="ambient-sphere-3"></div>
+
+    <div class="main-container">
+
+        <!-- Unified Brand Identity Hero Canvas -->
+        <header class="hero-canvas">
+            <span class="premium-tag">Kilimani Hub &bull; Nairobi</span>
+            <h1>The Premium Standard for <br><span>Disposables &amp; Starter Systems</span></h1>
+            <p>Welcome to JVapes. We remove the operational clutter of traditional open mods to manage a highly refined selection of original disposable hardware and luxury pod integrations for the discerning adult consumer.</p>
+        </header>
+
+        <!-- Brand Strip: Multi-Brand Expansion Grid -->
+        <section class="brand-scroller-canvas">
+            <div class="scroller-label">Stocking Over 25+ Global Electronic Nicotine Labels</div>
+            <div class="brand-capsule-flex">
+                <div class="brand-capsule highlight">Vapengin</div>
+                <div class="brand-capsule highlight">Oxbar</div>
+                <div class="brand-capsule highlight">Tugboat</div>
+                <div class="brand-capsule">Lost Mary</div>
+                <div class="brand-capsule">Elf Bar</div>
+                <div class="brand-capsule">Geek Bar</div>
+                <div class="brand-capsule">Vaporesso</div>
+                <div class="brand-capsule">Voopoo</div>
+                <div class="brand-capsule">Smok</div>
+                <div class="brand-capsule">Uwell Caliburn</div>
+                <div class="brand-capsule">Relx Pods</div>
+                <div class="brand-capsule">Allo Vapor</div>
+                <div class="brand-capsule">Nasty Juice Mini</div>
+                <div class="brand-capsule">Lost Vape</div>
+            </div>
+        </section>
+
+        <!-- Dynamic Core Info Canvas Grid -->
+        <main class="grid-layout">
+
+            <!-- WHO YOU ARE -->
+            <section class="glass-panel">
+                
+                <h2>Who We <span>Are</span></h2>
+                <p>JVapes is a boutique, compliance-driven enterprise based out of Kilimani, Nairobi. Operating at the intersection of consumer education and elite product curation, we serve as an authoritative, trusted alternative supply channel for adult smokers shifting into modern, hassle-free vapor solutions.</p>
+            </section>
+
+            <!-- WHAT YOU SELL -->
+            <section class="glass-panel">
+                <h2>What We <span>Sell</span></h2>
+                <p>Our operational catalog focuses purely on simple execution. We deliberately bypass complex rebuildables, external battery labs, or messy bulk liquid mixing. Instead, we sell an expansive range of high-capacity disposable vapes, premium pre-filled pod devices, and simple closed/open starter systems. From the glass aesthetic structures of Vapengin and the heavy-duty mesh cores of Oxbar to the reliable consistency of Tugboat and dozens of other global platforms, we deliver absolute hardware excellence.</p>
+            </section>
+
+            <!-- WHY THEY SHOULD TRUST YOU -->
+            <section class="glass-panel">
+               
+                <h2>Why They Should <span>Trust You</span></h2>
+                <p>To eliminate the risk of counterfeit products in the local marketplace, JVapes enforces a rigorous zero-tolerance framework against clones. Every device in our collection undergoes strict security code authentication before dispatch. Backed by automated age-verification structures and protected by secure <strong>Lipa na M-Pesa</strong> financial checkouts, we ensure complete consumer protection.</p>
+            </section>
+
+            <!-- WHY YOUR STORE IS DIFFERENT -->
+            <section class="glass-panel">
+                <h2>Why Our Store Is <span>Different</span></h2>
+                <p>We reject overcrowded, low-tier store configurations in favor of a clean digital experience. Our interface adapts a premium iOS frosted glass language built around deep user guidance, visual scannability, and minimal friction. We turn everyday retail transactions into a premium concierge experience, matching elite global hardware selections with swift local logistics.</p>
+            </section>
+
+        </main>
+
+        <!-- THE 3-STEP ACQUISITION FLOW -->
+        <section class="process-canvas">
+            <div class="process-title-row">
+                <h2>The Seamless Order Pipeline</h2>
+                <p style="color: var(--text-secondary); font-size: 14.5px; margin-top: 6px;">Engineered for zero friction from selection to hand-off</p>
+            </div>
+            <div class="process-flex-row">
+                <div class="process-node">
+                    <span class="node-badge-counter">1</span>
+                    <h3>Curate Your Selection</h3>
+                    <p>Select your hardware and preferred puff configurations across our extensive multi-brand catalog and send items straight to your cart.</p>
+                </div>
+                <div class="process-node">
+                    <span class="node-badge-counter">2</span>
+                    <h3>M-Pesa Clearing</h3>
+                    <p>Pass our brief, mandatory verification checkpoint and complete your invoice instantly via secure integrated Lipa na M-Pesa pathways.</p>
+                </div>
+                <div class="process-node">
+                    <span class="node-badge-counter">3</span>
+                    <h3>Verification Hand-off</h3>
+                    <p>Enjoy prompt courier delivery across Nairobi and countrywide. Simply present your National ID or Passport to our rider upon package arrival.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Trust Anchor Metrics Row -->
+        <section class="security-strip">
+            <div class="security-badge-cell">
+                <h4>Verified Original</h4>
+                <p>Zero Counterfeit Inventory</p>
+            </div>
+            <div class="security-badge-cell">
+                <h4>Nairobi Prompt Delivery</h4>
+                <p>Dispatched from Kilimani Hub</p>
+            </div>
+            <div class="security-badge-cell">
+                <h4>Statutory Age Gated</h4>
+                <p>Strictly 18+ Access Control</p>
+            </div>
+            <div class="security-badge-cell">
+                <h4>Secure M-Pesa Clearing</h4>
+                <p>Instant Encrypted Processing</p>
+            </div>
+        </section>
+
+        <!-- Apple Aesthetic Standard Footer -->
+        <footer class="ios-footer">
+            <p>&copy; 2026 JVapes Kenya. Crafted with Premium iOS Satin Glass Architecture. All Rights Reserved.</p>
+            <p style="margin-top: 8px; font-size: 11px;">Primary Core Node: Kilimani, Nairobi &bull; Admin Interface: <a href="mailto:joshuavapes@gmail.com">joshuavapes@gmail.com</a></p>
+        </footer>
+
+    </div>
+
+</body>
+</html>

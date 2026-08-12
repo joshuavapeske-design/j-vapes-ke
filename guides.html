@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JVapes Kenya | The Ultimate Vape Guide</title>
+    <style>
+        :root {
+            --bg-dark: #08090c;
+            --surface-glass: rgba(18, 20, 26, 0.65);
+            --border-gold: rgba(212, 175, 55, 0.2);
+            --border-subtle: rgba(255, 255, 255, 0.05);
+            --gold: #d4af37;
+            --gold-glow: rgba(212, 175, 55, 0.8);
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+            --card-gradient: linear-gradient(135deg, rgba(255, 255, 255, 0.03) 0%, rgba(255, 255, 255, 0.01) 100%);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-primary);
+            line-height: 1.8;
+            overflow-x: hidden;
+        }
+
+        /* Ambient Luxury Lighting Effects */
+        .glow-orb-1 {
+            position: fixed;
+            top: -20%;
+            right: -10%;
+            width: 70vw;
+            height: 70vw;
+            background: radial-gradient(circle, rgba(214, 175, 55, 0.04) 0%, transparent 70%);
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        .glow-orb-2 {
+            position: fixed;
+            bottom: -20%;
+            left: -10%;
+            width: 60vw;
+            height: 60vw;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.01) 0%, transparent 60%);
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        /* Hero Banner Section */
+        .hero-container {
+            max-width: 1300px;
+            margin: 40px auto 0 auto;
+            padding: 0 24px;
+        }
+
+        .hero-banner {
+            background: var(--surface-glass);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--border-gold);
+            border-radius: 24px;
+            padding: 80px 40px;
+            text-align: center;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-banner::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--gold), transparent);
+        }
+
+        .hero-tag {
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 5px;
+            color: var(--gold);
+            font-weight: 700;
+            margin-bottom: 16px;
+            display: inline-block;
+        }
+
+        .hero-banner h1 {
+            font-size: 42px;
+            font-weight: 800;
+            letter-spacing: -1px;
+            color: #ffffff;
+            margin-bottom: 20px;
+        }
+
+        .hero-banner p {
+            color: var(--text-secondary);
+            max-width: 750px;
+            margin: 0 auto 40px auto;
+            font-size: 16px;
+        }
+
+        /* Quick Jumper Dashboard */
+        .nav-matrix {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 16px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .matrix-btn {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--border-subtle);
+            border-radius: 14px;
+            padding: 20px;
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 15px;
+            font-weight: 600;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .matrix-btn:hover {
+            border-color: var(--gold);
+            background: rgba(214, 175, 55, 0.04);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+
+        .matrix-btn span {
+            color: var(--gold);
+        }
+
+        /* Main Structured Guide Content Layout */
+        .main-layout {
+            max-width: 1300px;
+            margin: 40px auto;
+            padding: 0 24px;
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 40px;
+        }
+
+        .guide-card {
+            background: var(--surface-glass);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--border-subtle);
+            border-radius: 24px;
+            padding: 50px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .section-header-group {
+            border-bottom: 1px solid var(--border-subtle);
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+        }
+
+        .section-counter {
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            color: var(--gold);
+            font-weight: 700;
+            display: block;
+            margin-bottom: 6px;
+        }
+
+        .guide-card h2 {
+            font-size: 28px;
+            font-weight: 700;
+            color: #ffffff;
+            letter-spacing: -0.5px;
+        }
+
+        .guide-card p {
+            font-size: 16px;
+            color: #cbd5e1;
+            margin-bottom: 24px;
+            text-align: justify;
+        }
+
+        /* Specialized Sub-Grid for Vape Brand Breakdowns */
+        .brand-showcase-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 24px;
+            margin-top: 30px;
+        }
+
+        .brand-tile {
+            background: var(--card-gradient);
+            border: 1px solid var(--border-subtle);
+            border-radius: 16px;
+            padding: 30px;
+            transition: border-color 0.3s;
+        }
+
+        .brand-tile:hover {
+            border-color: rgba(214, 175, 55, 0.3);
+        }
+
+        .brand-header-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .brand-title {
+            font-size: 20px;
+            font-weight: 700;
+            color: #ffffff;
+        }
+
+        .brand-badge {
+            background: rgba(214, 175, 55, 0.1);
+            border: 1px solid var(--border-gold);
+            color: var(--gold);
+            padding: 2px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .brand-tile ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .brand-tile li {
+            font-size: 14px;
+            color: var(--text-secondary);
+            margin-bottom: 10px;
+            padding-left: 18px;
+            position: relative;
+        }
+
+        .brand-tile li::before {
+            content: '•';
+            color: var(--gold);
+            position: absolute;
+            left: 0;
+            font-weight: bold;
+        }
+
+        /* YouTube Curated Resource Block Layout */
+        .video-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 24px;
+            margin-top: 25px;
+        }
+
+        .video-card {
+            background: rgba(0, 0, 0, 0.2);
+            border: 1px solid var(--border-subtle);
+            border-radius: 16px;
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .video-desc h4 {
+            color: #ffffff;
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .video-desc p {
+            font-size: 13px;
+            color: var(--text-secondary);
+            margin-bottom: 16px;
+            line-height: 1.5;
+        }
+
+        .youtube-btn {
+            background: #ef4444;
+            color: #ffffff;
+            text-decoration: none;
+            padding: 10px 16px;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: background 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .youtube-btn:hover {
+            background: #dc2626;
+        }
+
+        /* Highlight Boxes for Technical / Troubleshooting Elements */
+        .trouble-box {
+            background: rgba(255, 255, 255, 0.01);
+            border-left: 3px solid var(--gold);
+            padding: 20px 24px;
+            margin-bottom: 20px;
+            border-radius: 0 12px 12px 0;
+        }
+
+        .trouble-box h4 {
+            color: #ffffff;
+            font-size: 16px;
+            margin-bottom: 6px;
+            font-weight: 600;
+        }
+
+        .trouble-box p {
+            margin-bottom: 0;
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+
+        .alert-panel {
+            background: rgba(239, 68, 68, 0.05);
+            border: 1px solid rgba(239, 68, 68, 0.15);
+            border-radius: 16px;
+            padding: 30px;
+            margin-top: 40px;
+        }
+
+        .alert-panel h4 {
+            color: #ef4444;
+            font-size: 16px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+        }
+
+        .alert-panel p {
+            margin-bottom: 0;
+            font-size: 14px;
+            color: #fca5a5;
+        }
+
+        /* Footer Corporate parameters */
+        .guide-footer {
+            max-width: 1300px;
+            margin: 0 auto 60px auto;
+            padding: 0 24px;
+            text-align: center;
+            color: var(--text-secondary);
+            font-size: 13px;
+        }
+
+        .footer-line {
+            height: 1px;
+            background: var(--border-subtle);
+            margin-bottom: 30px;
+        }
+
+        /* Responsive Breakpoints */
+        @media (max-width: 768px) {
+            .hero-banner { padding: 50px 20px; }
+            .hero-banner h1 { font-size: 30px; }
+            .guide-card { padding: 30px 20px; }
+            .video-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="glow-orb-1"></div>
+    <div class="glow-orb-2"></div>
+
+    <!-- Hero Module Dashboard -->
+    <div class="hero-container">
+        <header class="hero-banner">
+            <span class="hero-tag">JVapes Knowledge Base</span>
+            <h1>The Definitive Guide to Disposables &amp; Pod Systems</h1>
+            <p>Welcome to your comprehensive blueprint for navigating modern vapor hardware. This curated handbook focuses exclusively on high-performance disposable platforms, beginner starter kits, and closed/open loop pod systems designed for maximum flavor delivery and ultimate convenience.</p>
+            
+            <nav class="nav-matrix">
+                <a href="#disposables" class="matrix-btn">1. Disposable Vapes <span></span></a>
+                <a href="#starter-kits" class="matrix-btn">2. Pods &amp; Starter Kits <span></span></a>
+                <a href="#troubleshooting" class="matrix-btn">3. Troubleshooting &amp; Use <span></span></a>
+                <a href="#video-tutorials" class="matrix-btn">4. Curated Video Library <span></span></a>
+            </nav>
+        </header>
+    </div>
+
+    <!-- Main Content Stream -->
+    <div class="main-layout">
+
+        <!-- SECTION 1: DISPOSABLES -->
+        <section id="disposables" class="guide-card">
+            <div class="section-header-group">
+                <span class="section-counter">Module 01</span>
+                <h2>Disposable Vapes: Convenience Redefined</h2>
+            </div>
+            <p>Disposable vapes represent the pinnacle of stress-free flavor execution. Pre-filled with premium nicotine salt e-liquids and pre-charged, these devices eliminate any requirement for liquid handling, coil building, or manual system adjustments. They are draw-activated, running instantly upon air inhalation, and are perfectly configured for immediate, on-the-go utilization inside busy metropolitan spaces like Nairobi.</p>
+            
+            <p>Modern disposable platforms have evolved significantly beyond basic baselines, integrating smart hardware parameters like visual e-liquid meters, physical power counters, and dual mesh core designs that double your cloud production with a flip of a toggle. Here is a granular teardrop look at the elite class of premium disposables distributed via JVapes:</p>
+
+            <div class="brand-showcase-grid">
+                <!-- VAPENGIN -->
+                <div class="brand-tile">
+                    <div class="brand-header-row">
+                        <div class="brand-title">Vapengin</div>
+                        <span class="brand-badge">Cyber Aesthetic</span>
+                    </div>
+                    <p style="font-size: 14px; color: var(--text-secondary); margin-bottom: 15px;">Renowned globally for pushing the limits of visual industrial design, utilizing translucent outer glass layer frames coupled with rich, deep-profile flavor outputs.</p>
+                    <ul>
+                        <li><strong>Key Offerings:</strong> Vapengin Jupiter, Mercury, and high-puff smart line configurations.</li>
+                        <li><strong>Flavor Profile Architecture:</strong> Famous for intense sweet undertones, icy cooling properties, and exceptional consistency until the final puff.</li>
+                        <li><strong>Best Suited For:</strong> Users demanding highly expressive flavor profiles and unique modern digital designs.</li>
+                    </ul>
+                </div>
+
+                <!-- OXBAR -->
+                <div class="brand-tile">
+                    <div class="brand-header-row">
+                        <div class="brand-title">Oxbar</div>
+                        <span class="brand-badge">Heavy Duty Performance</span>
+                    </div>
+                    <p style="font-size: 14px; color: var(--text-secondary); margin-bottom: 15px;">Engineered with exceptional durability and structural precision, leveraging structural advanced mesh coils to guarantee smooth throat hits.</p>
+                    <ul>
+                        <li><strong>Key Offerings:</strong> Oxbar G8000, Oxbar Magic, and specialized Pod Juice custom iterations.</li>
+                        <li><strong>Hardware Innovation:</strong> Integrated soft-touch comfort mouthpieces, robust physical casings, and optimized battery allocation logic.</li>
+                        <li><strong>Best Suited For:</strong> Enthusiasts prioritizing raw battery life, uninterrupted coil consistency, and accurate throat hits.</li>
+                    </ul>
+                </div>
+
+                <!-- TUGBOAT -->
+                <div class="brand-tile">
+                    <div class="brand-header-row">
+                        <div class="brand-title">Tugboat</div>
+                        <span class="brand-badge">Legendary Reliability</span>
+                    </div>
+                    <p style="font-size: 14px; color: var(--text-secondary); margin-bottom: 15px;">A pillar of the electronic nicotine space, celebrated for delivering hyper-accurate, balanced draw resistances and exceptional hardware shelf-life.</p>
+                    <ul>
+                        <li><strong>Key Offerings:</strong> Tugboat Evo, Super Pod, and Tugboat T12000 smart series.</li>
+                        <li><strong>Signature Draw:</strong> Smoother, modular air control channels that allow users to alter hit resistance safely.</li>
+                        <li><strong>Best Suited For:</strong> Everyday users who prioritize stealth setups, structured airflow control, and pure reliable consistency.</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 2: STARTER KITS & PODS -->
+        <section id="starter-kits" class="guide-card">
+            <div class="section-header-group">
+                <span class="section-counter">Module 02</span>
+                <h2>Starter Kits &amp; Pod Systems: The Next Evolution</h2>
+            </div>
+            <p>For users seeking to upgrade their journey past completely closed disposable configurations, **Starter Kits and Rechargeable Pod Systems** present the ultimate intermediate pathway. By decoupling the battery housing from the liquid tank component, pod platforms provide increased economical longevity while decreasing operational footprints.</p>
+            
+            <p>Our catalog targets the premium spectrum of simple pod ecosystems, focusing heavily on user-friendly setups that eliminate messy maintenance procedures. These systems are classified into two main streams:</p>
+
+            <div class="brand-showcase-grid">
+                <div class="brand-tile">
+                    <div class="brand-title" style="margin-bottom: 10px;">Pre-Filled Closed Pod Systems</div>
+                    <p style="font-size: 14px; color: var(--text-secondary);">The ultimate midpoint bridge. The battery device is permanently preserved and charged via Type-C cables, while the flavor compartment consists of factory-sealed pod replacements. When a pod is completely emptied, you simply snap it off, discard it responsibly, and click a fresh pre-filled flavor pod onto the gold-plated magnetic dock terminals.</p>
+                </div>
+                <div class="brand-tile">
+                    <div class="brand-title" style="margin-bottom: 10px;">Refillable Open Starter Pods</div>
+                    <p style="font-size: 14px; color: var(--text-secondary);">Provides complete freedom over flavor selection. These kits feature highly optimized refillable pod cartridges with integrated mesh internal structures. Users easily pop the leakage-free silicone side seals to introduce their custom-chosen nicotine salt liquids. Perfect for controlling nicotine concentrations exactly while maintaining ultra-compact forms.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 3: MAINTENANCE & TROUBLESHOOTING -->
+        <section id="troubleshooting" class="guide-card">
+            <div class="section-header-group">
+                <span class="section-counter">Module 03</span>
+                <h2>Hardware Upkeep, Optimization &amp; Care</h2>
+            </div>
+            <p>To extract maximum value and performance from your Oxbar, Vapengin, or Tugboat devices, proper usage habits must be strictly observed. Simple electronic components perform flawlessly when kept clean and powered correctly.</p>
+            
+            <h3>Pro-Level Diagnostics Breakdown</h3>
+            
+            <div class="trouble-box">
+                <h4>Avoiding the Dreaded "Burnt Hit" (Chain Vaping Prevention)</h4>
+                <p>The internal wicking material inside disposable vapes and pods requires brief recovery intervals to completely saturate with liquid after an activation cycle. If you execute rapid, consecutive high-duration draws (chain vaping), the dry cotton core will burn. Allow 15-30 seconds between draws to maintain crystal-clear flavor delivery.</p>
+            </div>
+
+            <div class="trouble-box">
+                <h4>Starter Kit Battery Safety Guidelines</h4>
+                <p>Vape starter devices are loaded with highly responsive, compact power cells. Never attach your vape hardware to fast-charging bricks designed for laptops or modern smartphones (such as high-wattage outputs). Doing so causes internal overheating, rapidly killing battery lifespans or triggering permanent component short-circuits. Always use standard 5V/1A or 5V/2A power boundaries via your laptop ports or compliant low-amperage outlets.</p>
+            </div>
+
+            <div class="trouble-box">
+                <h4>Gurgling Sound or Liquid Spitback Resolution</h4>
+                <p>If your pod or device sits horizontally or experiences extreme temperature shifts, excess liquid can pool directly inside the central airflow column. If you notice a gurgling sound or get drops of liquid on your tongue, simply wrap a clean tissue tightly around the top mouthpiece and shake the device downwards firmly a few times to clear excess fluid from the central chimney line safely.</p>
+            </div>
+
+            <div class="alert-panel">
+                <h4>⚠️ MANDATORY HARDWARE ADVISORY</h4>
+                <p>Always inspect the physical verification scratch-codes found on the external boxes of your Vapengin, Oxbar, and Tugboat products. Scan the official QR layers to ensure authentication status. JVapes distributes 100% certified genuine hardware to preserve absolute customer safety inside the Kenyan consumer market.</p>
+            </div>
+        </section>
+
+        <!-- SECTION 4: YOUTUBE CURATED TUTORIALS -->
+        <section id="video-tutorials" class="guide-card">
+            <div class="section-header-group">
+                <span class="section-counter">Module 04</span>
+                <h2>Curated Video Learning Library</h2>
+            </div>
+            <p>Visual learning provides quick resolution paths for mastering hardware setups. We have aggregated high-quality video walkthroughs tracking the exact mechanics of modern vaping setups, disposable product comparisons, and starter kit instructions.</p>
+
+            <div class="video-grid">
+                <!-- Video 1 -->
+                <div class="video-card">
+                    <div class="video-desc">
+                        <h4>Vaping 101: Absolute Beginner Setup Blueprint</h4>
+                        <p>An exhaustive visual walkthrough breaking down how electronic nicotine delivery architectures operate. Ideal for transitioning smokers seeking to understand draw-activated mechanics, tight MTL airflow restrictions, and basic hardware parameters.</p>
+                    </div>
+                    <a href="https://www.youtube.com/watch?v=R9VvO79pIHA" target="_blank" class="youtube-btn">▶ Watch Beginner Guide</a>
+                </div>
+
+                <!-- Video 2 -->
+                <div class="video-card">
+                    <div class="video-desc">
+                        <h4>Disposable Vapes: Everything You Need to Master</h4>
+                        <p>A deep analysis targeting disposable platforms. Learn exactly how internal mesh structures deploy flavor, how smart battery screens calculate liquid metrics, and methods to maximize product lifetimes.</p>
+                    </div>
+                    <a href="https://www.youtube.com/watch?v=J_V_tE089gQ" target="_blank" class="youtube-btn">▶ Watch Disposable Guide</a>
+                </div>
+
+                <!-- Video 3 -->
+                <div class="video-card">
+                    <div class="video-desc">
+                        <h4>Pod Systems vs Disposables: The Ultimate Comparison</h4>
+                        <p>Stuck figuring out if you should stay with a Tugboat disposable or switch to a rechargeable Oxbar starter kit? This detailed review weighs long-term economics, structural sizing differences, and flavor flexibility.</p>
+                    </div>
+                    <a href="https://www.youtube.com/watch?v=g9a5H3vM-R4" target="_blank" class="youtube-btn">▶ Watch Comparison Video</a>
+                </div>
+
+                <!-- Video 4 -->
+                <div class="video-card">
+                    <div class="video-desc">
+                        <h4>How to Correctly Charge &amp; Maintain Pod Hardware</h4>
+                        <p>Essential battery safety tutorial. Understand why high-voltage bricks destroy miniature internal batteries, how to avoid common charging errors, and simple preservation workflows.</p>
+                    </div>
+                    <a href="https://www.youtube.com/watch?v=68RWh7IPhXo" target="_blank" class="youtube-btn">▶ Watch Battery Safety</a>
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+    <!-- Layout Base Footer -->
+    <footer class="guide-footer">
+        <div class="footer-line"></div>
+        <p>&copy; 2026 JVapes Kenya. All Rights Reserved. Curated with Premium Glass &amp; Gold Infrastructure.</p>
+        <p style="margin-top: 8px; font-size: 11px; color: rgba(255, 255, 255, 0.2);">Contact: joshuavapes@gmail.com &bull; Kilimani, Nairobi, Kenya.</p>
+    </footer>
+
+</body>
+</html>

@@ -1,0 +1,2581 @@
+:root {
+    --bg-dark: #0a0a0a; /* Deep luxury obsidian backdrop */
+    --glass-bg: rgba(255, 255, 255, 0.03);
+    --glass-border: rgba(255, 255, 255, 0.08);
+    --text-primary: #ffffff;
+    --text-secondary: #a0aec0;
+    --accent-glow: rgba(255, 255, 255, 0.15);
+    --whatsapp-green: #25d366;
+    --primary-color: #ffffff;
+    --font-stack: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+
+    /* Frosted-glass accent system (matches the Lovable "liquid glass" redesign) */
+    --lv-primary: #0a0a0a;
+    --lv-primary-glow: #1a1a1a;
+    --lv-secondary: #ff5470;
+    --lv-accent: #0a0a0a;
+    --lv-gradient-hero: linear-gradient(135deg, #1c1c1e 0%, #000000 100%);
+    --lv-gradient-primary: linear-gradient(135deg, #1c1c1e, #000000);
+    --lv-shadow-glow: 0 8px 30px rgba(0, 0, 0, 0.16);
+    --lv-shadow-soft: 0 2px 10px rgba(15, 23, 42, 0.06);
+    --lv-shadow-strong: 0 16px 40px rgba(15, 23, 42, 0.14);
+    --lv-radius: 0.75rem;
+    --lv-glass-bg: rgba(255, 255, 255, 0.55);
+    --lv-glass-border: rgba(255, 255, 255, 0.6);
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    scroll-behavior: smooth;
+}
+
+body {
+    background-color: var(--bg-dark);
+    color: var(--text-primary);
+    font-family: var(--font-stack);
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+}
+
+/* Glassmorphism Structural Core Layout */
+.glass-card {
+    background: var(--glass-bg);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid var(--glass-border);
+    border-radius: 16px;
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.text-center { text-align: center; }
+.hidden {
+    display: none !important;
+}
+
+/* Modal Overlay initial active screen blocking state layout */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.85); /* Dark screen dimming */
+    z-index: 1000; /* Forces it above your navbar header */
+    display: flex; /* Centers your glass card content */
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.header-container {
+    max-width: 1200px;
+    margin: auto;
+    padding: 14px 25px;
+
+    display: flex;
+    align-items: center;
+
+    justify-content: space-between; /* IMPORTANT */
+}
+.logo {
+    font-size: 1.5rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+}
+
+.nav-links a {
+    color: var(--text-secondary);
+    text-decoration: none;
+    margin-right: 25px;
+    font-size: 0.9rem;
+    transition: color 0.2s ease;
+}
+
+.nav-links a:hover { color: var(--text-primary); }
+
+.cart-trigger {
+    cursor: pointer;
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    padding: 8px 16px;
+    border-radius: 20px;
+    display: flex;
+    gap: 8px;
+}
+
+/* Hero & Responsive Filtering Layout */
+.hero-section {
+    margin-top: 30px;
+    padding: 40px 20px;
+}
+
+.hero-heading {
+    font-family: 'Cormorant Garamond', var(--font-stack);
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 10px;
+    letter-spacing: 0.2px;
+}
+
+.hero-subheading {
+    max-width: 560px;
+    margin: 0 auto 24px;
+    font-size: 0.95rem;
+    color: var(--text-secondary);
+    line-height: 1.5;
+}
+
+.badge-row {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    margin-bottom: 20px;
+}
+
+.hero-badge {
+    background: rgba(255,255,255,0.06);
+    padding: 6px 14px;
+    border-radius: 30px;
+    font-size: 0.8rem;
+    border: 1px solid var(--glass-border);
+}
+
+.hero-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    letter-spacing: -1px;
+    margin-bottom: 10px;
+}
+
+.hero-subtitle {
+    color: var(--text-secondary);
+    margin-bottom: 30px;
+}
+
+.filter-wrapper {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+}
+
+.filter-dropdown {
+    background: #121212;
+    color: white;
+    border: 1px solid var(--glass-border);
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-family: inherit;
+    outline: none;
+}
+
+/* Premium Three-Tier Product Grids */
+.storefront-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 20px 100px 20px;
+}
+
+.inventory-section {
+    margin-bottom: 60px;
+}
+
+.section-title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 25px;
+    letter-spacing: 0.5px;
+    border-left: 3px solid white;
+    padding-left: 15px;
+}
+
+.product-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 24px;
+}
+
+/* Product Cards Aesthetic Layer Rules — frosted glass card */
+.product-item {
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    position: relative;
+    cursor: pointer;
+    background: var(--lv-glass-bg);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid var(--lv-glass-border);
+    border-radius: var(--lv-radius);
+    box-shadow: var(--lv-shadow-soft);
+    transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1), box-shadow 0.3s ease, border-color 0.3s ease;
+}
+
+.product-item:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--lv-shadow-strong);
+    border-color: rgba(0, 0, 0, 0.1);
+}
+
+.product-image-wrap {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    border-radius: 12px;
+    overflow: hidden;
+    margin-bottom: 15px;
+    background: rgba(255,255,255,0.02);
+}
+
+.product-image-wrap img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.promo-tag {
+    position: absolute;
+    top: 30px;
+    left: 30px;
+    background: var(--lv-secondary);
+    padding: 4px 10px;
+    border-radius: 6px;
+    font-size: 0.75rem;
+    font-weight: 700;
+}
+
+.product-details {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+.brand-lbl {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    color: var(--text-secondary);
+    letter-spacing: 1px;
+    margin-bottom: 2px;
+}
+
+.product-name {
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 6px;
+    line-height: 1.3;
+}
+
+.price-row {
+    margin-top: auto;
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    margin-bottom: 12px;
+}
+
+.original-price {
+    text-decoration: line-through;
+    color: var(--text-secondary);
+    font-size: 0.85rem;
+}
+
+.current-price {
+    font-size: 1.4rem;
+    font-weight: 700;
+    letter-spacing: -0.3px;
+    color: var(--lv-primary);
+}
+
+/* Modals & Age Gate Overlay System Layouts */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.85);
+    z-index: 1000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.modal-content {
+    max-width: 500px;
+    width: 100%;
+    padding: 40px;
+}
+
+.panel-content {
+    max-width: 850px;
+    position: relative;
+}
+
+.modal-layout-split {
+    display: flex;
+    gap: 30px;
+    margin-top: 20px;
+}
+
+@media(max-width: 768px) {
+    .modal-layout-split { flex-direction: column; }
+}
+
+.modal-image-pane {
+    flex: 1;
+    aspect-ratio: 1/1;
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.modal-image-pane img { width: 100%; height: 100%; object-fit: cover; }
+.modal-info-pane { flex: 1.2; display: flex; flex-direction: column; }
+
+/* Buttons Style Matrix */
+.btn {
+    padding: 12px 24px;
+    border-radius: 8px;
+    border: none;
+    font-family: inherit;
+    font-weight: 600;
+    cursor: pointer;
+    transition: opacity 0.2s ease;
+}
+
+.btn:hover { opacity: 0.9; }
+.btn-primary {
+    background: var(--lv-gradient-hero);
+    color: #fff;
+    border: none;
+    box-shadow: var(--lv-shadow-soft);
+    transition: transform 0.25s ease, box-shadow 0.25s ease, opacity 0.2s ease;
+}
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--lv-shadow-glow);
+    opacity: 1;
+}
+.btn-secondary { background: rgba(255,255,255,0.1); color: white; }
+.btn-whatsapp { background: var(--whatsapp-green); color: white; }
+
+/* Sliding Cart Drawer Setup */
+.cart-drawer-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.5);
+    z-index: 500;
+}
+
+.cart-drawer {
+    position: fixed;
+    right: 0;
+    top: 0;
+    height: 100%;
+    max-width: 450px;
+    width: 100%;
+    border-radius: 16px 0 0 16px;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden; /* header and footer stay put, only cart-items-body scrolls */
+    box-shadow: -12px 0 40px rgba(0, 0, 0, 0.25);
+}
+
+/* BUGFIX/POLISH: the drawer header, item list, and footer previously had
+   zero dedicated styling — just browser defaults inside a glass card —
+   which is why the whole drawer read as "plain". */
+.drawer-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 22px 26px;
+    border-bottom: 1px solid var(--glass-border);
+    flex-shrink: 0;
+}
+
+.drawer-header h3 {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: #111;
+}
+
+.close-btn {
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    background: transparent;
+    color: #333;
+    font-size: 1.3rem;
+    line-height: 1;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.15s ease;
+}
+
+.close-btn:hover {
+    background: rgba(0, 0, 0, 0.06);
+}
+
+.cart-items-body {
+    flex: 1;
+    min-height: 0; /* required so this flex child can shrink and scroll instead of pushing the footer off-screen */
+    overflow-y: auto;
+    padding: 10px 26px;
+}
+
+.drawer-footer {
+    flex-shrink: 0;
+    padding: 20px 26px 26px;
+    border-top: 1px solid var(--glass-border);
+    background: rgba(0, 0, 0, 0.015);
+}
+
+#whatsapp-checkout-btn,
+#cod-checkout-btn {
+    width: 100%;
+    display: block;
+}
+
+#whatsapp-checkout-btn {
+    margin-top: 16px;
+}
+
+#cod-checkout-btn {
+    margin-top: 10px;
+}
+
+#apply-promo-btn {
+    flex-shrink: 0;
+    padding: 10px 16px;
+}
+
+/* Footer & Strict Typography Alignment Rules */
+.main-footer {
+    padding: 60px 20px;
+    border-top: 1px solid var(--glass-border);
+    background: #050505;
+}
+
+.footer-nav {
+    margin: 20px 0;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+.footer-nav a { color: var(--text-secondary); text-decoration: none; font-size: 0.85rem; }
+.legal-highlight { color: #fff !important; font-weight: 600; }
+.statutory-warning {
+    font-size: 0.75rem;
+    color: #718096;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-top: 30px;
+}
+/* ... existing styles end here ... */
+
+/* ==========================================
+   INTERACTIVE CATEGORY ANIMATIONS 
+   ========================================== */
+.category-trigger {
+    cursor: pointer;
+    transition: all 0.25s ease;
+    display: inline-block;
+    user-select: none;
+}
+
+.category-trigger:hover {
+    color: #00ffcc; /* Gives it a neon glow on mouse hover */
+    transform: translateX(5px);
+    text-shadow: 0 0 10px rgba(0, 255, 204, 0.4);
+}
+
+.category-trigger.active-filter {
+    color: #00ffcc;
+    transform: scale(1.05);
+}
+
+/* ==========================================
+   MOBILE RESPONSIVE OPTIMIZATIONS (Smartphones & Tablets)
+   ========================================== */
+@media screen and (max-width: 768px) {
+    
+    /* 1. Header & Navigation Layout */
+    .header-container {
+        flex-direction: column;
+        text-align: center;
+        gap: 15px;
+        padding: 15px 10px;
+    }
+    
+    .nav-links {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 12px;
+        font-size: 0.9rem;
+    }
+
+    /* 2. Hero Section Typography Scale */
+    .hero-title {
+        font-size: 1.8rem;
+        line-height: 1.2;
+        padding: 0 10px;
+    }
+    
+    .hero-subtitle {
+        font-size: 0.95rem;
+        padding: 0 15px;
+    }
+
+    /* 3. Compact 2-Column Product Grid */
+    .product-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+        padding: 0 10px;
+    }
+
+    /* 4. Compact Product Item & Card Internals */
+    .product-item {
+        padding: 10px;
+        border-radius: 12px;
+    }
+
+    .product-image-wrap {
+        margin-bottom: 8px;
+        border-radius: 8px;
+    }
+
+    .promo-tag {
+        top: 8px;
+        left: 8px;
+        padding: 2px 6px;
+        font-size: 0.65rem;
+        border-radius: 4px;
+    }
+
+    .wishlist-heart-btn {
+        top: 6px;
+        right: 6px;
+        width: 28px;
+        height: 28px;
+    }
+
+    .brand-lbl {
+        font-size: 0.62rem;
+        margin-bottom: 2px;
+    }
+
+    .product-name {
+        font-size: 0.85rem;
+        line-height: 1.25;
+        margin-bottom: 4px;
+    }
+
+    .price-row {
+        gap: 6px;
+        margin-bottom: 8px;
+    }
+
+    .current-price {
+        font-size: 1.1rem;
+    }
+
+    .original-price {
+        font-size: 0.75rem;
+    }
+
+    .flavor-dropdown {
+        margin-bottom: 8px;
+    }
+
+    .flavor-dropdown-trigger {
+        padding: 7px 9px;
+        font-size: 0.78rem;
+        border-radius: 8px;
+    }
+
+    .product-item .btn {
+        padding: 8px 10px;
+        font-size: 0.78rem;
+        border-radius: 6px;
+    }
+
+    /* 5. Matching 2-Column Loading Skeleton */
+    .loading-skeleton {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+        padding: 0 10px;
+        margin-bottom: 30px;
+    }
+
+    .skeleton-card {
+        height: 270px;
+        border-radius: 12px;
+    }
+
+    /* 6. Modal Responsive Layout */
+    .modal-layout-split {
+        flex-direction: column;
+        overflow-y: auto;
+        max-height: 75vh;
+    }
+    
+    .modal-content {
+        width: 95%;
+        padding: 20px 15px;
+    }
+    
+    .modal-image-pane img {
+        max-height: 200px;
+        width: auto;
+        margin: 0 auto;
+        display: block;
+    }
+
+    /* 7. Full Screen Mobile Cart Drawer */
+    .cart-drawer {
+        width: 100%;
+        height: 100vh; /* fallback for older mobile browsers */
+        height: 100dvh; /* accounts for the mobile address bar so the footer isn't clipped */
+        max-height: 100vh;
+        max-height: 100dvh;
+        border-radius: 0;
+        overflow: hidden; /* keep header/footer pinned, only cart-items-body scrolls */
+    }
+
+    .drawer-footer {
+        padding-bottom: 30px;
+    }
+}
+
+/* ==========================================
+   LIGHT THEME OVERHAUL (jvapes.store aesthetic)
+   ========================================== */
+
+/* 1. Global Background & Text Inversion */
+body {
+    background-color: #ffffff !important;
+    background-image: none !important; /* Removes any dark gradient backgrounds */
+    color: #1a1a1a !important;
+}
+
+h1, h2, h3, h4, h5, h6, p, span, a {
+    color: #1a1a1a !important;
+}
+
+/* 2. Header & Footer Light Styling */
+/* ===========================
+   GLASS HEADER
+=========================== */
+
+.main-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 9999;
+
+    font-family: 'Poppins', sans-serif;
+
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+
+    border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+
+    transition: 0.3s ease;
+}
+
+/* inner layout */
+.header-container {
+    max-width: 1200px;
+    margin: auto;
+    padding: 14px 25px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+/* logo */
+.logo {
+    font-size: 1.4rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    margin: 0;
+    color: #0a0a0a;
+}
+
+/* nav */
+.nav-links {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+}
+
+.nav-links a {
+    color: #f7f3f3;
+    text-decoration: none;
+    font-size: 0.95rem;
+    font-weight: 500;
+    opacity: 0.75;
+    transition: 0.2s ease;
+}
+
+.nav-links a:hover {
+    opacity: 1;
+}
+
+/* cart */
+.cart-trigger {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    background: rgba(0, 0, 0, 0.05);
+    padding: 8px 14px;
+    border-radius: 999px;
+
+    color: #1a1a1a;
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+.cart-trigger:hover {
+    background: rgba(0, 0, 0, 0.09);
+}
+
+.cart-count {
+    background: #0a0a0a;
+    color: #fff;
+    font-weight: 700;
+    font-size: 0.8rem;
+
+    width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+}
+
+.main-footer {
+    background: #f8f8f8 !important;
+    border-top: 1px solid #eaeaea !important;
+    color: #555 !important;
+}
+
+.main-footer p, .main-footer a {
+    color: #555 !important;
+}
+
+/* 3. Glassmorphic Cards (Light Frosted Effect) */
+.glass-card {
+    background: rgba(255, 255, 255, 0.8) !important;
+    border: 1px solid rgba(0, 0, 0, 0.08) !important;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.06) !important; /* Soft dark shadow */
+}
+
+/* 4. Update Interactive Category Titles for White Background */
+.category-trigger {
+    color: #666 !important; /* Gray default state */
+}
+
+.category-trigger:hover {
+    color: #000 !important;
+    text-shadow: none !important; /* Removes the neon glow */
+    transform: translateX(5px);
+}
+
+.category-trigger.active-filter {
+    color: #000 !important;
+    border-bottom: 2px solid #000; /* Sleek black underline */
+}
+
+/* 5. Modals and Overlays */
+.modal-overlay {
+    background: rgba(255, 255, 255, 0.9) !important; /* White blurry overlay */
+}
+
+/* 6. Buttons & Badges */
+.btn-secondary {
+    background: #f0f0f0 !important;
+    color: #333 !important;
+    border: 1px solid #ccc !important;
+}
+
+.btn-secondary:hover {
+    background: #e0e0e0 !important;
+}
+
+.hero-badge {
+    background: var(--lv-gradient-hero) !important;
+    color: #fff !important;
+    border: none !important;
+    font-weight: 600;
+}
+
+.warning-tag {
+    background: #fff1e8 !important;
+    color: #c2410c !important;
+    border: 1px solid #fdba8c !important;
+    font-weight: 700;
+}
+/* ===========================
+   FOOTER — compact, single-band layout
+   (previously ~200px of vertical padding stacked into a "tower";
+   this keeps everything in one tidy band)
+=========================== */
+
+.dark-footer {
+    background: #111;
+    color: #ffffff;
+    padding: 36px 20px 24px;
+    margin-top: 80px;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+/* Make ALL footer text white */
+.dark-footer,
+.dark-footer h2,
+.dark-footer p,
+.dark-footer a,
+.dark-footer strong {
+    color: #ffffff;
+}
+
+.footer-content {
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+.footer-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    flex-wrap: wrap;
+    padding-bottom: 20px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.footer-brand {
+    text-align: left;
+}
+
+.footer-logo {
+    font-size: 1.3rem;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+}
+
+.footer-desc {
+    font-size: 0.82rem;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.6) !important;
+    margin: 0;
+}
+
+.footer-socials {
+    display: flex;
+    gap: 10px;
+}
+
+.social-icon {
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    color: #fff;
+    text-decoration: none;
+    transition: all 0.2s ease;
+}
+
+.social-icon:hover {
+    background: #fff;
+    color: #111 !important;
+    border-color: #fff;
+    transform: translateY(-2px);
+}
+
+.footer-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.footer-links a {
+    text-decoration: none;
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.75) !important;
+    transition: color 0.2s ease;
+}
+
+.footer-links a:hover {
+    color: #fff !important;
+}
+
+.statutory-warning {
+    margin: 18px auto 0;
+    max-width: 100%;
+    background: transparent;
+    border: none;
+    border-left: 3px solid #25D366;
+    border-radius: 0;
+    padding: 4px 0 4px 14px;
+    font-size: 0.78rem;
+    font-weight: 500;
+    line-height: 1.5;
+    text-align: left;
+    color: rgba(255, 255, 255, 0.55) !important;
+}
+
+.statutory-warning strong {
+    color: rgba(255, 255, 255, 0.85) !important;
+}
+
+/* ===========================
+   WHATSAPP BUTTON
+=========================== */
+
+.whatsapp-float {
+    position: fixed;
+    bottom: 25px;
+    right: 25px;
+    width: 62px;
+    height: 62px;
+    background: #28b35d;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.35);
+    z-index: 9999;
+    transition: all 0.3s ease;
+}
+
+.whatsapp-float:hover {
+    transform: scale(1.1);
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.45);
+}
+
+.whatsapp-float img {
+    width: 34px;
+    height: 34px;
+}
+
+/* ===========================
+   MOBILE
+=========================== */
+
+@media (max-width: 768px) {
+
+    .dark-footer {
+        padding: 28px 20px 20px;
+        margin-top: 60px;
+    }
+
+    .footer-top {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 16px;
+    }
+
+    .footer-brand {
+        text-align: left;
+    }
+
+    .statutory-warning {
+        font-size: 0.75rem;
+    }
+
+    .whatsapp-float {
+        width: 56px;
+        height: 56px;
+        bottom: 20px;
+        right: 20px;
+    }
+
+    .whatsapp-float img {
+        width: 30px;
+        height: 30px;
+    }
+}
+.dark-footer,
+.dark-footer * {
+    color: #fff !important;
+    opacity: 1 !important;
+    -webkit-text-fill-color: #fff !important;
+}
+body {
+    padding-top: 80px;
+}
+@media (max-width: 768px) {
+
+    .header-container {
+        padding: 10px 15px;
+    }
+
+    .logo {
+        font-size: 1.1rem;
+    }
+
+    .nav-links {
+        gap: 12px;
+        font-size: 0.85rem;
+    }
+
+    .nav-links a {
+        font-size: 0.8rem;
+    }
+
+    .cart-trigger {
+        padding: 6px 10px;
+        font-size: 0.85rem;
+    }
+
+    .cart-count {
+        width: 18px;
+        height: 18px;
+        font-size: 0.7rem;
+    }
+}
+/* ===========================
+   HAMBURGER (hidden on desktop)
+=========================== */
+
+.menu-toggle {
+    display: none;
+    font-size: 1.6rem;
+    color: #1a1a1a;
+    cursor: pointer;
+}
+
+/* ===========================
+   MOBILE MENU
+=========================== */
+
+@media (max-width: 768px) {
+
+    .menu-toggle {
+        display: block;
+    }
+
+    .nav-links {
+        position: absolute;
+        top: 70px;
+        left: 0;
+        width: 100%;
+
+        background: rgba(17, 17, 17, 0.95);
+        backdrop-filter: blur(15px);
+
+        flex-direction: column;
+        align-items: center;
+
+        gap: 18px;
+        padding: 20px 0;
+
+        display: none; /* hidden by default */
+    }
+
+    .nav-links.active {
+        display: flex;
+    }
+
+    .header-container {
+        position: relative;
+    }
+
+    .cart-trigger {
+        padding: 6px 10px;
+        font-size: 0.85rem;
+    }
+}
+@media (max-width: 768px) {
+
+    .nav-links {
+        position: absolute;
+        top: 70px;
+        left: 0;
+        width: 100%;
+
+        background: rgba(0, 0, 0, 0.95); /* darker = readable */
+        backdrop-filter: blur(18px);
+        -webkit-backdrop-filter: blur(18px);
+
+        flex-direction: column;
+        align-items: center;
+
+        gap: 18px;
+        padding: 25px 0;
+
+        display: none;
+
+        border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .nav-links a {
+        color: #ffffff;
+        font-size: 1rem;
+        font-weight: 600;
+        opacity: 1; /* IMPORTANT */
+        text-shadow: 0 2px 10px rgba(0,0,0,0.6);
+    }
+
+    .nav-links.active {
+        display: flex;
+    }
+}
+.header-container {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+}
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.storefront-container {
+    flex: 1; /* hII NI YA  KU force the main content area to stretch and push the footer to the bottom of the viewport */
+    min-height: 400px; /* Ensures space even when grids are collapsed */
+}
+/* ==========================================
+   UI/UX PASS — new components
+   ========================================== */
+
+/* --- Toast notifications (replaces blocking alert() popups) --- */
+.toast-container {
+    position: fixed;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 3000;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    pointer-events: none;
+    width: 100%;
+    padding: 0 20px;
+}
+
+.toast {
+    background: rgba(20, 20, 20, 0.95);
+    color: #fff;
+    padding: 12px 20px;
+    border-radius: 999px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+    opacity: 0;
+    transform: translateY(12px);
+    transition: opacity 0.25s ease, transform 0.25s ease;
+    max-width: 90vw;
+    text-align: center;
+}
+
+.toast-visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* --- Age gate soft-exit note --- */
+.age-gate-note {
+    margin-top: 12px;
+    font-size: 0.85rem;
+    color: var(--text-secondary) !important;
+}
+
+/* --- Always-visible quick search bar (sits above the collapsible filters) --- */
+.quick-search-bar {
+    max-width: 560px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 14px 22px;
+    background: var(--lv-glass-bg);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid var(--lv-glass-border);
+    border-radius: 999px;
+    box-shadow: var(--lv-shadow-soft);
+    transition: box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.quick-search-bar:focus-within {
+    border-color: rgba(0, 0, 0, 0.15);
+    box-shadow: var(--lv-shadow-strong);
+}
+
+.quick-search-icon {
+    flex-shrink: 0;
+    color: #8a8a8a;
+}
+
+.quick-search-input {
+    flex: 1;
+    border: none;
+    background: transparent;
+    outline: none;
+    font-family: inherit;
+    font-size: 0.95rem;
+    color: #1a1a1a;
+}
+
+.quick-search-input::placeholder {
+    color: #9a9a9a;
+}
+
+/* --- Trust row: instant delivery / pay on delivery / authenticity --- */
+.trust-row {
+    max-width: 950px;
+    margin: 50px auto 0;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+    padding: 26px 20px;
+    background: var(--lv-glass-bg);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid var(--lv-glass-border);
+    border-radius: var(--lv-radius);
+    box-shadow: var(--lv-shadow-soft);
+}
+
+.trust-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+}
+
+.trust-icon {
+    flex-shrink: 0;
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background: rgba(10, 10, 10, 0.06);
+    color: #0a0a0a;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.trust-title {
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: #1a1a1a;
+    margin-bottom: 2px;
+}
+
+.trust-subtitle {
+    font-size: 0.78rem;
+    color: var(--text-secondary, #6b7280);
+}
+
+.trust-item-till .trust-icon-till {
+    background: rgba(209, 41, 61, 0.1);
+    color: var(--accent-red, #d1293d);
+}
+
+.trust-item-till .trust-title {
+    color: var(--accent-red, #d1293d);
+}
+
+@media (max-width: 900px) and (min-width: 769px) {
+    .trust-row {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .trust-row {
+        grid-template-columns: 1fr;
+        gap: 18px;
+    }
+    .quick-search-bar {
+        margin: 0 15px;
+    }
+}
+
+/* --- Filter toggle + collapsible filter panel --- */
+.filter-toggle-row {
+    display: flex;
+    justify-content: center;
+    margin-top: 8px;
+}
+
+.filter-toggle-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.filter-toggle-icon {
+    font-size: 1rem;
+}
+
+.filter-wrapper {
+    margin: 16px auto 0;
+    max-width: 800px;
+    padding: 15px;
+    background: rgba(10, 10, 10, 0.75);
+    backdrop-filter: blur(10px);
+    border: 1px solid var(--glass-border);
+    border-radius: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    align-items: center;
+}
+
+.filter-row-top {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+
+.filter-controls {
+    width: 100%;
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.filter-wrapper .filter-flavor {
+    width: 100%;
+    max-width: 400px;
+}
+
+.filter-wrapper select,
+.filter-wrapper input {
+    padding: 12px;
+    border-radius: 8px;
+    border: 1px solid var(--glass-border);
+    background: #121212;
+    color: #ffffff;
+    font-weight: 500;
+    font-family: inherit;
+}
+
+.filter-controls input,
+.filter-controls select {
+    flex: 1;
+    min-width: 140px;
+}
+
+/* --- Category tab bar (replaces click-to-hide-everything headings) --- */
+.category-tabs {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 35px;
+}
+
+.category-tab {
+    padding: 10px 20px;
+    border-radius: 999px;
+    border: 1px solid var(--glass-border);
+    background: rgba(255, 255, 255, 0.04);
+    color: #555 !important;
+    font-family: inherit;
+    font-weight: 600;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.category-tab:hover {
+    border-color: var(--lv-primary);
+    color: var(--lv-primary) !important;
+}
+
+.category-tab.active-filter {
+    background: var(--lv-gradient-hero);
+    border-color: transparent;
+    color: #fff !important;
+    box-shadow: var(--lv-shadow-soft);
+}
+
+.category-heading {
+    font-size: 1.4rem;
+    font-weight: 600;
+    margin-bottom: 20px;
+    letter-spacing: 0.3px;
+    border-left: 3px solid var(--lv-primary);
+    padding-left: 14px;
+}
+
+/* --- Loading skeleton (replaces silent blank gap while data loads) --- */
+.loading-skeleton {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 24px;
+    margin-bottom: 40px;
+}
+
+.skeleton-card {
+    height: 340px;
+    border-radius: 16px;
+    background: linear-gradient(100deg, rgba(0,0,0,0.04) 30%, rgba(0,0,0,0.09) 50%, rgba(0,0,0,0.04) 70%);
+    background-size: 200% 100%;
+    animation: skeleton-shimmer 1.4s ease-in-out infinite;
+}
+
+@keyframes skeleton-shimmer {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+}
+
+#load-error-message {
+    padding: 60px 20px;
+}
+
+#load-error-message p {
+    margin-bottom: 16px;
+    color: var(--text-secondary) !important;
+}
+
+/* --- Flavor dropdown (replaces cramped pill row for products with many flavors) --- */
+.flavor-dropdown {
+    position: relative;
+    margin-bottom: 12px;
+}
+
+.flavor-dropdown-trigger {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    padding: 11px 14px;
+    border-radius: 10px;
+    border: 1px solid rgba(0, 0, 0, 0.14);
+    background: #fff;
+    color: #333 !important;
+    font-family: inherit;
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.flavor-dropdown-trigger:hover {
+    border-color: rgba(0, 0, 0, 0.3);
+}
+
+.flavor-dropdown-trigger.open {
+    border-color: var(--lv-primary);
+    box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.06);
+}
+
+.flavor-dropdown-label {
+    color: #888 !important;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.flavor-dropdown-label.flavor-chosen {
+    color: #111 !important;
+}
+
+.flavor-dropdown-caret {
+    flex-shrink: 0;
+    color: #888;
+    transition: transform 0.18s ease;
+}
+
+.flavor-dropdown-trigger.open .flavor-dropdown-caret {
+    transform: rotate(180deg);
+    color: var(--lv-primary);
+}
+
+/* Floating panel — this is what stops things looking cramped: instead of
+   every flavor competing for space on the card, they live in a scrollable
+   overlay that only appears on demand. */
+.flavor-dropdown-panel {
+    position: absolute;
+    top: calc(100% + 6px);
+    left: 0;
+    right: 0;
+    z-index: 60;
+    background: rgba(255, 255, 255, 0.98);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 12px;
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.16);
+    padding: 8px;
+    animation: flavor-panel-in 0.15s ease;
+}
+
+@keyframes flavor-panel-in {
+    from { opacity: 0; transform: translateY(-4px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.flavor-dropdown-search {
+    width: 100%;
+    padding: 8px 10px;
+    margin-bottom: 6px;
+    border-radius: 8px;
+    border: 1px solid rgba(0, 0, 0, 0.12);
+    background: #f7f7f7;
+    color: #111 !important;
+    font-family: inherit;
+    font-size: 0.82rem;
+}
+
+.flavor-dropdown-search:focus {
+    outline: none;
+    border-color: var(--lv-primary);
+    background: #fff;
+}
+
+.flavor-dropdown-options {
+    max-height: 210px;
+    overflow-y: auto;
+    scrollbar-width: thin;
+}
+
+.flavor-dropdown-options::-webkit-scrollbar {
+    width: 6px;
+}
+
+.flavor-dropdown-options::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.15);
+    border-radius: 6px;
+}
+
+.flavor-dropdown-option {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    padding: 9px 10px;
+    border-radius: 8px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: #222 !important;
+    cursor: pointer;
+    transition: background 0.12s ease;
+}
+
+.flavor-dropdown-option:hover {
+    background: rgba(0, 0, 0, 0.05);
+}
+
+.flavor-dropdown-option.selected {
+    background: var(--lv-gradient-hero);
+    color: #fff !important;
+    font-weight: 600;
+}
+
+.flavor-option-check {
+    flex-shrink: 0;
+    opacity: 0;
+    color: #fff;
+}
+
+.flavor-dropdown-option.selected .flavor-option-check {
+    opacity: 1;
+}
+
+.flavor-dropdown-empty {
+    padding: 14px 10px;
+    text-align: center;
+    font-size: 0.8rem;
+    color: var(--text-secondary) !important;
+}
+
+/* --- Cart drawer line items with quantity stepper --- */
+.cart-line-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 0;
+    border-bottom: 1px solid var(--glass-border);
+}
+
+.cart-line-name {
+    font-weight: 600;
+    font-size: 0.95rem;
+}
+
+.cart-line-flavor {
+    font-size: 0.78rem;
+    color: var(--text-secondary) !important;
+    margin-top: 2px;
+}
+
+.cart-line-price {
+    font-size: 0.8rem;
+    color: var(--text-secondary) !important;
+    margin-top: 4px;
+}
+
+.cart-line-controls {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-shrink: 0;
+}
+
+.qty-stepper {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    border-radius: 999px;
+    padding: 4px 10px;
+}
+
+.qty-btn {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    border: none;
+    background: #f0f0f0;
+    color: #111 !important;
+    font-family: inherit;
+    font-size: 1.05rem;
+    line-height: 1;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* Keeps a comfortable ~44px touch target even though the visible
+       circle is smaller, so it's easy to tap accurately on mobile
+       without the stepper looking oversized. */
+    position: relative;
+}
+
+.qty-btn::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 44px;
+    height: 44px;
+    transform: translate(-50%, -50%);
+}
+
+.qty-btn:hover {
+    background: var(--lv-gradient-hero);
+    color: #fff !important;
+}
+
+.qty-value {
+    min-width: 16px;
+    text-align: center;
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+
+.remove-cart-item-btn {
+    border: none;
+    background: transparent;
+    color: var(--text-secondary) !important;
+    font-size: 1.3rem;
+    line-height: 1;
+    cursor: pointer;
+    padding: 4px;
+}
+
+.remove-cart-item-btn:hover {
+    color: #d33 !important;
+}
+
+/* --- Modal product description hierarchy --- */
+.rich-description-panel {
+    margin-top: 15px;
+    line-height: 1.7;
+    color: #333 !important;
+}
+
+.rich-description-panel p {
+    margin-bottom: 12px;
+    color: #333 !important;
+}
+
+.rich-description-panel h1,
+.rich-description-panel h2,
+.rich-description-panel h3,
+.rich-description-panel h4 {
+    margin: 18px 0 8px;
+    font-weight: 700;
+    color: #000 !important;
+}
+
+.rich-description-panel ul,
+.rich-description-panel ol {
+    margin: 0 0 12px 20px;
+}
+
+.rich-description-panel li {
+    margin-bottom: 6px;
+}
+
+/* --- Mobile tweaks for new components --- */
+@media (max-width: 768px) {
+    .category-tabs {
+        gap: 8px;
+    }
+
+    .category-tab {
+        padding: 8px 14px;
+        font-size: 0.82rem;
+    }
+
+    /* Removed conflicting 1fr skeleton code as it's defined in the main mobile query above */
+
+    .toast-container {
+        bottom: 90px; /* clears the WhatsApp float + mobile safe area */
+    }
+}
+
+.btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* ==========================================
+   ROUND 2 — header icons, brand strip, wishlist,
+   black/gold product modal, black Add-to-Bag, cart polish
+   ========================================== */
+
+/* --- Header icon cluster (wishlist heart + cart) --- */
+.header-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.icon-trigger {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(0, 0, 0, 0.05);
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    border-radius: 999px;
+    padding: 8px 12px;
+    color: #1a1a1a;
+    cursor: pointer;
+    transition: background 0.2s ease;
+}
+
+.icon-trigger:hover {
+    background: rgba(0, 0, 0, 0.09);
+}
+
+.icon-trigger .cart-count,
+.cart-trigger .cart-count {
+    background: #0a0a0a;
+    color: #fff !important;
+    font-weight: 700;
+}
+
+/* --- Featured brand strip (fills the gap right under the header) --- */
+.brand-strip {
+    background: rgba(255, 255, 255, 0.6);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+    padding: 14px 0;
+    overflow-x: auto;
+    scrollbar-width: none;
+}
+
+.brand-strip::-webkit-scrollbar {
+    display: none;
+}
+
+.brand-strip-track {
+    display: flex;
+    gap: 10px;
+    padding: 0 20px;
+    width: max-content;
+    margin: 0 auto;
+}
+
+.brand-chip {
+    flex-shrink: 0;
+    padding: 8px 18px;
+    border-radius: 999px;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    background: rgba(255, 255, 255, 0.7);
+    color: rgba(10, 10, 10, 0.75) !important;
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+    cursor: pointer;
+    transition: all 0.18s ease;
+    white-space: nowrap;
+}
+
+.brand-chip:hover {
+    background: var(--lv-gradient-hero);
+    color: #fff !important;
+    border-color: transparent;
+    transform: translateY(-1px);
+}
+
+/* --- Wishlist heart on product card --- */
+.product-image-wrap {
+    position: relative;
+}
+
+.wishlist-heart-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    border: none;
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(4px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #333;
+    cursor: pointer;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    transition: transform 0.15s ease, color 0.15s ease;
+}
+
+.wishlist-heart-btn:hover {
+    transform: scale(1.1);
+}
+
+.wishlist-heart-btn.active {
+    color: #f8f8f8;
+}
+
+.wishlist-heart-btn.active svg path {
+    fill: #202020;
+}
+
+/* --- Black "Add to Bag" action area --- */
+.add-cart-btn {
+    background: var(--lv-gradient-hero) !important;
+    color: #fff !important;
+    border: none;
+}
+
+.add-cart-btn:hover {
+    opacity: 0.92;
+    transform: translateY(-1px);
+    box-shadow: var(--lv-shadow-glow);
+}
+
+.add-cart-btn:disabled,
+.disabled-stock {
+    background: #eee !important;
+    color: #888 !important;
+}
+
+/* ==========================================
+   PRODUCT DETAIL MODAL — structural rules only.
+   Colors/background for this modal are set once, further down,
+   in the "Product detail modal: white/grey glass, black text"
+   block — keeping color in one place avoids the two rule sets
+   fighting each other and washing out the text.
+   ========================================== */
+#product-detail-modal .close-modal-btn:hover {
+    background: rgba(255, 255, 255, 0.12);
+}
+
+#product-detail-modal h2 {
+    font-family: 'Cormorant Garamond', var(--font-stack);
+    font-size: 2rem;
+    font-weight: 700;
+    letter-spacing: 0.3px;
+    padding-bottom: 14px;
+    margin-bottom: 14px;
+}
+
+#product-detail-modal .modal-meta {
+    display: flex;
+    gap: 16px;
+    margin-bottom: 14px;
+}
+
+#product-detail-modal .modal-meta span {
+    font-size: 0.8rem;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+}
+
+#product-detail-modal .modal-price-row {
+    margin-bottom: 18px;
+}
+
+#product-detail-modal #modal-product-price {
+    font-size: 1.6rem;
+    font-weight: 700;
+}
+
+#product-detail-modal .rich-description-panel {
+    padding-top: 16px;
+}
+
+/* --- Cart drawer: delivery location search + confirmation --- */
+.delivery-location-block {
+    margin-bottom: 16px;
+}
+
+.delivery-location-label {
+    display: block;
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+    color: var(--text-muted, #777);
+    margin-bottom: 6px;
+}
+
+.delivery-location-search {
+    position: relative;
+    display: flex;
+    gap: 8px;
+}
+
+.delivery-location-search input {
+    flex: 1;
+    padding: 10px 12px;
+    border-radius: 8px;
+    border: 1px solid var(--glass-border);
+    background: #f7f7f7;
+    color: #111;
+    font-family: inherit;
+    font-size: 0.85rem;
+}
+
+.delivery-location-search input:focus {
+    outline: none;
+    border-color: var(--lv-primary);
+    background: #fff;
+}
+
+.use-location-btn {
+    flex-shrink: 0;
+    width: 38px;
+    height: 38px;
+    border-radius: 8px;
+    border: 1px solid var(--glass-border);
+    background: #f7f7f7;
+    color: var(--lv-primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background 0.15s ease, border-color 0.15s ease;
+}
+
+.use-location-btn:hover {
+    background: #fff;
+    border-color: var(--lv-primary);
+}
+
+.use-location-btn.is-loading {
+    animation: spin 0.9s linear infinite;
+}
+
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+.location-suggestions-list {
+    position: absolute;
+    top: calc(100% + 4px);
+    left: 0;
+    right: 46px;
+    z-index: 30;
+    background: #fff;
+    border: 1px solid var(--glass-border);
+    border-radius: 8px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.18);
+    list-style: none;
+    margin: 0;
+    padding: 4px;
+    max-height: 220px;
+    overflow-y: auto;
+}
+
+.location-suggestions-list li {
+    padding: 9px 10px;
+    border-radius: 6px;
+    font-size: 0.82rem;
+    color: #222;
+    cursor: pointer;
+    line-height: 1.35;
+}
+
+.location-suggestions-list li:hover,
+.location-suggestions-list li.is-active {
+    background: rgba(209, 41, 61, 0.08);
+    color: var(--lv-primary);
+}
+
+.location-suggestions-list li.suggestions-status {
+    color: var(--text-muted, #888);
+    cursor: default;
+}
+
+.location-suggestions-list li.suggestions-status:hover {
+    background: none;
+    color: var(--text-muted, #888);
+}
+
+.delivery-location-confirmed {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(37, 211, 102, 0.1);
+    border: 1px solid rgba(37, 211, 102, 0.35);
+    border-radius: 8px;
+    padding: 9px 12px;
+    margin-top: 8px;
+    font-size: 0.8rem;
+    color: #1a7a3d !important;
+}
+
+.delivery-location-confirmed svg {
+    flex-shrink: 0;
+}
+
+.delivery-location-confirmed span#delivery-location-confirmed-text {
+    flex: 1;
+    line-height: 1.3;
+}
+
+.delivery-location-confirmed button {
+    flex-shrink: 0;
+    border: none;
+    background: transparent;
+    color: #1a7a3d !important;
+    font-weight: 600;
+    font-size: 0.78rem;
+    text-decoration: underline;
+    cursor: pointer;
+    padding: 0;
+}
+
+#delivery-fee-row {
+    color: var(--lv-primary);
+}
+
+/* --- Cart drawer polish: promo code section --- */
+.promo-row {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 14px;
+}
+
+.promo-row input {
+    flex: 1;
+    padding: 10px 12px;
+    border-radius: 8px;
+    border: 1px solid var(--glass-border);
+    background: #f7f7f7;
+    color: #111;
+    font-family: inherit;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+}
+
+.promo-row input:focus {
+    outline: none;
+    border-color: var(--lv-primary);
+    background: #fff;
+}
+
+.promo-applied-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    background: rgba(37, 211, 102, 0.1);
+    border: 1px solid rgba(37, 211, 102, 0.35);
+    border-radius: 8px;
+    padding: 10px 12px;
+    margin-bottom: 14px;
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: #1a7a3d !important;
+}
+
+.promo-applied-row button {
+    border: none;
+    background: transparent;
+    color: #1a7a3d !important;
+    font-size: 1.2rem;
+    line-height: 1;
+    cursor: pointer;
+}
+
+.total-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 6px 0;
+    font-size: 0.9rem;
+}
+
+.total-row:last-of-type {
+    font-size: 1.15rem;
+    font-weight: 700;
+    padding-top: 10px;
+    margin-top: 4px;
+    border-top: 1px solid var(--glass-border);
+}
+
+#subtotal-row {
+    color: var(--text-secondary) !important;
+}
+
+.drawer-header h3 {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.empty-state-msg {
+    padding: 40px 20px;
+    color: var(--text-secondary) !important;
+    font-size: 0.9rem;
+}
+
+@media (max-width: 768px) {
+    .brand-strip-track {
+        gap: 8px;
+        padding: 0 15px;
+    }
+
+    .brand-chip {
+        padding: 7px 14px;
+        font-size: 0.75rem;
+    }
+
+    #product-detail-modal h2 {
+        font-size: 1.5rem;
+    }
+}
+
+/* ==========================================================
+   ROUND 4 — SOFT PORCELAIN + GREY GLASS (quiet-luxury theme)
+   Replaces the black glass pass. Off-white base, translucent
+   grey glass cards that let the white show through, black text
+   & CTAs for contrast, one disciplined red accent for urgency.
+   Sits at the end of the file so it wins the cascade.
+   ========================================== */
+
+:root {
+    --bg-dark: #f5f4f1;
+    --glass-bg: rgba(20, 20, 20, 0.045);
+    --glass-border: rgba(0, 0, 0, 0.09);
+    --text-primary: #17181b;
+    --text-secondary: #6b7280;
+    --accent-red: #d1293d;
+    --accent-gold: #a9762f;
+
+    --lv-primary: #17181b;
+    --lv-primary-glow: #000000;
+    --lv-secondary: #d1293d;
+    --lv-accent: #17181b;
+    --lv-gradient-hero: linear-gradient(135deg, #2a2a2c 0%, #000000 100%);
+    --lv-shadow-glow: 0 10px 30px rgba(0, 0, 0, 0.14);
+    --lv-shadow-soft: 0 4px 18px rgba(0, 0, 0, 0.06);
+    --lv-shadow-strong: 0 20px 48px rgba(0, 0, 0, 0.12);
+    --lv-glass-bg: rgba(20, 20, 20, 0.05);
+    --lv-glass-border: rgba(0, 0, 0, 0.09);
+}
+
+/* --- Page backdrop: soft porcelain, not stark white --- */
+html { background: #f5f4f1 !important; }
+
+body {
+    background:
+        radial-gradient(ellipse 900px 500px at 50% -8%, rgba(0, 0, 0, 0.025), transparent 60%),
+        #eff1f0 !important;
+    background-attachment: fixed !important;
+    color: var(--text-primary) !important;
+}
+
+h1, h2, h3, h4, h5, h6, p, span, a, li, label {
+    color: var(--text-primary);
+}
+
+/* --- Header: light frosted glass bar floating on porcelain --- */
+.main-header {
+    background: rgb(255, 255, 255) !important;
+    backdrop-filter: blur(20px) saturate(160%) !important;
+    -webkit-backdrop-filter: blur(20px) saturate(160%) !important;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.06) !important;
+}
+
+.logo { color: #17181b !important; }
+.nav-links a { color: rgba(242, 245, 254, 0.959) !important; }
+.nav-links a:hover { color: #17181b !important; }
+.menu-toggle { color: #17181b !important; }
+
+.cart-trigger,
+.icon-trigger {
+    background: rgba(0, 0, 0, 0.045) !important;
+    border: 1px solid rgba(0, 0, 0, 0.08) !important;
+    color: #17181b !important;
+}
+.cart-trigger:hover,
+.icon-trigger:hover { background: rgba(0, 0, 0, 0.08) !important; }
+
+.icon-trigger .cart-count,
+.cart-trigger .cart-count,
+.cart-count {
+    background: var(--accent-red) !important;
+    color: #fff !important;
+}
+
+/* --- Hero --- */
+.hero-badge {
+    background: rgba(0, 0, 0, 0.045) !important;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(0, 0, 0, 0.08) !important;
+    color: #17181b !important;
+}
+.hero-title { color: #17181b !important; }
+.hero-subtitle { color: var(--text-secondary) !important; }
+
+.warning-tag {
+    background: rgba(209, 41, 61, 0.08) !important;
+    color: #a3172a !important;
+    border: 1px solid rgba(209, 41, 61, 0.3) !important;
+}
+
+/* --- Generic frosted glass card: grey glass, porcelain bleeds through --- */
+.glass-card {
+    background: rgba(20, 20, 20, 0.05) !important;
+    backdrop-filter: blur(18px) saturate(140%);
+    -webkit-backdrop-filter: blur(18px) saturate(140%);
+    border: 1px solid rgba(0, 0, 0, 0.09) !important;
+    box-shadow: var(--lv-shadow-soft) !important;
+}
+
+/* --- Category tabs --- */
+.category-trigger { color: rgba(23, 24, 27, 0.5) !important; }
+.category-trigger:hover { color: #17181b !important; }
+.category-trigger.active-filter {
+    color: #17181b !important;
+    border-bottom: 2px solid #17181b;
+}
+
+.category-tab {
+    background: rgba(0, 0, 0, 0.035);
+    border-color: rgba(0, 0, 0, 0.09);
+    color: rgba(23, 24, 27, 0.55) !important;
+}
+.category-tab:hover {
+    border-color: rgba(0, 0, 0, 0.2);
+    color: #17181b !important;
+}
+.category-tab.active-filter {
+    background: var(--lv-gradient-hero);
+    border-color: transparent;
+    color: #fff !important;
+}
+
+.category-heading { border-left-color: #17181b; }
+
+/* --- Product cards: the centrepiece — grey glass on porcelain,
+       white still visible through it, image frame stays pure white
+       so product photography (white studio backdrop) sits flush --- */
+.product-item {
+    background: rgba(0, 0, 0, 0.932) !important;
+    backdrop-filter: blur(16px) saturate(140%);
+    -webkit-backdrop-filter: blur(16px) saturate(140%);
+    border: 1px solid rgba(0, 0, 0, 0.08) !important;
+    box-shadow: var(--lv-shadow-soft) !important;
+}
+.product-item:hover {
+    border-color: rgba(0, 0, 0, 0.16) !important;
+    box-shadow: var(--lv-shadow-strong) !important;
+    transform: translateY(-5px);
+}
+
+.product-image-wrap { background: #ffffff !important; }
+.brand-lbl { color: rgb(253, 249, 248) !important; }
+.product-name { color: #f4f4f5 !important; }
+.original-price { color: rgba(252, 252, 252, 0.979) !important; }
+.current-price { color: #fdfdfdf3 !important; }
+
+.wishlist-heart-btn {
+    background: rgba(255, 255, 255, 0.85) !important;
+    border: 1px solid rgba(0, 0, 0, 0.08) !important;
+    color: #333 !important;
+}
+.wishlist-heart-btn.active svg path { fill: var(--accent-red) !important; }
+
+/* --- Quick search + filters --- */
+.quick-search-bar {
+    background: rgba(7, 7, 7, 0.6) !important;
+    border: 1px solid rgba(0, 0, 0, 0.09) !important;
+}
+.quick-search-input { color: #17181b !important; }
+.quick-search-input::placeholder { color: rgba(23, 24, 27, 0.4) !important; }
+.quick-search-icon { color: rgba(23, 24, 27, 0.45) !important; }
+
+.filter-wrapper {
+    background: rgba(255, 255, 255, 0.6) !important;
+    border-color: rgba(0, 0, 0, 0.09) !important;
+}
+.filter-dropdown {
+    background: #ffffff !important;
+    border-color: rgba(0, 0, 0, 0.12) !important;
+    color: #17181b !important;
+}
+
+.trust-row {
+    background: rgba(20, 20, 20, 0.045) !important;
+    border-color: rgba(0, 0, 0, 0.09) !important;
+}
+.trust-icon { background: rgba(0, 0, 0, 0.06) !important; color: #17181b !important; }
+.trust-title { color: #17181b !important; }
+.trust-subtitle { color: var(--text-secondary) !important; }
+
+/* --- Flavor dropdown --- */
+.flavor-dropdown-trigger {
+    background: #ffffff !important;
+    border-color: rgba(0, 0, 0, 0.14) !important;
+    color: #17181b !important;
+}
+.flavor-dropdown-trigger:hover { border-color: rgba(0, 0, 0, 0.28) !important; }
+.flavor-dropdown-label { color: rgba(23, 24, 27, 0.45) !important; }
+.flavor-dropdown-label.flavor-chosen { color: #17181b !important; }
+.flavor-dropdown-caret { color: rgba(23, 24, 27, 0.45) !important; }
+
+.flavor-dropdown-panel {
+    background: rgba(255, 255, 255, 0.98) !important;
+    backdrop-filter: blur(20px) !important;
+    -webkit-backdrop-filter: blur(20px) !important;
+    border: 1px solid rgba(0, 0, 0, 0.1) !important;
+    box-shadow: var(--lv-shadow-strong) !important;
+}
+.flavor-dropdown-search {
+    background: #f5f4f1 !important;
+    border-color: rgba(0, 0, 0, 0.12) !important;
+    color: #17181b !important;
+}
+.flavor-dropdown-search:focus { background: #ffffff !important; }
+.flavor-dropdown-options::-webkit-scrollbar-thumb { background: rgba(0, 0, 0, 0.15) !important; }
+.flavor-dropdown-option { color: rgba(23, 24, 27, 0.85) !important; }
+.flavor-dropdown-option:hover { background: rgba(0, 0, 0, 0.05) !important; }
+.flavor-dropdown-option.selected {
+    background: var(--lv-gradient-hero) !important;
+    color: #fff !important;
+}
+
+/* --- Buttons --- */
+.btn-secondary {
+    background: rgba(0, 0, 0, 0.045) !important;
+    color: #17181b !important;
+    border: 1px solid rgba(0, 0, 0, 0.16) !important;
+}
+.btn-secondary:hover { background: rgba(0, 0, 0, 0.08) !important; }
+
+.add-cart-btn:disabled,
+.disabled-stock {
+    background: rgba(0, 0, 0, 0.06) !important;
+    color: rgba(23, 24, 27, 0.35) !important;
+}
+
+/* --- Modal overlay: keep a dark scrim regardless of theme so the
+       modal content stays focused --- */
+.modal-overlay {
+    background: rgba(10, 10, 10, 0.45) !important;
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+}
+
+/* --- Product detail modal: white/grey glass, black text --- */
+#product-detail-modal .modal-content {
+    background: rgba(255, 255, 255, 0.75) !important;
+    color: #17181b !important;
+    border: 1px solid rgba(0, 0, 0, 0.1) !important;
+    box-shadow: var(--lv-shadow-strong) !important;
+    backdrop-filter: blur(26px) saturate(160%) !important;
+    -webkit-backdrop-filter: blur(26px) saturate(160%) !important;
+}
+#product-detail-modal .modal-content * { color: #17181b !important; }
+#product-detail-modal h2 { border-bottom: 1px solid rgba(0, 0, 0, 0.12) !important; }
+/* Meta labels (brand / puff count) and the description use a slightly
+   muted grey instead of opacity, since fading a near-black color with
+   opacity over a translucent background is what caused the low-contrast
+   text bug — #55575c on this background still comfortably clears WCAG AA. */
+#product-detail-modal .modal-meta span { color: #55575c !important; }
+#product-detail-modal .rich-description-panel,
+#product-detail-modal .rich-description-panel p { color: #33353a !important; }
+#product-detail-modal .rich-description-panel { border-top: 1px solid rgba(0, 0, 0, 0.1) !important; }
+#product-detail-modal .modal-image-pane { border: 1px solid rgba(0, 0, 0, 0.1) !important; }
+#product-detail-modal .close-modal-btn {
+    color: #17181b !important;
+    border: 1px solid rgba(0, 0, 0, 0.16) !important;
+}
+#product-detail-modal .close-modal-btn:hover { background: rgba(0, 0, 0, 0.06) !important; }
+
+/* --- Brand strip --- */
+.brand-strip {
+    background: rgba(255, 255, 255, 0.55) !important;
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.06) !important;
+}
+.brand-chip {
+    background: rgba(0, 0, 0, 0.04) !important;
+    border: 1px solid rgba(0, 0, 0, 0.09) !important;
+    color: rgba(23, 24, 27, 0.7) !important;
+}
+.brand-chip:hover {
+    background: var(--lv-gradient-hero) !important;
+    color: #fff !important;
+    border-color: transparent !important;
+}
+
+/* --- Footer (if .main-footer is used anywhere) --- */
+.main-footer {
+    background: rgba(245, 244, 241, 0.92) !important;
+    border-top: 1px solid rgba(0, 0, 0, 0.07) !important;
+    color: rgba(23, 24, 27, 0.6) !important;
+}
+.main-footer p, .main-footer a { color: rgba(23, 24, 27, 0.6) !important; }
+
+/* --- Cart drawer --- */
+.cart-drawer {
+    background: rgba(255, 255, 255, 0.85) !important;
+    backdrop-filter: blur(24px) saturate(150%);
+    -webkit-backdrop-filter: blur(24px) saturate(150%);
+    border-left: 1px solid rgba(0, 0, 0, 0.08) !important;
+    color: #17181b !important;
+}
+.cart-drawer * { color: inherit; }
+.cart-line-name { color: #17181b !important; }
+.cart-line-flavor,
+.cart-line-price { color: var(--text-secondary) !important; }
+
+.promo-row input {
+    background: #f5f4f1 !important;
+    color: #17181b !important;
+    border: 1px solid rgba(0, 0, 0, 0.12) !important;
+}
+.promo-row input:focus {
+    background: #ffffff !important;
+    border-color: #17181b !important;
+}
+.promo-applied-row {
+    background: rgba(34, 197, 94, 0.1) !important;
+    border: 1px solid rgba(34, 197, 94, 0.35) !important;
+    color: #15803d !important;
+}
+.promo-applied-row button { color: #15803d !important; }
+
+.qty-stepper { border-color: rgba(0, 0, 0, 0.16) !important; }
+.qty-btn { background: rgba(0, 0, 0, 0.06) !important; color: #17181b !important; }
+.qty-btn:hover { background: var(--lv-gradient-hero) !important; color: #fff !important; }
+
+.empty-state-msg { color: var(--text-secondary) !important; }
+.age-gate-note { color: var(--text-secondary) !important; }
+/* Elevates the card's stacking context when interacted with */
+.product-item:hover,
+.product-item:focus-within {
+    z-index: 100;
+}
+/* Forces primary buttons and their internal text (like spans) to stay white */
+.add-cart-btn,
+.add-cart-btn *,
+.btn-primary,
+.btn-primary * {
+    color: #ffffff !important;
+}
+.marquee-container {
+  width: 100%;
+  overflow: hidden;
+  background-color: #f4f5f5; 
+  padding: 20px 0;
+  box-sizing: border-box;
+}
+
+.marquee-track {
+  display: flex;
+  width: max-content;
+  animation: marquee-scroll 30s linear infinite; 
+}
+
+.marquee-container:hover .marquee-track {
+  animation-play-state: paused;
+}
+
+.marquee-track img {
+  height: 60px; 
+  margin: 0 25px; 
+  object-fit: contain;
+  background-color: white; 
+  padding: 10px;
+  border-radius: 12px; 
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05); 
+}
+
+@keyframes marquee-scroll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+@media (max-width: 768px) {
+    .marquee-container {
+        padding: 14px 0;
+    }
+    .marquee-track {
+        /* Faster loop on mobile so smaller, tighter logos don't feel
+           like they're crawling across the screen. */
+        animation-duration: 18s;
+    }
+    .marquee-track img {
+        height: 38px;
+        margin: 0 14px;
+        padding: 6px;
+        border-radius: 8px;
+    }
+}

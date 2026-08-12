@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JVapes Kenya | Legal Framework & Terms of Service</title>
+    <style>
+        :root {
+            --bg-color: #0d0e12;
+            --card-bg: rgba(255, 255, 255, 0.03);
+            --card-border: rgba(255, 255, 255, 0.08);
+            --gold-accent: #d4af37;
+            --gold-hover: #f3e5ab;
+            --text-main: #e2e8f0;
+            --text-muted: #94a3b8;
+            --sidebar-bg: rgba(13, 14, 18, 0.8);
+            --warning-bg: rgba(212, 175, 55, 0.1);
+            --warning-border: rgba(212, 175, 55, 0.3);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.7;
+            padding: 0;
+            overflow-x: hidden;
+        }
+
+        /* Premium Glassmorphism Background Elements */
+        .bg-glow-1 {
+            position: fixed;
+            top: -10%;
+            left: -10%;
+            width: 50vw;
+            height: 50vw;
+            background: radial-gradient(circle, rgba(214, 175, 55, 0.05) 0%, rgba(0,0,0,0) 70%);
+            z-index: -1;
+            pointer-events: none;
+        }
+        .bg-glow-2 {
+            position: fixed;
+            bottom: -10%;
+            right: -10%;
+            width: 50vw;
+            height: 50vw;
+            background: radial-gradient(circle, rgba(214, 175, 55, 0.03) 0%, rgba(0,0,0,0) 70%);
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        .layout-container {
+            display: flex;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            gap: 40px;
+        }
+
+        /* Sticky Sidebar Navigation */
+        .sidebar {
+            width: 320px;
+            position: -webkit-sticky;
+            position: sticky;
+            top: 40px;
+            height: calc(100vh - 80px);
+            background: var(--card-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--card-border);
+            border-radius: 16px;
+            padding: 30px 20px;
+            overflow-y: auto;
+        }
+
+        .brand-section {
+            text-align: center;
+            padding-bottom: 25px;
+            border-bottom: 1px solid var(--card-border);
+            margin-bottom: 25px;
+        }
+
+        .brand-logo {
+            font-size: 28px;
+            font-weight: 800;
+            letter-spacing: 2px;
+            color: #fff;
+        }
+
+        .brand-logo span {
+            color: var(--gold-accent);
+        }
+
+        .brand-tagline {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            color: var(--text-muted);
+            margin-top: 5px;
+        }
+
+        .nav-list {
+            list-style: none;
+        }
+
+        .nav-item {
+            margin-bottom: 8px;
+        }
+
+        .nav-link {
+            display: block;
+            padding: 12px 16px;
+            color: var(--text-muted);
+            text-decoration: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .nav-link:hover {
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--gold-accent);
+            padding-left: 22px;
+        }
+
+        /* Main Legal Content Area */
+        .content-area {
+            flex: 1;
+            background: var(--card-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--card-border);
+            border-radius: 16px;
+            padding: 50px;
+        }
+
+        .doc-header {
+            margin-bottom: 40px;
+            border-bottom: 1px solid var(--card-border);
+            padding-bottom: 30px;
+        }
+
+        .doc-header h1 {
+            font-size: 32px;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            color: #fff;
+            margin-bottom: 10px;
+        }
+
+        .meta-info {
+            font-size: 13px;
+            color: var(--text-muted);
+        }
+
+        .legal-section {
+            margin-bottom: 50px;
+            scroll-margin-top: 40px;
+        }
+
+        .legal-section h2 {
+            font-size: 22px;
+            color: var(--gold-accent);
+            margin-bottom: 20px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            letter-spacing: 0.5px;
+        }
+
+        .legal-section h2::after {
+            content: '';
+            flex: 1;
+            margin-left: 20px;
+            height: 1px;
+            background: var(--card-border);
+        }
+
+        .legal-section h3 {
+            font-size: 16px;
+            color: #fff;
+            margin: 20px 0 10px 0;
+            font-weight: 600;
+        }
+
+        .legal-section p {
+            margin-bottom: 16px;
+            color: var(--text-main);
+            font-size: 15px;
+            text-align: justify;
+        }
+
+        .legal-section ul, .legal-section ol {
+            margin-bottom: 20px;
+            padding-left: 25px;
+            color: var(--text-main);
+            font-size: 15px;
+        }
+
+        .legal-section li {
+            margin-bottom: 8px;
+        }
+
+        /* Callout / Highlight Blocks */
+        .warning-box {
+            background: var(--warning-bg);
+            border: 1px solid var(--warning-border);
+            border-radius: 12px;
+            padding: 24px;
+            margin: 25px 0;
+        }
+
+        .warning-box h4 {
+            color: var(--gold-accent);
+            font-size: 16px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+        }
+
+        .warning-box p {
+            margin-bottom: 0;
+            color: #f8fafc;
+            font-size: 14px;
+        }
+
+        /* Flow Diagram Graphics using CSS Table Grid Patterns */
+        .diagram-container {
+            display: table;
+            width: 100%;
+            margin: 30px 0;
+            border-collapse: separate;
+            border-spacing: 15px 0;
+        }
+
+        .diagram-step {
+            display: table-cell;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--card-border);
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            vertical-align: top;
+            width: 33.33%;
+        }
+
+        .diagram-number {
+            display: inline-block;
+            width: 30px;
+            height: 30px;
+            line-height: 28px;
+            border-radius: 50%;
+            border: 2px solid var(--gold-accent);
+            color: var(--gold-accent);
+            font-weight: 700;
+            margin-bottom: 12px;
+            font-size: 14px;
+        }
+
+        .diagram-title {
+            font-weight: 600;
+            color: #fff;
+            font-size: 14px;
+            margin-bottom: 6px;
+        }
+
+        .diagram-desc {
+            font-size: 12px;
+            color: var(--text-muted);
+            line-height: 1.4;
+        }
+
+        /* Footer styling inside content */
+        .corporate-footer {
+            margin-top: 60px;
+            padding-top: 30px;
+            border-top: 1px solid var(--card-border);
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 25px;
+            margin-top: 20px;
+        }
+
+        .info-block h5 {
+            color: var(--text-muted);
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 6px;
+        }
+
+        .info-block p {
+            color: #fff;
+            font-size: 14px;
+            margin-bottom: 0;
+        }
+
+        /* Scrollbar adjustments */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--bg-color);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--card-border);
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--gold-accent);
+        }
+
+        /* Responsive Design Rules */
+        @media (max-width: 1024px) {
+            .layout-container {
+                flex-direction: column;
+            }
+            .sidebar {
+                width: 100%;
+                position: relative;
+                top: 0;
+                height: auto;
+            }
+            .content-area {
+                padding: 30px;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .diagram-container {
+                display: block;
+            }
+            .diagram-step {
+                display: block;
+                width: 100%;
+                margin-bottom: 15px;
+            }
+            .content-area {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="bg-glow-1"></div>
+    <div class="bg-glow-2"></div>
+
+    <div class="layout-container">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar">
+            <div class="brand-section">
+                <div class="brand-logo">JV<span>APES</span></div>
+                <div class="brand-tagline">Legal Framework</div>
+            </div>
+            <nav>
+                <ul class="nav-list">
+                    <li class="nav-item"><a href="#terms" class="nav-link">1. Terms &amp; Conditions</a></li>
+                    <li class="nav-item"><a href="#privacy" class="nav-link">2. Privacy Policy</a></li>
+                    <li class="nav-item"><a href="#cookies" class="nav-link">3. Cookie Policy</a></li>
+                    <li class="nav-item"><a href="#age-policy" class="nav-link">4. Age Verification</a></li>
+                    <li class="nav-item"><a href="#consignment" class="nav-link">5. Consignment Policy</a></li>
+                    <li class="nav-item"><a href="#disclaimers" class="nav-link">6. Disclaimers &amp; Safety</a></li>
+                    <li class="nav-item"><a href="#regulatory" class="nav-link">7. Regulatory Compliance</a></li>
+                    <li class="nav-item"><a href="#corporate" class="nav-link">8. Corporate Information</a></li>
+                </ul>
+            </nav>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="content-area">
+            <header class="doc-header">
+                <h1>Master Legal Policies &amp; User Agreements</h1>
+                <div class="meta-info">Jurisdiction: Republic of Kenya &bull; Effective Date: July 2026 &bull; Corporate Status: Fully Compliant</div>
+            </header>
+
+            <!-- 1. TERMS & CONDITIONS -->
+            <section id="terms" class="legal-section">
+                <h2>1. Terms &amp; Conditions</h2>
+                <p>Welcome to JVapes. These Master Terms and Conditions ("Terms") completely govern the access, operational interaction, digital browsing, and consumer acquisition processes executed upon this platform. By continuing your journey through this interface, you explicitly manifest binding compliance with these terms.</p>
+                
+                <h3>1.1 Eligibility &amp; Access Criteria</h3>
+                <p>Access to this portal is explicitly restricted. In strict alignment with the Tobacco Control Act of the Laws of Kenya, you must be a minimum of <strong>18 years of age</strong> and possess absolute contractual capacity. Any attempt to access this site by minors or via masked proxies constitutes material misrepresentation.</p>
+
+                <h3>1.2 The Ordering Process</h3>
+                <p>Execution of a checkout operation constitutes a commercial offer to purchase. A legally binding distribution contract is only formulated when your transaction completes age verification protocols, stock status validation, and passes safely into physical dispatch status, accompanied by an explicit confirmation alert. JVapes reserves absolute discretion to refuse any transaction prior to physical fulfillment.</p>
+
+                <h3>1.3 Product Availability &amp; Specifications</h3>
+                <p>All items, kits, pod variations, and e-liquids are subject to real-time inventory realities. Due to dynamic global manufacturing changes, physical aesthetic parameters, structural packaging design modifications, or specific product color hues may present minor adjustments from visual representations on screen. System pricing anomalies or typographical errors exempt JVapes from honor obligations; we reserve the right to cancel affected parameters and execute full reversals.</p>
+
+                <h3>1.4 Pricing &amp; Payment Architecture</h3>
+                <p>All currency items listed on the interface are firmly denominated in <strong>Kenya Shillings (KES)</strong> and incorporate mandated Value Added Tax (VAT) and excise parameters where required by the Kenya Revenue Authority. Transaction clearings are securely executed via authorized channels including <strong>M-Pesa (Lipa na M-Pesa)</strong> and certified banking card integrations. You warrant absolute operational right over the mobile asset line or credit ledger utilized.</p>
+
+                <h3>1.5 Delivery Framework &amp; Location Rules</h3>
+                <p>We provide localized prompt delivery vectors inside Nairobi (focused heavily on Kilimani and surrounding zones) alongside broader nationwide transit routes. Timelines are conditional on weather parameters, traffic states, and courier handling variables. **Physical National Identity Card (ID) or Passport verification is mandatory at the point of drop-off.** Packages will never be left with minors or building access points without verification.</p>
+
+                <h3>1.6 Returns, Refunds, &amp; Hygiene Mandates</h3>
+                <p>Due to the sanitary constraints of electronic nicotine systems, e-liquids, pre-filled closed loop systems, structural coils, and cotton are permanently classified as <strong>Final Sale</strong> and are completely exempt from returns. Factory sealed hardware packages can qualify for exchange analysis within 7 days of drop-off, subject to the customer funding transport parameters. Dead-on-Arrival (DOA) technical reports must be logged within 48 hours for immediate physical technical analysis at our Kilimani base.</p>
+
+                <h3>1.7 Intellectual Property &amp; Copyright Preservation</h3>
+                <p>The entire layout, textual content, graphic assets, interface buttons, iconography, and systemic code schemas deployed across this website are the proprietary property of JVapes and are fully protected under the Copyright Act (Cap 130) of the Laws of Kenya. Copying, scraping, mirroring, or unauthorized commercial exploitation will trigger immediate civil and criminal statutory enforcement measures.</p>
+            </section>
+
+            <!-- 2. PRIVACY POLICY -->
+            <section id="privacy" class="legal-section">
+                <h2>2. Privacy Policy</h2>
+                <p>JVapes operates under strict compliance with the <strong>Kenya Data Protection Act, 2019</strong>. We serve as the explicit data controller for personal attributes gathered through your commercial use of the site.</p>
+                <h3>2.1 Information Categorization</h3>
+                <p>We log, organize, and safeguard the following parameters:</p>
+                <ul>
+                    <li><strong>Identity Constructs:</strong> Legal name, age metric, and physical or visual verification of National Identification/Passport documents.</li>
+                    <li><strong>Contact Parameters:</strong> Exact structural delivery drop-points within Kilimani or broader operational territories, contact mobile phone numbers, and operational email records.</li>
+                    <li><strong>Financial Indicators:</strong> Lipa na M-Pesa transaction codes, confirmation receipt data, and systemic purchase histories. We do not store financial access pins or payment authorization credentials.</li>
+                </ul>
+                <h3>2.2 Lawful Basis for Data Processing</h3>
+                <p>Data processing is legally anchored on: Contractual Performance (executing delivery), Legal Obligation compliance (verifying age parameters under statutory law), and Core Legitimate Business Operations (preventing systemic transaction fraud).</p>
+            </section>
+
+            <!-- 3. COOKIE POLICY -->
+            <section id="cookies" class="legal-section">
+                <h2>3. Cookie Policy</h2>
+                <p>Our website utilizes tracking cookies and cryptographic sessions to perfect interface capabilities, enforce security compliance layers, and refine delivery flows.</p>
+                <h3>3.1 Functional Vector Allocations</h3>
+                <ul>
+                    <li><strong>Crucial Systemic Cookies:</strong> Essential tags required to retain items inside your cart logic and bridge the checkout framework with secure Lipa na M-Pesa callback systems.</li>
+                    <li><strong>Age Verification Persistence:</strong> Tokens that maintain state recognition of your 18+ age gate acceptance, eliminating redundant confirmation checks during single-session access.</li>
+                    <li><strong>Anonymized Optimization Analytics:</strong> Invisible counters detailing flavor movements and system navigation velocity, supporting stock balancing frameworks.</li>
+                </ul>
+            </section>
+
+            <!-- 4. AGE VERIFICATION POLICY -->
+            <section id="age-policy" class="legal-section">
+                <h2>4. Age Verification Policy</h2>
+                <div class="warning-box">
+                    <h4>🔞 Zero Tolerance Minor Prevention Directive</h4>
+                    <p>JVapes strictly refuses sale operations, inventory transfers, or platform access to any individual who has not reached the legal milestone of 18 years. We implement a rigorous three-step verification architecture to completely eliminate youth access.</p>
+                </div>
+
+                <div class="diagram-container">
+                    <div class="diagram-step">
+                        <div class="diagram-number">1</div>
+                        <div class="diagram-title">Digital Entry Gate</div>
+                        <div class="diagram-desc">Mandatory interactive cryptographic intercept requiring affirmation of birth metrics before structural asset rendering.</div>
+                    </div>
+                    <div class="diagram-step">
+                        <div class="diagram-number">2</div>
+                        <div class="diagram-title">Payment Verification</div>
+                        <div class="diagram-desc">Cross-referencing payment registration databases and names against order placement indicators during M-Pesa confirmation routing.</div>
+                    </div>
+                    <div class="diagram-step">
+                        <div class="diagram-number">3</div>
+                        <div class="diagram-title">Physical ID Inspection</div>
+                        <div class="diagram-desc">Mandatory visual checking of a valid physical National ID or Passport by our delivery rider prior to handing over the package.</div>
+                    </div>
+                </div>
+                <p>Should physical identification be missing, unavailable, or show signs of tampering at the point of drop-off, the package will be immediately pulled back to our Kilimani hub. The user will forfeit delivery fee balances, and the associated platform profile will face permanent administrative termination.</p>
+            </section>
+
+            <!-- 5. CONSIGNMENT POLICY -->
+            <section id="consignment" class="legal-section">
+                <h2>5. Consignment Inventory Policy (B2B/Vendors)</h2>
+                <p>These operational conditions govern all inventory items placed into the care of JVapes by third-party brand manufacturers, or distributed by JVapes to associated retail outposts on a consignment framework:</p>
+                <h3>5.1 Structural Ownership &amp; Risk Parameters</h3>
+                <p>Legal ownership of consigned vaporizers, custom accessories, or liquids remains definitively with the Consignor until a retail transaction is processed and paid for by the consumer on our system. Physical risk passes completely to the Consignee during storage. Any stock destruction due to poor environment handling, structural liquid leakage, or internal shrinkage must be fully reimbursed at the agreed wholesale baseline price.</p>
+                <h3>5.2 Financial Clearing Cycles</h3>
+                <p>Reconciliation metrics are aggregated monthly. All accumulated balances are audited and dispatched within 7 business days of the subsequent month via secure M-Pesa Till infrastructure or direct institutional bank transfer directives.</p>
+            </section>
+
+            <!-- 6. DISCLAIMERS & SAFETY -->
+            <section id="disclaimers" class="legal-section">
+                <h2>6. Disclaimers &amp; Safety Mandates</h2>
+                
+                <div class="warning-box">
+                    <h4>⚠️ Health Warning: Nicotine Is Addictive</h4>
+                    <p>Products available across this portal frequently contain nicotine, a highly potent chemical stimulant known to form deep physical dependency. These products are developed purely for adult consumers using traditional combustible tobacco products. They do not operate as diagnostic vectors, medical remedies, or therapeutic smoking cessation systems.</p>
+                </div>
+
+                <h3>6.1 High-Drain Lithium-Ion Battery Safety</h3>
+                <p>Modern advanced modular vaping hardware draws power from sophisticated high-drain lithium-ion battery configurations. By purchasing these components from JVapes, you accept absolute operational liability. You are legally bound to avoid using unrated high-voltage mobile charging bricks, never to leave active charging hardware unmonitored overnight, and to retire cells with compromised outer insulation wraps instantly. JVapes is entirely exempt from any claims involving physical injury or property damage stemming from thermal runaway events due to user neglect.</p>
+            </section>
+
+            <!-- 7. REGULATORY COMPLIANCE -->
+            <section id="regulatory" class="legal-section">
+                <h2>7. Regulatory Compliance Statements</h2>
+                <p>JVapes proactively updates its operational standards to fully align with the Ministry of Health directives, the National Environmental Management Authority (NEMA) recycling provisions, and the foundational guidelines of the Tobacco Control Board of Kenya. As the regulatory architecture for electronic nicotine systems continues to formalize across the East African Community, JVapes remains fully committed to maintaining a compliant, transparent, and legally responsible corporate presence.</p>
+            </section>
+
+            <!-- CORPORATE INFO FOOTER SECTION -->
+            <footer id="corporate" class="corporate-footer">
+                <h3>8. Corporate Governance &amp; Communications</h3>
+                <p>For official legal correspondence, statutory communication filings, structural data erasure requests, or commercial vendor consignment inquiries, please reach out via our verified channels:</p>
+                <div class="info-grid">
+                    <div class="info-block">
+                        <h5>Entity Operator</h5>
+                        <p>JVapes Kenya</p>
+                    </div>
+                    <div class="info-block">
+                        <h5>Primary Compliance Officer</h5>
+                        <p>joshuavapes@gmail.com</p>
+                    </div>
+                    <div class="info-block">
+                        <h5>Registered Base</h5>
+                        <p>Kilimani, Nairobi, Kenya</p>
+                    </div>
+                </div>
+            </footer>
+        </main>
+    </div>
+
+</body>
+</html>

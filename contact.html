@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JVapes Kenya | Contact Concierge Desk</title>
+    <style>
+        :root {
+            --ios-bg: #000000;
+            --ios-glass-bg: rgba(255, 255, 255, 0.04);
+            --ios-glass-bright: rgba(255, 255, 255, 0.08);
+            --ios-border: rgba(255, 255, 255, 0.12);
+            --ios-gold-border: rgba(212, 175, 55, 0.25);
+            --gold-accent: #e5c158;
+            --gold-light: #f3e5ab;
+            --text-main: #f5f5f7;
+            --text-secondary: #86868b;
+            --ios-green: #34c759;
+            --sf-font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: var(--sf-font);
+            -webkit-font-smoothing: antialiased;
+        }
+
+        body {
+            background-color: var(--ios-bg);
+            color: var(--text-main);
+            line-height: 1.6;
+            overflow-x: hidden;
+            padding-bottom: 80px;
+        }
+
+        /* Fluid iOS Backdrop Sphere Blurs */
+        .blur-orb-top {
+            position: absolute;
+            top: -100px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 750px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(214, 175, 55, 0.06) 0%, transparent 65%);
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        .blur-orb-bottom {
+            position: fixed;
+            bottom: -50px;
+            right: -100px;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.015) 0%, transparent 60%);
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        .main-container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 80px 24px 0 24px;
+        }
+
+        /* iOS Header Hub Module */
+        .contact-header {
+            background: var(--ios-glass-bg);
+            backdrop-filter: blur(35px);
+            -webkit-backdrop-filter: blur(35px);
+            border: 1px solid var(--ios-gold-border);
+            border-radius: 28px;
+            padding: 60px 40px;
+            text-align: center;
+            box-shadow: 0 40px 100px rgba(0, 0, 0, 0.7), inset 0 1px 1px rgba(255,255,255,0.05);
+            margin-bottom: 40px;
+        }
+
+        .header-tag {
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            color: var(--gold-accent);
+            font-weight: 700;
+            margin-bottom: 16px;
+            display: inline-block;
+        }
+
+        .contact-header h1 {
+            font-size: 42px;
+            font-weight: 700;
+            letter-spacing: -1.5px;
+            color: #ffffff;
+            margin-bottom: 14px;
+        }
+
+        .contact-header p {
+            color: var(--text-secondary);
+            font-size: 17px;
+            max-width: 650px;
+            margin: 0 auto;
+        }
+
+        /* Dual Column Dynamic Split Canvas */
+        .split-layout {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+            gap: 30px;
+            align-items: start;
+        }
+
+        @media (max-width: 600px) {
+            .split-layout {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Left Side: iOS Fast Contact Panel Cards */
+        .info-panel-stack {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .glass-node {
+            background: var(--ios-glass-bg);
+            backdrop-filter: blur(30px);
+            -webkit-backdrop-filter: blur(30px);
+            border: 1px solid var(--ios-border);
+            border-radius: 22px;
+            padding: 30px;
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4);
+            transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+            display: flex;
+            gap: 20px;
+            align-items: flex-start;
+        }
+
+        .glass-node:hover {
+            border-color: rgba(255, 255, 255, 0.2);
+            background: var(--ios-glass-bright);
+            transform: translateY(-2px);
+        }
+
+        .icon-box {
+            width: 46px;
+            height: 46px;
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--ios-border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            flex-shrink: 0;
+        }
+
+        .node-details h3 {
+            font-size: 18px;
+            font-weight: 600;
+            color: #ffffff;
+            margin-bottom: 6px;
+            letter-spacing: -0.3px;
+        }
+
+        .node-details p {
+            font-size: 14.5px;
+            color: var(--text-secondary);
+            margin-bottom: 12px;
+        }
+
+        .action-link {
+            display: inline-flex;
+            align-items: center;
+            color: var(--gold-accent);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 600;
+            transition: color 0.3s;
+            gap: 4px;
+        }
+
+        .action-link:hover {
+            color: var(--gold-light);
+        }
+
+        .action-link.whatsapp {
+            color: var(--ios-green);
+        }
+        
+        .action-link.whatsapp:hover {
+            color: #5edc80;
+        }
+
+        /* Right Side: Luxury iOS Input Form Canvas */
+        .form-canvas {
+            background: var(--ios-glass-bg);
+            backdrop-filter: blur(30px);
+            -webkit-backdrop-filter: blur(30px);
+            border: 1px solid var(--ios-border);
+            border-radius: 24px;
+            padding: 40px;
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4);
+        }
+
+        .form-canvas h2 {
+            font-size: 22px;
+            font-weight: 600;
+            color: #ffffff;
+            margin-bottom: 24px;
+            letter-spacing: -0.5px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-secondary);
+            margin-bottom: 8px;
+            padding-left: 4px;
+        }
+
+        .ios-input, .ios-textarea {
+            width: 100%;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid var(--ios-border);
+            border-radius: 12px;
+            padding: 14px 16px;
+            color: #ffffff;
+            font-size: 15px;
+            transition: all 0.3s ease;
+            outline: none;
+        }
+
+        .ios-input:focus, .ios-textarea:focus {
+            border-color: var(--gold-accent);
+            background: rgba(255, 255, 255, 0.02);
+            box-shadow: 0 0 0 3px rgba(229, 193, 88, 0.15);
+        }
+
+        .ios-textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        .ios-submit-btn {
+            width: 100%;
+            background: linear-gradient(180deg, #ffffff 0%, #e5c158 100%);
+            border: none;
+            border-radius: 12px;
+            padding: 16px;
+            color: #000000;
+            font-size: 15px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: opacity 0.3s, transform 0.2s;
+            box-shadow: 0 10px 20px rgba(229, 193, 88, 0.15);
+        }
+
+        .ios-submit-btn:hover {
+            opacity: 0.95;
+            transform: translateY(-1px);
+        }
+
+        .ios-submit-btn:active {
+            transform: translateY(1px);
+        }
+
+        /* Apple Clean Footer */
+        .contact-footer {
+            margin-top: 80px;
+            border-top: 1px solid var(--ios-border);
+            padding-top: 30px;
+            text-align: center;
+            font-size: 12px;
+            color: var(--text-secondary);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="blur-orb-top"></div>
+    <div class="blur-orb-bottom"></div>
+
+    <div class="main-container">
+
+        <!-- Header Communication Context Hub -->
+        <header class="contact-header">
+            <span class="header-tag">Concierge Matrix</span>
+            <h1>Connect With JVapes</h1>
+            <p>Reach our Kilimani desk directly. Whether verifying multi-brand bulk stock, querying M-Pesa clearing parameters, or managing consignment contracts, we respond promptly.</p>
+        </header>
+
+        <!-- Main Canvas Content Layout Split -->
+        <main class="split-layout">
+
+            <!-- Left Stack: Direct Communication Nodes -->
+            <div class="info-panel-stack">
+                
+                <!-- PHONE NODE -->
+                <section class="glass-node">
+                
+                    <div class="node-details">
+                        <h3>Direct Calling Desk</h3>
+                        <p>Call our localized Kilimani support desk for instant order checking, device diagnostics, or stock status.</p>
+                        <a href="tel:+254741658556" class="action-link">Dial +254 741 658 556 →</a>
+                    </div>
+                </section>
+
+                <!-- WHATSAPP NODE -->
+                <section class="glass-node">
+                
+                    <div class="node-details">
+                        <h3>WhatsApp Secure Chat</h3>
+                        <p>Instantly message our team for live updates, photo verifications of devices, or instant delivery location dropping pins.</p>
+                        <a href="https://wa.me/254741658556" target="_blank" class="action-link whatsapp">Launch WhatsApp Chat →</a>
+                    </div>
+                </section>
+
+                <!-- EMAIL NODE -->
+                <section class="glass-node">
+                    
+                    <div class="node-details">
+                        <h3>Authorized Control Email</h3>
+                        <p>Send B2B consignment reconciliations, technical warranty logs, or data erasure audit requests to our primary controller.</p>
+                        <a href="mailto:joshuavapes@gmail.com" class="action-link">Write to joshuavapes@gmail.com →</a>
+                    </div>
+                </section>
+
+                <!-- LOCATION NODE -->
+                <section class="glass-node">
+                
+                    <div class="node-details">
+                        <h3>Operational Base</h3>
+                        <p>All premium disposables, closed pods, and starter kits are fully authenticated and dispatched directly from our hub.</p>
+                        <p style="color: #ffffff; font-weight: 500; margin-bottom: 0;">Kilimani, Nairobi, Kenya</p>
+                    </div>
+                </section>
+
+                <!-- TIMELINES NODE -->
+                <section class="glass-node">
+                 
+                    <div class="node-details">
+                        <h3>Operational Matrix Hours</h3>
+                        <p style="margin-bottom: 4px;"><strong>Monday – Saturday:</strong> 08:00 AM – 08:00 PM</p>
+                        <p style="margin-bottom: 0;"><strong>Sunday:</strong> Closed (Fulfillment Channels Paused)</p>
+                    </div>
+                </section>
+
+            </div>
+
+            <!-- Right Canvas: High-End Interactive Form Block -->
+            <div class="form-canvas">
+                <h2>Direct Message Channel</h2>
+                <form action="#" method="POST" onsubmit="event.preventDefault(); alert('Message logged successfully via JVapes Concierge Logic.');">
+                    
+                    <div class="form-group">
+                        <label for="cust-name">Full Legal Name</label>
+                        <input type="text" id="cust-name" class="ios-input" placeholder="e.g. Joshua Onyango" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="cust-contact">Mobile Line / M-Pesa Number</label>
+                        <input type="tel" id="cust-contact" class="ios-input" placeholder="e.g. 0741658556" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="cust-email">Email Address</label>
+                        <input type="email" id="cust-email" class="ios-input" placeholder="name@domain.com" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="msg-text">Inquiry Details</label>
+                        <textarea id="msg-text" class="ios-textarea" placeholder="Detail your multi-brand hardware parameters or delivery requests..." required></textarea>
+                    </div>
+
+                    <button type="submit" class="ios-submit-btn">Send Secure Message</button>
+                </form>
+            </div>
+
+        </main>
+
+        <!-- Clean Apple Base Footer -->
+        <footer class="contact-footer">
+            <p>&copy; 2026 JVapes Kenya. Constructed with Authentic iOS Glass Architecture. All Rights Reserved.</p>
+        </footer>
+
+    </div>
+
+</body>
+</html>
