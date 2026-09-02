@@ -187,7 +187,7 @@
 
                     
                 <div style="margin-bottom: 24px;" class="flavor-selection-block">
-                    <label style="display: block; font-size: 13px; font-weight: 600; margin-bottom: 10px; color: #a1a1aa; text-transform: uppercase; letter-spacing: 0.5px;">Choose Flavor / Option:</label>
+                    <label style="display: block; font-size: 13px; font-weight: 600; margin-bottom: 10px; color: #a1a1aa; text-transform: uppercase; letter-spacing: 0.5px;">Choose Flavor(s) / Option (Select 1 or more):</label>
                     <div class="flavor-pills-container" style="display: flex; flex-wrap: wrap; gap: 8px;">
                         <button type="button" class="flavor-pill-btn active" data-flavor="BLACK GRAPE ">BLACK GRAPE </button><button type="button" class="flavor-pill-btn" data-flavor="BLUE RAZZ LEMONADE">BLUE RAZZ LEMONADE</button><button type="button" class="flavor-pill-btn" data-flavor="BLUEBERRY ICE">BLUEBERRY ICE</button><button type="button" class="flavor-pill-btn" data-flavor="BLUEBERRY RASPBERRY ICE">BLUEBERRY RASPBERRY ICE</button><button type="button" class="flavor-pill-btn" data-flavor="CITRUS SUNRISE">CITRUS SUNRISE</button><button type="button" class="flavor-pill-btn" data-flavor="COLA ICE">COLA ICE</button><button type="button" class="flavor-pill-btn" data-flavor="DESERT OASIS">DESERT OASIS</button><button type="button" class="flavor-pill-btn" data-flavor="KIWI GUAVA PASSION">KIWI GUAVA PASSION</button><button type="button" class="flavor-pill-btn" data-flavor="LEMON PASSION FRUIT ">LEMON PASSION FRUIT </button><button type="button" class="flavor-pill-btn" data-flavor="MANGO ICE">MANGO ICE</button><button type="button" class="flavor-pill-btn" data-flavor="MIAMI MINT">MIAMI MINT</button><button type="button" class="flavor-pill-btn" data-flavor="PEACH GREEN APPLE ">PEACH GREEN APPLE </button><button type="button" class="flavor-pill-btn" data-flavor="PEACH MANGO">PEACH MANGO</button><button type="button" class="flavor-pill-btn" data-flavor="PEACH MANGO WATERMELON">PEACH MANGO WATERMELON</button><button type="button" class="flavor-pill-btn" data-flavor="STRAWBERRY ICE">STRAWBERRY ICE</button><button type="button" class="flavor-pill-btn" data-flavor="STRAWBERRY KIWI ICE ">STRAWBERRY KIWI ICE </button><button type="button" class="flavor-pill-btn" data-flavor="VANILLA CUSTARD TOBACCO">VANILLA CUSTARD TOBACCO</button><button type="button" class="flavor-pill-btn" data-flavor="WATERMELON BUBBLEGUM">WATERMELON BUBBLEGUM</button><button type="button" class="flavor-pill-btn" data-flavor="WATERMELON ICE">WATERMELON ICE</button>
                     </div>
@@ -330,26 +330,35 @@ Blend-in battery & e-liquid display
     <script src="../analytics.js"></script>
     <script src="../script.js"></script>
     <script>
-        // Wire direct page flavor selector & add-to-cart button
-        let selectedProductFlavor = document.querySelector('.flavor-pill-btn.active')?.getAttribute('data-flavor') || null;
-
+        // Wire multi-flavor selection & add-to-cart button
         document.querySelectorAll('.flavor-pill-btn').forEach(btn => {
             btn.addEventListener('click', function() {
-                document.querySelectorAll('.flavor-pill-btn').forEach(b => b.classList.remove('active'));
-                this.classList.add('active');
-                selectedProductFlavor = this.getAttribute('data-flavor');
+                this.classList.toggle('active');
             });
         });
 
         document.getElementById('direct-add-cart-btn')?.addEventListener('click', function() {
             const prodId = this.getAttribute('data-id');
-            const pillCount = document.querySelectorAll('.flavor-pill-btn').length;
-            if (pillCount > 0 && !selectedProductFlavor) {
-                if (typeof showToast === 'function') showToast("Please choose a flavor first");
-                return;
-            }
-            if (typeof addToCart === 'function') {
-                addToCart(prodId, selectedProductFlavor);
+            const pills = document.querySelectorAll('.flavor-pill-btn');
+            
+            if (pills.length > 0) {
+                const selectedFlavors = Array.from(document.querySelectorAll('.flavor-pill-btn.active'))
+                    .map(b => b.getAttribute('data-flavor'));
+
+                if (selectedFlavors.length === 0) {
+                    if (typeof showToast === 'function') showToast("Please choose at least 1 flavor");
+                    return;
+                }
+
+                if (typeof addToCart === 'function') {
+                    selectedFlavors.forEach(flavor => {
+                        addToCart(prodId, flavor);
+                    });
+                }
+            } else {
+                if (typeof addToCart === 'function') {
+                    addToCart(prodId);
+                }
             }
         });
     </script>

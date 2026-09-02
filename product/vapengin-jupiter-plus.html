@@ -187,7 +187,7 @@
 
                     
                 <div style="margin-bottom: 24px;" class="flavor-selection-block">
-                    <label style="display: block; font-size: 13px; font-weight: 600; margin-bottom: 10px; color: #a1a1aa; text-transform: uppercase; letter-spacing: 0.5px;">Choose Flavor / Option:</label>
+                    <label style="display: block; font-size: 13px; font-weight: 600; margin-bottom: 10px; color: #a1a1aa; text-transform: uppercase; letter-spacing: 0.5px;">Choose Flavor(s) / Option (Select 1 or more):</label>
                     <div class="flavor-pills-container" style="display: flex; flex-wrap: wrap; gap: 8px;">
                         <button type="button" class="flavor-pill-btn active" data-flavor="Blue Razz">Blue Razz</button><button type="button" class="flavor-pill-btn" data-flavor="Raspberry Grape ">Raspberry Grape </button><button type="button" class="flavor-pill-btn" data-flavor="Sour Blue Raspberry ">Sour Blue Raspberry </button><button type="button" class="flavor-pill-btn" data-flavor="Peach Apple ">Peach Apple </button><button type="button" class="flavor-pill-btn" data-flavor="Cool Mint ">Cool Mint </button><button type="button" class="flavor-pill-btn" data-flavor="Strawberry Raspberry ">Strawberry Raspberry </button><button type="button" class="flavor-pill-btn" data-flavor="Arizona Blended Juice ">Arizona Blended Juice </button><button type="button" class="flavor-pill-btn" data-flavor="Watermelon Ice ">Watermelon Ice </button><button type="button" class="flavor-pill-btn" data-flavor="Passion Fruit Kiwi Guava ">Passion Fruit Kiwi Guava </button><button type="button" class="flavor-pill-btn" data-flavor="Peach Mango Ice ">Peach Mango Ice </button><button type="button" class="flavor-pill-btn" data-flavor="Blackberry Ice ">Blackberry Ice </button><button type="button" class="flavor-pill-btn" data-flavor="Triple Mango ">Triple Mango </button><button type="button" class="flavor-pill-btn" data-flavor="Mango Lemonade ice ">Mango Lemonade ice </button><button type="button" class="flavor-pill-btn" data-flavor="Strawberry Ice ">Strawberry Ice </button><button type="button" class="flavor-pill-btn" data-flavor="Cherry Pomegranate Kiwi Ice ">Cherry Pomegranate Kiwi Ice </button><button type="button" class="flavor-pill-btn" data-flavor="Strawberry Lychye Ice ">Strawberry Lychye Ice </button><button type="button" class="flavor-pill-btn" data-flavor="Strawberry kiwi Ice ">Strawberry kiwi Ice </button><button type="button" class="flavor-pill-btn" data-flavor="Energy Forest Berries ">Energy Forest Berries </button><button type="button" class="flavor-pill-btn" data-flavor="Watermelon Bubblegum Mint ">Watermelon Bubblegum Mint </button><button type="button" class="flavor-pill-btn" data-flavor="Strawberry Peach Guava ">Strawberry Peach Guava </button><button type="button" class="flavor-pill-btn" data-flavor="Strawberry watermelon ">Strawberry watermelon </button><button type="button" class="flavor-pill-btn" data-flavor="Black Mamba ">Black Mamba </button><button type="button" class="flavor-pill-btn" data-flavor="Tropical Fruits ">Tropical Fruits </button><button type="button" class="flavor-pill-btn" data-flavor="Pineapple Coconut">Pineapple Coconut</button><button type="button" class="flavor-pill-btn" data-flavor="Pomegranate berry mint">Pomegranate berry mint</button>
                     </div>
@@ -322,26 +322,35 @@
     <script src="../analytics.js"></script>
     <script src="../script.js"></script>
     <script>
-        // Wire direct page flavor selector & add-to-cart button
-        let selectedProductFlavor = document.querySelector('.flavor-pill-btn.active')?.getAttribute('data-flavor') || null;
-
+        // Wire multi-flavor selection & add-to-cart button
         document.querySelectorAll('.flavor-pill-btn').forEach(btn => {
             btn.addEventListener('click', function() {
-                document.querySelectorAll('.flavor-pill-btn').forEach(b => b.classList.remove('active'));
-                this.classList.add('active');
-                selectedProductFlavor = this.getAttribute('data-flavor');
+                this.classList.toggle('active');
             });
         });
 
         document.getElementById('direct-add-cart-btn')?.addEventListener('click', function() {
             const prodId = this.getAttribute('data-id');
-            const pillCount = document.querySelectorAll('.flavor-pill-btn').length;
-            if (pillCount > 0 && !selectedProductFlavor) {
-                if (typeof showToast === 'function') showToast("Please choose a flavor first");
-                return;
-            }
-            if (typeof addToCart === 'function') {
-                addToCart(prodId, selectedProductFlavor);
+            const pills = document.querySelectorAll('.flavor-pill-btn');
+            
+            if (pills.length > 0) {
+                const selectedFlavors = Array.from(document.querySelectorAll('.flavor-pill-btn.active'))
+                    .map(b => b.getAttribute('data-flavor'));
+
+                if (selectedFlavors.length === 0) {
+                    if (typeof showToast === 'function') showToast("Please choose at least 1 flavor");
+                    return;
+                }
+
+                if (typeof addToCart === 'function') {
+                    selectedFlavors.forEach(flavor => {
+                        addToCart(prodId, flavor);
+                    });
+                }
+            } else {
+                if (typeof addToCart === 'function') {
+                    addToCart(prodId);
+                }
             }
         });
     </script>
