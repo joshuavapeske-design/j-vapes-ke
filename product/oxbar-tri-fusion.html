@@ -186,10 +186,10 @@
                     </div>
 
                     
-                <div style="margin-bottom: 20px;">
-                    <label style="display: block; font-size: 13px; font-weight: 600; margin-bottom: 8px; color: #a1a1aa;">Available Flavors / Options:</label>
-                    <div style="display: flex; flex-wrap: wrap; gap: 8px;">
-                        <span style="background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.12); padding: 5px 12px; border-radius: 6px; font-size: 13px;">APPLE MANGO KIWI</span><span style="background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.12); padding: 5px 12px; border-radius: 6px; font-size: 13px;">BLUEBERRY RASPBERRY</span><span style="background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.12); padding: 5px 12px; border-radius: 6px; font-size: 13px;">CHERRY LEMONADE</span><span style="background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.12); padding: 5px 12px; border-radius: 6px; font-size: 13px;">CHERRY STRAWBERRY </span><span style="background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.12); padding: 5px 12px; border-radius: 6px; font-size: 13px;">DOUBLE MINT</span><span style="background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.12); padding: 5px 12px; border-radius: 6px; font-size: 13px;">GRAPE RASPBERRY</span><span style="background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.12); padding: 5px 12px; border-radius: 6px; font-size: 13px;">PASSION FRUIT RASPBERRY GRAPE</span><span style="background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.12); padding: 5px 12px; border-radius: 6px; font-size: 13px;">PEACH BERRIES </span><span style="background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.12); padding: 5px 12px; border-radius: 6px; font-size: 13px;">PEACH WATERMELON</span><span style="background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.12); padding: 5px 12px; border-radius: 6px; font-size: 13px;">PINEAPPLE MANGO WATERMELON</span><span style="background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.12); padding: 5px 12px; border-radius: 6px; font-size: 13px;">SAKURA GRAPE</span><span style="background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.12); padding: 5px 12px; border-radius: 6px; font-size: 13px;">STRAWBERRY GRAPE</span><span style="background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.12); padding: 5px 12px; border-radius: 6px; font-size: 13px;">STRAWBERRY KIWI WATERMELON</span><span style="background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.12); padding: 5px 12px; border-radius: 6px; font-size: 13px;">WATERMELON ICE</span>
+                <div style="margin-bottom: 24px;" class="flavor-selection-block">
+                    <label style="display: block; font-size: 13px; font-weight: 600; margin-bottom: 10px; color: #a1a1aa; text-transform: uppercase; letter-spacing: 0.5px;">Choose Flavor / Option:</label>
+                    <div class="flavor-pills-container" style="display: flex; flex-wrap: wrap; gap: 8px;">
+                        <button type="button" class="flavor-pill-btn active" data-flavor="APPLE MANGO KIWI">APPLE MANGO KIWI</button><button type="button" class="flavor-pill-btn" data-flavor="BLUEBERRY RASPBERRY">BLUEBERRY RASPBERRY</button><button type="button" class="flavor-pill-btn" data-flavor="CHERRY LEMONADE">CHERRY LEMONADE</button><button type="button" class="flavor-pill-btn" data-flavor="CHERRY STRAWBERRY ">CHERRY STRAWBERRY </button><button type="button" class="flavor-pill-btn" data-flavor="DOUBLE MINT">DOUBLE MINT</button><button type="button" class="flavor-pill-btn" data-flavor="GRAPE RASPBERRY">GRAPE RASPBERRY</button><button type="button" class="flavor-pill-btn" data-flavor="PASSION FRUIT RASPBERRY GRAPE">PASSION FRUIT RASPBERRY GRAPE</button><button type="button" class="flavor-pill-btn" data-flavor="PEACH BERRIES ">PEACH BERRIES </button><button type="button" class="flavor-pill-btn" data-flavor="PEACH WATERMELON">PEACH WATERMELON</button><button type="button" class="flavor-pill-btn" data-flavor="PINEAPPLE MANGO WATERMELON">PINEAPPLE MANGO WATERMELON</button><button type="button" class="flavor-pill-btn" data-flavor="SAKURA GRAPE">SAKURA GRAPE</button><button type="button" class="flavor-pill-btn" data-flavor="STRAWBERRY GRAPE">STRAWBERRY GRAPE</button><button type="button" class="flavor-pill-btn" data-flavor="STRAWBERRY KIWI WATERMELON">STRAWBERRY KIWI WATERMELON</button><button type="button" class="flavor-pill-btn" data-flavor="WATERMELON ICE">WATERMELON ICE</button>
                     </div>
                 </div>
             
@@ -338,11 +338,26 @@ Mega intelligent screen
     <script src="../analytics.js"></script>
     <script src="../script.js"></script>
     <script>
-        // Wire direct page add-to-cart button
+        // Wire direct page flavor selector & add-to-cart button
+        let selectedProductFlavor = document.querySelector('.flavor-pill-btn.active')?.getAttribute('data-flavor') || null;
+
+        document.querySelectorAll('.flavor-pill-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('.flavor-pill-btn').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                selectedProductFlavor = this.getAttribute('data-flavor');
+            });
+        });
+
         document.getElementById('direct-add-cart-btn')?.addEventListener('click', function() {
             const prodId = this.getAttribute('data-id');
+            const pillCount = document.querySelectorAll('.flavor-pill-btn').length;
+            if (pillCount > 0 && !selectedProductFlavor) {
+                if (typeof showToast === 'function') showToast("Please choose a flavor first");
+                return;
+            }
             if (typeof addToCart === 'function') {
-                addToCart(prodId);
+                addToCart(prodId, selectedProductFlavor);
             }
         });
     </script>

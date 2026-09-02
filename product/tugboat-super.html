@@ -315,11 +315,26 @@
     <script src="../analytics.js"></script>
     <script src="../script.js"></script>
     <script>
-        // Wire direct page add-to-cart button
+        // Wire direct page flavor selector & add-to-cart button
+        let selectedProductFlavor = document.querySelector('.flavor-pill-btn.active')?.getAttribute('data-flavor') || null;
+
+        document.querySelectorAll('.flavor-pill-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('.flavor-pill-btn').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                selectedProductFlavor = this.getAttribute('data-flavor');
+            });
+        });
+
         document.getElementById('direct-add-cart-btn')?.addEventListener('click', function() {
             const prodId = this.getAttribute('data-id');
+            const pillCount = document.querySelectorAll('.flavor-pill-btn').length;
+            if (pillCount > 0 && !selectedProductFlavor) {
+                if (typeof showToast === 'function') showToast("Please choose a flavor first");
+                return;
+            }
             if (typeof addToCart === 'function') {
-                addToCart(prodId);
+                addToCart(prodId, selectedProductFlavor);
             }
         });
     </script>

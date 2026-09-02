@@ -177,10 +177,10 @@ async function generate() {
         let flavorHtml = '';
         if (p.flavors && Array.isArray(p.flavors) && p.flavors.length > 0) {
             flavorHtml = `
-                <div style="margin-bottom: 20px;">
-                    <label style="display: block; font-size: 13px; font-weight: 600; margin-bottom: 8px; color: #a1a1aa;">Available Flavors / Options:</label>
-                    <div style="display: flex; flex-wrap: wrap; gap: 8px;">
-                        ${p.flavors.map(f => `<span style="background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.12); padding: 5px 12px; border-radius: 6px; font-size: 13px;">${f}</span>`).join('')}
+                <div style="margin-bottom: 24px;" class="flavor-selection-block">
+                    <label style="display: block; font-size: 13px; font-weight: 600; margin-bottom: 10px; color: #a1a1aa; text-transform: uppercase; letter-spacing: 0.5px;">Choose Flavor / Option:</label>
+                    <div class="flavor-pills-container" style="display: flex; flex-wrap: wrap; gap: 8px;">
+                        ${p.flavors.map((f, idx) => `<button type="button" class="flavor-pill-btn${idx === 0 ? ' active' : ''}" data-flavor="${f}">${f}</button>`).join('')}
                     </div>
                 </div>
             `;

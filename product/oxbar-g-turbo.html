@@ -186,10 +186,10 @@
                     </div>
 
                     
-                <div style="margin-bottom: 20px;">
-                    <label style="display: block; font-size: 13px; font-weight: 600; margin-bottom: 8px; color: #a1a1aa;">Available Flavors / Options:</label>
-                    <div style="display: flex; flex-wrap: wrap; gap: 8px;">
-                        <span style="background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.12); padding: 5px 12px; border-radius: 6px; font-size: 13px;">APPLE PEACH ICE</span><span style="background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.12); padding: 5px 12px; border-radius: 6px; font-size: 13px;">BLUEBERRY RASPBERRY</span><span style="background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.12); padding: 5px 12px; border-radius: 6px; font-size: 13px;">DRAGON FRUIT LEMON</span><span style="background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.12); padding: 5px 12px; border-radius: 6px; font-size: 13px;">JADE MINT</span><span style="background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.12); padding: 5px 12px; border-radius: 6px; font-size: 13px;">JUICY PEACH</span><span style="background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.12); padding: 5px 12px; border-radius: 6px; font-size: 13px;">KIWI LIME</span><span style="background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.12); padding: 5px 12px; border-radius: 6px; font-size: 13px;">MANGO PINEAPPLE</span><span style="background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.12); padding: 5px 12px; border-radius: 6px; font-size: 13px;">SAKURA GRAPE</span><span style="background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.12); padding: 5px 12px; border-radius: 6px; font-size: 13px;">STRAWBERRY WATERMELON ICE</span><span style="background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.12); padding: 5px 12px; border-radius: 6px; font-size: 13px;">TRIPLE MELON ICE</span><span style="background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.12); padding: 5px 12px; border-radius: 6px; font-size: 13px;">WATERMELON ICE</span>
+                <div style="margin-bottom: 24px;" class="flavor-selection-block">
+                    <label style="display: block; font-size: 13px; font-weight: 600; margin-bottom: 10px; color: #a1a1aa; text-transform: uppercase; letter-spacing: 0.5px;">Choose Flavor / Option:</label>
+                    <div class="flavor-pills-container" style="display: flex; flex-wrap: wrap; gap: 8px;">
+                        <button type="button" class="flavor-pill-btn active" data-flavor="APPLE PEACH ICE">APPLE PEACH ICE</button><button type="button" class="flavor-pill-btn" data-flavor="BLUEBERRY RASPBERRY">BLUEBERRY RASPBERRY</button><button type="button" class="flavor-pill-btn" data-flavor="DRAGON FRUIT LEMON">DRAGON FRUIT LEMON</button><button type="button" class="flavor-pill-btn" data-flavor="JADE MINT">JADE MINT</button><button type="button" class="flavor-pill-btn" data-flavor="JUICY PEACH">JUICY PEACH</button><button type="button" class="flavor-pill-btn" data-flavor="KIWI LIME">KIWI LIME</button><button type="button" class="flavor-pill-btn" data-flavor="MANGO PINEAPPLE">MANGO PINEAPPLE</button><button type="button" class="flavor-pill-btn" data-flavor="SAKURA GRAPE">SAKURA GRAPE</button><button type="button" class="flavor-pill-btn" data-flavor="STRAWBERRY WATERMELON ICE">STRAWBERRY WATERMELON ICE</button><button type="button" class="flavor-pill-btn" data-flavor="TRIPLE MELON ICE">TRIPLE MELON ICE</button><button type="button" class="flavor-pill-btn" data-flavor="WATERMELON ICE">WATERMELON ICE</button>
                     </div>
                 </div>
             
@@ -335,11 +335,26 @@ Soft TPU mouthpiece
     <script src="../analytics.js"></script>
     <script src="../script.js"></script>
     <script>
-        // Wire direct page add-to-cart button
+        // Wire direct page flavor selector & add-to-cart button
+        let selectedProductFlavor = document.querySelector('.flavor-pill-btn.active')?.getAttribute('data-flavor') || null;
+
+        document.querySelectorAll('.flavor-pill-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('.flavor-pill-btn').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                selectedProductFlavor = this.getAttribute('data-flavor');
+            });
+        });
+
         document.getElementById('direct-add-cart-btn')?.addEventListener('click', function() {
             const prodId = this.getAttribute('data-id');
+            const pillCount = document.querySelectorAll('.flavor-pill-btn').length;
+            if (pillCount > 0 && !selectedProductFlavor) {
+                if (typeof showToast === 'function') showToast("Please choose a flavor first");
+                return;
+            }
             if (typeof addToCart === 'function') {
-                addToCart(prodId);
+                addToCart(prodId, selectedProductFlavor);
             }
         });
     </script>

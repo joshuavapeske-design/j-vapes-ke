@@ -1253,24 +1253,26 @@ function resetAllFilters() {
     document.getElementById('flavor-filter').value = '';
     filterProducts(); // Re-trigger viewport evaluation pass
 }
-function addToCart(productId){
+function addToCart(productId, overrideFlavor){
 
     const product = allProducts.find(p => p._id === productId);
     if(!product) return;
 
-    const flavorGroup = document.querySelector(
-        `.flavor-dropdown[data-product="${productId}"]`
-    );
+    let selectedFlavor = overrideFlavor || null;
 
-    let selectedFlavor = null;
+    if(!selectedFlavor){
+        const flavorGroup = document.querySelector(
+            `.flavor-dropdown[data-product="${productId}"]`
+        );
 
-    if(flavorGroup){
-        const selectedOption = flavorGroup.querySelector('.flavor-dropdown-option.selected');
-        if(!selectedOption){
-            showToast("Please choose a flavor first");
-            return;
+        if(flavorGroup){
+            const selectedOption = flavorGroup.querySelector('.flavor-dropdown-option.selected');
+            if(!selectedOption){
+                showToast("Please choose a flavor first");
+                return;
+            }
+            selectedFlavor = selectedOption.getAttribute('data-flavor');
         }
-        selectedFlavor = selectedOption.getAttribute('data-flavor');
     }
 
     // If the same product+flavor is already in the bag, bump its quantity

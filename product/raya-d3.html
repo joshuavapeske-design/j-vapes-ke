@@ -186,10 +186,10 @@
                     </div>
 
                     
-                <div style="margin-bottom: 20px;">
-                    <label style="display: block; font-size: 13px; font-weight: 600; margin-bottom: 8px; color: #a1a1aa;">Available Flavors / Options:</label>
-                    <div style="display: flex; flex-wrap: wrap; gap: 8px;">
-                        <span style="background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.12); padding: 5px 12px; border-radius: 6px; font-size: 13px;">Blueberry ice </span><span style="background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.12); padding: 5px 12px; border-radius: 6px; font-size: 13px;">Blueberry Raspberry </span><span style="background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.12); padding: 5px 12px; border-radius: 6px; font-size: 13px;">Grape Ice</span><span style="background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.12); padding: 5px 12px; border-radius: 6px; font-size: 13px;">Double Mango</span><span style="background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.12); padding: 5px 12px; border-radius: 6px; font-size: 13px;">Grape cherry </span><span style="background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.12); padding: 5px 12px; border-radius: 6px; font-size: 13px;">Peach ice </span><span style="background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.12); padding: 5px 12px; border-radius: 6px; font-size: 13px;">Watermelon Ice </span><span style="background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.12); padding: 5px 12px; border-radius: 6px; font-size: 13px;">Watermelon bubblegum</span><span style="background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.12); padding: 5px 12px; border-radius: 6px; font-size: 13px;">Strawberry Grape </span><span style="background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.12); padding: 5px 12px; border-radius: 6px; font-size: 13px;">Kiwi Guava Passion </span>
+                <div style="margin-bottom: 24px;" class="flavor-selection-block">
+                    <label style="display: block; font-size: 13px; font-weight: 600; margin-bottom: 10px; color: #a1a1aa; text-transform: uppercase; letter-spacing: 0.5px;">Choose Flavor / Option:</label>
+                    <div class="flavor-pills-container" style="display: flex; flex-wrap: wrap; gap: 8px;">
+                        <button type="button" class="flavor-pill-btn active" data-flavor="Blueberry ice ">Blueberry ice </button><button type="button" class="flavor-pill-btn" data-flavor="Blueberry Raspberry ">Blueberry Raspberry </button><button type="button" class="flavor-pill-btn" data-flavor="Grape Ice">Grape Ice</button><button type="button" class="flavor-pill-btn" data-flavor="Double Mango">Double Mango</button><button type="button" class="flavor-pill-btn" data-flavor="Grape cherry ">Grape cherry </button><button type="button" class="flavor-pill-btn" data-flavor="Peach ice ">Peach ice </button><button type="button" class="flavor-pill-btn" data-flavor="Watermelon Ice ">Watermelon Ice </button><button type="button" class="flavor-pill-btn" data-flavor="Watermelon bubblegum">Watermelon bubblegum</button><button type="button" class="flavor-pill-btn" data-flavor="Strawberry Grape ">Strawberry Grape </button><button type="button" class="flavor-pill-btn" data-flavor="Kiwi Guava Passion ">Kiwi Guava Passion </button>
                     </div>
                 </div>
             
@@ -322,11 +322,26 @@
     <script src="../analytics.js"></script>
     <script src="../script.js"></script>
     <script>
-        // Wire direct page add-to-cart button
+        // Wire direct page flavor selector & add-to-cart button
+        let selectedProductFlavor = document.querySelector('.flavor-pill-btn.active')?.getAttribute('data-flavor') || null;
+
+        document.querySelectorAll('.flavor-pill-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('.flavor-pill-btn').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                selectedProductFlavor = this.getAttribute('data-flavor');
+            });
+        });
+
         document.getElementById('direct-add-cart-btn')?.addEventListener('click', function() {
             const prodId = this.getAttribute('data-id');
+            const pillCount = document.querySelectorAll('.flavor-pill-btn').length;
+            if (pillCount > 0 && !selectedProductFlavor) {
+                if (typeof showToast === 'function') showToast("Please choose a flavor first");
+                return;
+            }
             if (typeof addToCart === 'function') {
-                addToCart(prodId);
+                addToCart(prodId, selectedProductFlavor);
             }
         });
     </script>
