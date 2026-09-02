@@ -2532,40 +2532,99 @@ h1, h2, h3, h4, h5, h6, p, span, a, li, label {
 .cart-line-flavor,
 .cart-line-price { color: #a1a1aa !important; }
 
-/* --- Age Gate Modal (Clean Dark) --- */
-.age-gate-overlay {
-    background: #050505 !important;
+/* --- Age Gate Full-Screen Modal Overlay --- */
+.age-gate-overlay,
+#age-gate {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100vw !important;
+    height: 100vh !important;
+    min-height: 100vh !important;
+    background: rgba(5, 5, 5, 0.96) !important;
+    backdrop-filter: blur(20px) !important;
+    -webkit-backdrop-filter: blur(20px) !important;
+    z-index: 999999 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding: 20px !important;
+    box-sizing: border-box !important;
+}
+
+.age-gate-overlay.hidden,
+#age-gate.hidden {
+    display: none !important;
 }
 
 .age-gate-card {
-    background: #111111 !important;
-    border: 1px solid rgba(255, 255, 255, 0.1) !important;
-    border-radius: 12px !important;
-    padding: 30px 24px !important;
+    background: #111113 !important;
+    border: 1px solid rgba(255, 255, 255, 0.15) !important;
+    border-radius: 16px !important;
+    padding: 32px 24px !important;
+    max-width: 440px !important;
+    width: 100% !important;
+    text-align: center !important;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.9), 0 0 30px rgba(212, 175, 55, 0.15) !important;
 }
 
 .age-gate-badge {
-    color: #ffffff !important;
+    display: inline-block !important;
+    background: rgba(212, 175, 55, 0.15) !important;
+    color: #d4af37 !important;
+    border: 1px solid rgba(212, 175, 55, 0.3) !important;
+    padding: 4px 14px !important;
+    border-radius: 20px !important;
+    font-weight: 800 !important;
+    font-size: 0.9rem !important;
+    letter-spacing: 1px !important;
+    margin-bottom: 14px !important;
 }
 
 .age-gate-title {
     color: #ffffff !important;
+    font-size: 1.2rem !important;
+    font-weight: 700 !important;
+    letter-spacing: 1px !important;
+    margin-bottom: 12px !important;
+    text-transform: uppercase !important;
 }
 
 .age-gate-text {
     color: #a1a1aa !important;
+    font-size: 0.88rem !important;
+    line-height: 1.5 !important;
+    margin-bottom: 20px !important;
+}
+
+.age-gate-buttons {
+    display: flex !important;
+    gap: 12px !important;
+    justify-content: center !important;
+}
+
+.age-gate-btn {
+    flex: 1 !important;
+    padding: 12px 18px !important;
+    font-weight: 700 !important;
+    font-size: 0.85rem !important;
+    border-radius: 10px !important;
+    cursor: pointer !important;
+    transition: all 0.2s ease !important;
+    letter-spacing: 0.5px !important;
 }
 
 .age-gate-btn.exit-btn {
-    background: rgba(255, 255, 255, 0.06) !important;
-    color: #ffffff !important;
+    background: rgba(255, 255, 255, 0.08) !important;
+    color: #f4f4f5 !important;
     border: 1px solid rgba(255, 255, 255, 0.15) !important;
 }
 
 .age-gate-btn.verify-btn {
-    background: #ffffff !important;
+    background: #d4af37 !important;
     color: #000000 !important;
-    border: 1px solid #ffffff !important;
+    border: 1px solid #d4af37 !important;
+    box-shadow: 0 4px 14px rgba(212, 175, 55, 0.35) !important;
 }
 
 .hero-mobile-badge {
