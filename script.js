@@ -292,28 +292,27 @@ function setupBrandStrip() {
     });
 }
 
-// Age Gate Verification
+// Age Gate Verification — Prompted on Every Site Visit
 function initAgeGate() {
     const ageGate = document.getElementById('age-gate');
     const verifyBtn = document.getElementById('verify-btn');
     const exitBtn = document.getElementById('exit-btn');
     const exitNote = document.getElementById('age-gate-exit-note');
 
-    if (localStorage.getItem('isOfAge') === 'true') {
-        if(ageGate) ageGate.classList.add('hidden');
+    if (ageGate) {
+        ageGate.classList.remove('hidden');
     }
 
-    if(verifyBtn) {
+    if (verifyBtn) {
         verifyBtn.addEventListener('click', () => {
-            localStorage.setItem('isOfAge', 'true');
-            if(ageGate) ageGate.classList.add('hidden');
+            if (ageGate) ageGate.classList.add('hidden');
         });
     }
 
-    if(exitBtn) {
+    if (exitBtn) {
         exitBtn.addEventListener('click', () => {
             exitBtn.disabled = true;
-            if (document.getElementById('verify-btn')) document.getElementById('verify-btn').disabled = true;
+            if (verifyBtn) verifyBtn.disabled = true;
             if (exitNote) exitNote.classList.remove('hidden');
             setTimeout(() => {
                 window.location.href = "https://www.google.com";
