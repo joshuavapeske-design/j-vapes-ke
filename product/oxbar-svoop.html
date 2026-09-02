@@ -168,8 +168,17 @@
 
         <section class="glass-card product-detail-static-card" style="padding: 30px; border-radius: 20px; margin-bottom: 40px;">
             <div class="modal-layout-split" style="gap: 40px; align-items: flex-start;">
-                <div class="modal-image-pane" style="text-align: center;">
-                    <img src="https://jvapes.store/favicon.png" alt="oxbar svoop — JVAPES Kenya" style="max-width: 100%; height: auto; max-height: 440px; object-fit: contain; border-radius: 16px;" loading="eager">
+                <div class="modal-image-pane" style="text-align: center; cursor: pointer; position: relative;" id="product-image-wrapper">
+                    <img id="product-main-img" src="https://jvapes.store/favicon.png" alt="oxbar svoop — JVAPES Kenya" style="max-width: 100%; height: auto; max-height: 440px; object-fit: contain; border-radius: 16px; transition: transform 0.25s ease;" loading="eager">
+                    <div class="zoom-hint-badge" style="margin-top: 10px; display: inline-flex; align-items: center; gap: 6px; font-size: 12px; color: #a1a1aa; background: rgba(255,255,255,0.06); padding: 4px 12px; border-radius: 20px; border: 1px solid rgba(255,255,255,0.1);">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="11" cy="11" r="8"></circle>
+                            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                            <line x1="11" y1="8" x2="11" y2="14"></line>
+                            <line x1="8" y1="11" x2="14" y2="11"></line>
+                        </svg>
+                        Tap image to view full screen
+                    </div>
                 </div>
                 <div class="modal-info-pane" style="flex: 1;">
                     <span class="brand-lbl" style="font-size: 14px; text-transform: uppercase; letter-spacing: 1px; color: #d4af37;">Oxbar </span>
@@ -195,12 +204,9 @@
             
 
                     <div style="display: flex; gap: 14px; margin-bottom: 30px; flex-wrap: wrap;">
-                        <button class="btn btn-primary" id="direct-add-cart-btn" data-id="a552b0e3-cf36-4a4e-a225-7132f141ecae" style="flex: 1; min-width: 200px; padding: 14px 24px; font-size: 15px;">
+                        <button class="btn btn-primary" id="direct-add-cart-btn" data-id="a552b0e3-cf36-4a4e-a225-7132f141ecae" style="width: 100%; padding: 16px 24px; font-size: 16px; font-weight: 700;">
                             Add to Bag
                         </button>
-                        <a href="https://wa.me/254741658556?text=Hi%20JVAPES%2C%20I%20want%20to%20order%20oxbar%20svoop%20(34%2C999%20KES)%20from%20https%3A%2F%2Fjvapes.store%2Fproduct%2Foxbar-svoop.html" target="_blank" rel="noopener noreferrer" class="btn btn-whatsapp" style="padding: 14px 24px; text-decoration: none; font-size: 15px; display: inline-flex; align-items: center; justify-content: center; gap: 8px;">
-                            Order via WhatsApp
-                        </a>
                     </div>
 
                     <div class="rich-description-panel" style="border-top: 1px solid rgba(255,255,255,0.1); padding-top: 20px; line-height: 1.7; color: #c4c4c8;">
@@ -372,12 +378,51 @@ Visible e-liquid pod
                         addToCart(prodId, flavor);
                     });
                 }
-            } else {
-                if (typeof addToCart === 'function') {
-                    addToCart(prodId);
-                }
             }
         });
+
+        // Full-Screen Image Lightbox Preview Handler
+        (function initProductImageLightbox() {
+            const wrapper = document.getElementById('product-image-wrapper');
+            const mainImg = document.getElementById('product-main-img');
+            const lightboxModal = document.getElementById('image-lightbox-modal');
+            const lightboxImg = document.getElementById('lightbox-img');
+            const closeBtn = document.getElementById('close-lightbox-btn');
+
+            if (!wrapper || !mainImg || !lightboxModal || !lightboxImg) return;
+
+            wrapper.addEventListener('click', function() {
+                if (mainImg.src) {
+                    lightboxImg.src = mainImg.src;
+                    lightboxImg.alt = mainImg.alt || 'Product Image Preview';
+                    lightboxModal.classList.remove('hidden');
+                    document.body.style.overflow = 'hidden';
+                }
+            });
+
+            const closeLightbox = function() {
+                lightboxModal.classList.add('hidden');
+                document.body.style.overflow = '';
+            };
+
+            if (closeBtn) closeBtn.addEventListener('click', closeLightbox);
+
+            lightboxModal.addEventListener('click', function(e) {
+                if (e.target === lightboxModal || e.target === closeBtn) closeLightbox();
+            });
+
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape' && !lightboxModal.classList.contains('hidden')) {
+                    closeLightbox();
+                }
+            });
+        })();
     </script>
+
+    <!-- Full-Screen Image Lightbox Modal -->
+    <div id="image-lightbox-modal" class="image-lightbox-modal hidden" aria-hidden="true">
+        <button id="close-lightbox-btn" class="close-lightbox-btn" aria-label="Close image preview">&times;</button>
+        <img id="lightbox-img" src="" alt="Product Full Preview">
+    </div>
 </body>
 </html>
