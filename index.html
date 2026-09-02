@@ -1,40 +1,47 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>JVAPES — Premium Vape Shop in Ruiru & Nairobi, Kenya | Countrywide Delivery</title>
-    <meta name="description" content="Premium disposable vapes, starter kits & pods in Kenya. Same-day delivery in Ruiru & Nairobi, pay on delivery. Elfbar, Lost Mary, Oxbar & more. 18+ only.">
+    <title>JVAPES — Premium Vape Shop in Ruiru &amp; Nairobi, Kenya | Countrywide Delivery</title>
+    <meta name="description" content="Premium disposable vapes, starter kits &amp; pods in Kenya. Same-day delivery in Ruiru &amp; Nairobi, pay on delivery. Elfbar, Lost Mary, Oxbar &amp; more. 18+ only.">
     <meta name="robots" content="index, follow">
     <link rel="canonical" href="https://jvapes.store/">
-    
+    <link rel="icon" type="image/png" href="favicon.png">
+    <link rel="apple-touch-icon" href="favicon.png">
 
     <!-- Open Graph -->
     <meta property="og:type" content="website">
-    <meta property="og:title" content="JVAPES — Premium Vape Shop in Kenya | Countrywide Delivery">
-    <meta property="og:description" content="Kenya's premium vape source: disposables, starter kits & pods. Fast delivery in Ruiru/Nairobi, pay on delivery countrywide. 18+ only.">
+    <meta property="og:title" content="JVAPES — Premium Vape Shop in Ruiru &amp; Nairobi, Kenya">
+    <meta property="og:description" content="Kenya's premium vape source: genuine disposables, starter kits &amp; pods. Same-day delivery in Ruiru &amp; Nairobi, pay on delivery via M-Pesa. 18+ only.">
     <meta property="og:url" content="https://jvapes.store/">
     <meta property="og:site_name" content="JVAPES">
+    <meta property="og:image" content="https://jvapes.store/favicon.png">
+    <meta property="og:image:width" content="512">
+    <meta property="og:image:height" content="512">
     <meta property="og:locale" content="en_KE">
 
     <!-- Twitter Card -->
-    <meta name="twitter:card" content="summary">
+    <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="JVAPES — Premium Vape Shop in Kenya">
-    <meta name="twitter:description" content="Disposables, starter kits & pods. Fast delivery in Ruiru/Nairobi, pay on delivery countrywide. 18+ only.">
+    <meta name="twitter:description" content="Genuine disposables, starter kits &amp; pods. Fast delivery in Ruiru/Nairobi, pay on delivery via M-Pesa. 18+ only.">
+    <meta name="twitter:image" content="https://jvapes.store/favicon.png">
 
-    <!-- Structured data: helps Google understand this is a real local business,
-         which matters more for local map-pack visibility than any meta tag does. -->
+    <!-- Structured data: LocalBusiness / Store / VapeShop -->
     <script type="application/ld+json">
     {
         "@context": "https://schema.org",
-        "@type": "Store",
+        "@type": ["Store", "LocalBusiness"],
         "name": "JVAPES",
         "url": "https://jvapes.store/",
-        "description": "Premium vape shop in Kenya offering disposable vapes, starter kits, and replacement pods with delivery in Ruiru & Nairobi.",
+        "logo": "https://jvapes.store/favicon.png",
+        "image": "https://jvapes.store/favicon.png",
+        "description": "Premium vape shop in Kenya offering genuine disposable vapes, starter kits, and replacement pods with rapid same-day delivery across Ruiru, Nairobi, and countrywide dispatch.",
         "telephone": "+254741658556",
+        "email": "joshuavapes@gmail.com",
         "address": {
             "@type": "PostalAddress",
+            "streetAddress": "Ruiru Central Dispatch Hub",
             "addressLocality": "Ruiru",
             "addressRegion": "Kiambu County",
             "addressCountry": "KE"
@@ -44,29 +51,48 @@
             "latitude": -1.1462,
             "longitude": 36.9610
         },
-        "areaServed": ["Ruiru", "Nairobi"],
-        "priceRange": "KES"
+        "hasMap": "https://maps.google.com/?q=-1.1462,36.9610",
+        "areaServed": [
+            "Ruiru",
+            "Nairobi CBD",
+            "Kilimani",
+            "Westlands",
+            "Thika Road"
+        ],
+        "priceRange": "KES",
+        "currenciesAccepted": "KES",
+        "paymentAccepted": "Cash, M-Pesa",
+        "openingHoursSpecification": [
+            {
+                "@type": "OpeningHoursSpecification",
+                "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
+                "opens": "08:00",
+                "closes": "23:00"
+            }
+        ]
     }
     </script>
-    
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;700&family=Cormorant+Garamond:wght@500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="styles.css?v=3.0.0">
 </head>
 <body>
 
-    <div id="age-gate" class="modal-overlay">
-        <div class="glass-card modal-content text-center">
-            <span class="warning-tag">18+</span>
-            <h2>Age Verification Required</h2>
-            <p>You must be of legal smoking age (18+) to enter JVAPES. Products contain nicotine, an addictive chemical.</p>
+    <div id="age-gate" class="age-gate-overlay">
+        <div class="age-gate-card">
+            <div class="age-gate-badge">18+</div>
+            <h2 class="age-gate-title">AGE VERIFICATION REQUIRED</h2>
+            <p class="age-gate-text">
+                You must be of legal smoking age (18+) to enter J_VAPES.KE.<br>
+                Products contain nicotine, an addictive chemical.
+            </p>
             <p id="age-gate-exit-note" class="age-gate-note hidden">No problem — please come back once you're 18. Redirecting you now...</p>
-           <div class="modal-buttons">
-    <button id="exit-btn" class="btn btn-secondary">I'm under 18</button>
-    <button id="verify-btn" class="btn btn-primary">I am 18+</button>
-</div>
+            <div class="age-gate-buttons">
+                <button id="exit-btn" class="age-gate-btn exit-btn">EXIT</button>
+                <button id="verify-btn" class="age-gate-btn verify-btn">I AM 18+</button>
+            </div>
         </div>
     </div>
 
@@ -75,19 +101,38 @@
     <header class="main-header">
     <div class="header-container">
 
+        <!-- Hamburger button (on left side) -->
+        <button class="menu-toggle" id="menu-toggle" aria-label="Toggle navigation menu">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="3" y1="12" x2="21" y2="12"></line>
+                <line x1="3" y1="6" x2="21" y2="6"></line>
+                <line x1="3" y1="18" x2="21" y2="18"></line>
+            </svg>
+        </button>
+
         <h1 class="logo"><a href="index.html" style="text-decoration: none; color: inherit;">JVAPES</a></h1>
 
-        <!-- Hamburger button -->
-        <div class="menu-toggle" id="menu-toggle">
-            ☰
-        </div>
-
-        <!-- Navigation -->
+        <!-- Navigation (Left Sidebar Drawer on Mobile, Inline on Desktop) -->
         <nav class="nav-links" id="nav-links">
-           <a href="about.html">About JVapes</a>
-          <a href="guides.html">Vape Guides</a>
-           <a href="legal.html" id="terms-link-nav">Legal Policy</a>
-            <a href="#quit">Want to Quit?</a>
+            <div class="nav-drawer-header">
+                <div class="nav-drawer-brand">
+                    <span class="nav-drawer-title">JVAPES</span>
+                    <span class="nav-drawer-tagline">Premium Vape Shop</span>
+                </div>
+                <button class="nav-close-btn" id="nav-close-btn" aria-label="Close menu">&times;</button>
+            </div>
+            <div class="nav-drawer-body">
+                <a href="index.html" class="nav-link-item">Home</a>
+                <a href="about.html" class="nav-link-item">About JVapes</a>
+                <a href="guides.html" class="nav-link-item">Vape Guides</a>
+                <a href="faq.html" class="nav-link-item">FAQ / Delivery</a>
+                <a href="contact.html" class="nav-link-item">Contact Us</a>
+                <a href="legal.html" class="nav-link-item" id="terms-link-nav">Legal Policy</a>
+            </div>
+            <div class="nav-drawer-footer">
+                <div class="nav-footer-badge">Same-Day Delivery in Ruiru &amp; Nairobi</div>
+                <a href="https://wa.me/254741658556" target="_blank" rel="noopener" class="nav-whatsapp-btn">Chat on WhatsApp</a>
+            </div>
         </nav>
 
         <div class="header-actions">
@@ -109,68 +154,41 @@
     </div>
 </header>
 
-    <!-- Featured brands strip: the blank space right under the header -->
-   <div class="marquee-container">
-  <div class="marquee-track">
-    <!-- First set of logos -->
-    <img src="images/Lost mary.png" alt="Lost Mary">
-    <img src="images/Vapengin.png" alt="Vapengin">
-    <img src="images/elfbar.png" alt="Elfbar">
-    <img src="images/Crownbar.png" alt="Crownbar">
-    <img src="images/Solobar.png" alt="Solobar">
-    <img src="images/Yuoto.png" alt="Yuoto">
-    <img src="images/Oxbar.png" alt="Oxbar">
-    <img src="images/Dummy.png" alt="Dummy Vapes">
-    <img src="images/Bugatti.png" alt="Bugatti">
+    <section class="hero-section text-center">
+        <div class="hero-content-inner">
+            <h2 class="hero-heading">Premium Vape Shop in Ruiru &amp; Nairobi, Kenya</h2>
+            <p class="hero-subheading">Genuine disposables, starter kits &amp; replacement pods — same-day delivery, pay on delivery or via M-Pesa. 18+ only.</p>
 
-    <!-- Duplicated set of logos so it loops without a gap -->
-    <img src="images/Lost mary.png" alt="Lost Mary">
-    <img src="images/Vapengin.png" alt="Vapengin">
-    <img src="images/elfbar.png" alt="Elfbar">
-    <img src="images/Crownbar.png" alt="Crownbar">
-    <img src="images/Solobar.png" alt="Solobar">
-    <img src="images/Yuoto.png" alt="Yuoto">
-    <img src="images/Oxbar.png" alt="Oxbar">
-    <img src="images/Dummy.png" alt="Dummy Vapes">
-    <img src="images/Bugatti.png" alt="Bugatti">
-  </div>
-</div>
-       <section class="hero-section text-center">
-
-        <h2 class="hero-heading">Premium Vape Shop in Ruiru &amp; Nairobi, Kenya</h2>
-        <p class="hero-subheading">Genuine disposables, starter kits &amp; replacement pods — same-day delivery, pay on delivery or via M-Pesa. 18+ only.</p>
-
-        <div class="quick-search-bar">
-            <svg class="quick-search-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                <circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="1.8"/>
-                <path d="M20 20L16.5 16.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
-            </svg>
-            <input type="text" id="search-input" class="quick-search-input" placeholder="Search devices, brands or flavors" onkeyup="filterProducts()">
-        </div>
-
-        <div class="filter-toggle-row">
-            <button id="filter-toggle-btn" class="btn btn-secondary filter-toggle-btn" aria-expanded="false" aria-controls="filter-wrapper">
-                <span class="filter-toggle-icon">⚙</span> More Filters
-            </button>
-        </div>
-
-        <div id="filter-wrapper" class="filter-wrapper hidden">
-            
-            <div class="filter-row-top">
-                <select id="flavor-filter" class="filter-dropdown filter-flavor" aria-label="Filter products by flavor" title="Filter products by flavor">
-                    <option value="">All Flavors</option>
-                </select>
-                <button id="clear-filters-btn" class="btn btn-secondary hidden">Clear Filters</button>
+            <div class="quick-search-bar">
+                <svg class="quick-search-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                    <circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="1.8"/>
+                    <path d="M20 20L16.5 16.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+                </svg>
+                <input type="text" id="search-input" class="quick-search-input" placeholder="Search devices, brands or flavors" onkeyup="filterProducts()">
             </div>
 
-            <div class="filter-controls">
-                <select id="brand-filter" onchange="filterProducts()">
-                    <option value="">All Brands</option>
-                    <option value="Elfbar">Elfbar</option>
-                    <option value="Bugatti">Bugatti</option>
-                </select>
-                
-                <input type="number" id="price-filter" placeholder="Max Price (KES)" onkeyup="filterProducts()">
+            <div class="filter-toggle-row">
+                <button id="filter-toggle-btn" class="btn btn-secondary filter-toggle-btn" aria-expanded="false" aria-controls="filter-wrapper">
+                    <span class="filter-toggle-icon">⚙</span> More Filters
+                </button>
+            </div>
+
+            <div id="filter-wrapper" class="filter-wrapper hidden">
+                <div class="filter-row-top">
+                    <select id="flavor-filter" class="filter-dropdown filter-flavor" aria-label="Filter products by flavor" title="Filter products by flavor">
+                        <option value="">All Flavors</option>
+                    </select>
+                    <button id="clear-filters-btn" class="btn btn-secondary hidden">Clear Filters</button>
+                </div>
+
+                <div class="filter-controls">
+                    <select id="brand-filter" onchange="filterProducts()">
+                        <option value="">All Brands</option>
+                        <option value="Elfbar">Elfbar</option>
+                        <option value="Bugatti">Bugatti</option>
+                    </select>
+                    <input type="number" id="price-filter" placeholder="Max Price (KES)" onkeyup="filterProducts()">
+                </div>
             </div>
         </div>
     </section>
@@ -417,12 +435,13 @@
        aria-label="Chat with us on WhatsApp">
 
         <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg"
-             alt="WhatsApp">
+             alt="Chat with JVAPES Kenya on WhatsApp">
 
     </a>
 </footer>
-    <!-- Add this line right before the closing body tag -->
-    <script src="script.js"></script>
+    <!-- Analytics & Core Client Engine -->
+    <script src="analytics.js"></script>
+    <script src="script.js?v=2.0.0"></script>
 
 
 </body>

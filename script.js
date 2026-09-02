@@ -98,17 +98,60 @@ function setupCategoryTabs() {
     });
 }
 
-// UX FIX: the hamburger menu previously stayed open after tapping a nav
-// link, leaving it covering page content until manually toggled shut.
+// Left Sidebar Navigation Drawer
 function setupMobileNav() {
     const toggle = document.getElementById('menu-toggle');
     const nav = document.getElementById('nav-links');
     if (!toggle || !nav) return;
 
-    toggle.addEventListener('click', () => nav.classList.toggle('active'));
+    // Dynamically create dark backdrop overlay if not present in DOM
+    let backdrop = document.getElementById('nav-backdrop');
+    if (!backdrop) {
+        backdrop = document.createElement('div');
+        backdrop.id = 'nav-backdrop';
+        backdrop.className = 'nav-backdrop';
+        document.body.appendChild(backdrop);
+    }
+
+    const closeBtn = document.getElementById('nav-close-btn');
+
+    function openNav() {
+        nav.classList.add('active');
+        backdrop.classList.add('active');
+        document.body.classList.add('menu-open');
+        toggle.setAttribute('aria-expanded', 'true');
+    }
+
+    function closeNav() {
+        nav.classList.remove('active');
+        backdrop.classList.remove('active');
+        document.body.classList.remove('menu-open');
+        toggle.setAttribute('aria-expanded', 'false');
+    }
+
+    toggle.addEventListener('click', (e) => {
+        e.stopPropagation();
+        if (nav.classList.contains('active')) {
+            closeNav();
+        } else {
+            openNav();
+        }
+    });
+
+    if (closeBtn) {
+        closeBtn.addEventListener('click', closeNav);
+    }
+
+    backdrop.addEventListener('click', closeNav);
 
     nav.querySelectorAll('a').forEach(link => {
-        link.addEventListener('click', () => nav.classList.remove('active'));
+        link.addEventListener('click', closeNav);
+    });
+
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && nav.classList.contains('active')) {
+            closeNav();
+        }
     });
 }
 
@@ -356,6 +399,7 @@ async function fetchStorefrontData() {
 "products": *[_type=="product"]{
  _id,
  name,
+ slug,
  brand,
  price,
  stock,
@@ -363,7 +407,10 @@ async function fetchStorefrontData() {
  flavors,
  image,
  description,
- puffs
+ puffs,
+ seoTitle,
+ metaDescription,
+ canonicalUrl
 },
 "promos": *[_type=="promo"]{
  discountPercentage,
@@ -391,6 +438,7 @@ async function fetchStorefrontData() {
         populateFilters(allProducts);
         renderStorefront(allProducts);
         injectProductStructuredData(allProducts);
+        checkDeepLinkProduct(allProducts);
     } catch (error) {
         console.error("Critical error querying unified product schema vectors:", error);
         // UX FIX: previously a failed fetch left a silently blank page.
@@ -398,6 +446,22 @@ async function fetchStorefrontData() {
     } finally {
         if (skeleton) skeleton.classList.add('hidden');
     }
+}
+
+// Helper to get clean slug for a product
+function getProductSlug(product) {
+    if (product.slug && product.slug.current) return product.slug.current;
+    if (product.name) {
+        return product.name
+            .toLowerCase()
+            .trim()
+            .replace(/\s+/g, '-')
+            .replace(/[^\w\-]+/g, '')
+            .replace(/\-\-+/g, '-')
+            .replace(/^-+/, '')
+            .replace(/-+$/, '');
+    }
+    return product._id;
 }
 
 // Injects schema.org Product/Offer JSON-LD for the currently loaded
@@ -410,24 +474,27 @@ function injectProductStructuredData(products) {
     const existing = document.getElementById('product-structured-data');
     if (existing) existing.remove();
 
-    const itemListElement = products.slice(0, 30).map((product, index) => ({
-        "@type": "ListItem",
-        "position": index + 1,
-        "item": {
-            "@type": "Product",
-            "name": product.name,
-            "brand": product.brand || "JVAPES",
-            "offers": {
-                "@type": "Offer",
-                "priceCurrency": "KES",
-                "price": Number(product.price || 0),
-                "availability": (product.stock && product.stock > 0)
-                    ? "https://schema.org/InStock"
-                    : "https://schema.org/OutOfStock",
-                "url": "https://jvapes.store/"
+    const itemListElement = products.slice(0, 30).map((product, index) => {
+        const slug = getProductSlug(product);
+        return {
+            "@type": "ListItem",
+            "position": index + 1,
+            "item": {
+                "@type": "Product",
+                "name": product.name,
+                "brand": product.brand || "JVAPES",
+                "offers": {
+                    "@type": "Offer",
+                    "priceCurrency": "KES",
+                    "price": Number(product.price || 0),
+                    "availability": (product.stock && product.stock > 0)
+                        ? "https://schema.org/InStock"
+                        : "https://schema.org/OutOfStock",
+                    "url": `https://jvapes.store/product/${slug}.html`
+                }
             }
-        }
-    }));
+        };
+    });
 
     const script = document.createElement('script');
     script.type = 'application/ld+json';
@@ -438,6 +505,21 @@ function injectProductStructuredData(products) {
         "itemListElement": itemListElement
     });
     document.head.appendChild(script);
+}
+
+// Automatically opens product modal if URL has ?product=slug or #product-slug
+function checkDeepLinkProduct(products) {
+    const params = new URLSearchParams(window.location.search);
+    const productQuery = params.get('product');
+    const hash = window.location.hash.replace('#product-', '').replace('#', '');
+    const targetSlug = productQuery || hash;
+
+    if (targetSlug) {
+        const targetProduct = products.find(p => getProductSlug(p) === targetSlug || p._id === targetSlug);
+        if (targetProduct) {
+            openProductDetailPanel(targetProduct);
+        }
+    }
 }
 
 // UI Dropdown Dynamic Populator Framework
@@ -521,14 +603,15 @@ function renderStorefront(products) {
 
     products.forEach(product => {
         const cardHtml = generateProductCard(product);
+        const type = product.productType || 'disposable';
         
         // Frontend segments products safely by matching your backend list keys
-        if (product.productType === 'disposable' && dispContainer) {
-            dispContainer.insertAdjacentHTML('beforeend', cardHtml);
-        } else if (product.productType === 'starterKit' && kitContainer) {
+        if (type === 'starterKit' && kitContainer) {
             kitContainer.insertAdjacentHTML('beforeend', cardHtml);
-        } else if (product.productType === 'replacementPod' && podContainer) {
+        } else if (type === 'replacementPod' && podContainer) {
             podContainer.insertAdjacentHTML('beforeend', cardHtml);
+        } else if (dispContainer) {
+            dispContainer.insertAdjacentHTML('beforeend', cardHtml);
         }
     });
 
@@ -545,7 +628,9 @@ function generateProductCard(product) {
     let priceSnippet = `<span class="current-price">KES ${formatPrice(product.price)}</span>`;
     let promoBadge = '';
 
-    if (promo) {
+    if (!product.price || Number(product.price) <= 0) {
+        priceSnippet = `<span class="current-price price-inquire">Contact for Price</span>`;
+    } else if (promo) {
         const discountAmount = product.price * (promo.discountPercentage / 100);
         const salePrice = product.price - discountAmount;
         priceSnippet = `
@@ -555,81 +640,41 @@ function generateProductCard(product) {
         promoBadge = `<div class="promo-tag">-${promo.discountPercentage}%</div>`;
     }
 
-    // Check if the item is out of stock completely
-    let flavorSelector = '';
-
-    // UX FIX: pills wrapped and looked cramped once a product had more
-    // than 4-5 flavors. Replaced with a compact custom dropdown — a
-    // trigger button plus a floating, scrollable panel. Products with a
-    // long flavor list (8+) get a type-to-filter search inside the panel
-    // so the list stays fast to use instead of a long scroll.
-    if (product.flavors && Array.isArray(product.flavors) && product.flavors.length > 0) {
-        const needsSearch = product.flavors.length > 8;
-        flavorSelector = `
-            <div class="flavor-dropdown" data-product="${product._id}">
-                <button type="button" class="flavor-dropdown-trigger" aria-haspopup="listbox" aria-expanded="false">
-                    <span class="flavor-dropdown-label">Choose flavor</span>
-                    <svg class="flavor-dropdown-caret" width="10" height="6" viewBox="0 0 10 6" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M1 1L5 5L9 1" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
-                    </svg>
-                </button>
-                <div class="flavor-dropdown-panel hidden" role="listbox">
-                    ${needsSearch ? `<input type="text" class="flavor-dropdown-search" placeholder="Search flavors...">` : ''}
-                    <div class="flavor-dropdown-options">
-                        ${product.flavors.map(flavor => `
-                            <div class="flavor-dropdown-option" role="option" data-flavor="${flavor}">
-                                <span>${flavor}</span>
-                                <svg class="flavor-option-check" width="12" height="10" viewBox="0 0 12 10" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M1 5L4.5 8.5L11 1.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-                                </svg>
-                            </div>
-                        `).join('')}
-                    </div>
-                    <div class="flavor-dropdown-empty hidden">No flavors match your search</div>
-                </div>
-            </div>
-        `;
+    let puffsSnippet = '';
+    if (product.puffs) {
+        puffsSnippet = `<span class="product-puffs-badge">${Number(product.puffs).toLocaleString('en-KE')} Puffs</span>`;
     }
 
-
-let stockActionHtml = `
-    ${flavorSelector}
-
-    <button 
-        class="btn btn-primary add-cart-btn" 
-        data-id="${product._id}"
-        style="width:100%;">
-        Add to Bag
-    </button>
-`;
+    let stockActionHtml = `
+        <button class="btn btn-primary add-cart-btn" data-id="${product._id}" style="width:100%;">
+            Add to Bag
+        </button>
+    `;
     if (product.stock === 0 || product.stock === undefined) {
         stockActionHtml = `<button class="btn btn-secondary disabled-stock" style="width:100%; cursor:not-allowed;" disabled>Out of Stock</button>`;
     }
 
-    // Safely parse image assets referencing Sanity's global Image CDN rules
-   // Locate this block inside generateProductCard(product) and completely replace it:
-
-let imageUrl = 'placeholder.png';
-if (product.image && product.image.asset && product.image.asset._ref) {
-    // Advanced Regex Parser: Safely strips 'image-' prefixes and converts trailing hyphens to matching web file extensions
-    const assetRef = product.image.asset._ref;
-    const cleanId = assetRef.replace(/^image-/, '');
-    
-    // Locates the final hyphen before the file extension string
-    const lastHyphenIndex = cleanId.lastIndexOf('-');
-    
-    if (lastHyphenIndex !== -1) {
-        const base = cleanId.substring(0, lastHyphenIndex);
-        const ext = cleanId.substring(lastHyphenIndex + 1);
-        imageUrl = `https://cdn.sanity.io/images/${SANITY_PROJECT_ID}/${SANITY_DATASET}/${base}.${ext}`;
+    let imageUrl = 'images/product-placeholder.jpg';
+    if (product.image && product.image.asset && product.image.asset._ref) {
+        const assetRef = product.image.asset._ref;
+        const cleanId = assetRef.replace(/^image-/, '');
+        const lastHyphenIndex = cleanId.lastIndexOf('-');
+        if (lastHyphenIndex !== -1) {
+            const base = cleanId.substring(0, lastHyphenIndex);
+            const ext = cleanId.substring(lastHyphenIndex + 1);
+            imageUrl = `https://cdn.sanity.io/images/${SANITY_PROJECT_ID}/${SANITY_DATASET}/${base}.${ext}`;
+        }
     }
-}
+
+    const slug = getProductSlug(product);
 
     return `
-        <div class="glass-card product-item" data-id="${product._id}" data-name="${(product.name || '').toLowerCase()}" data-brand="${product.brand || ''}" data-price="${product.price || 0}" data-flavor="${(product.flavors || []).join(',').toLowerCase()}">
+        <div class="product-item" data-id="${product._id}" data-slug="${slug}" data-name="${(product.name || '').toLowerCase()}" data-brand="${product.brand || ''}" data-price="${product.price || 0}" data-flavor="${(product.flavors || []).join(',').toLowerCase()}">
             ${promoBadge}
             <div class="product-image-wrap">
-                <img src="${imageUrl}" alt="${product.name}" loading="lazy">
+                <a href="product/${slug}.html" class="product-image-link" style="display:block; width:100%; height:100%; text-decoration:none; color:inherit;">
+                    <img src="${imageUrl}" alt="${product.name || 'Vape Device'} — JVAPES Kenya" loading="lazy" onerror="this.onerror=null; this.src='images/product-placeholder.jpg';">
+                </a>
                 <button type="button" class="wishlist-heart-btn${wishlist.includes(product._id) ? ' active' : ''}" data-id="${product._id}" aria-label="Toggle wishlist">
                     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M12 21s-7.5-4.7-10.1-9.3C.4 8.6 1.8 4.9 5.4 4.1c2.2-.5 4.3.5 5.6 2.3 1.3-1.8 3.4-2.8 5.6-2.3 3.6.8 5 4.5 3.5 7.6C19.5 16.3 12 21 12 21z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/>
@@ -637,8 +682,13 @@ if (product.image && product.image.asset && product.image.asset._ref) {
                 </button>
             </div>
             <div class="product-details">
-                <span class="brand-lbl">${product.brand || 'Premium Selection'}</span>
-                <h4 class="product-name">${product.name}</h4>
+                <div class="product-header-meta">
+                    <span class="brand-lbl">${product.brand || 'JVAPES'}</span>
+                    ${puffsSnippet}
+                </div>
+                <h4 class="product-name">
+                    <a href="product/${slug}.html" class="product-link" style="text-decoration:none; color:inherit;">${product.name}</a>
+                </h4>
                 <div class="price-row">
                     ${priceSnippet}
                 </div>
@@ -648,39 +698,20 @@ if (product.image && product.image.asset && product.image.asset._ref) {
     `;
 }
 
-// Closes any currently-open flavor dropdown panel. Called before opening
-// another one (so only one is ever open at a time) and on outside clicks.
-function closeAllFlavorDropdowns() {
-    document.querySelectorAll('.flavor-dropdown-panel').forEach(panel => panel.classList.add('hidden'));
-    document.querySelectorAll('.flavor-dropdown-trigger').forEach(trigger => {
-        trigger.setAttribute('aria-expanded', 'false');
-        trigger.classList.remove('open');
-    });
-}
-
-document.addEventListener('click', () => closeAllFlavorDropdowns());
-document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape') closeAllFlavorDropdowns();
-});
-
-// Click Listeners interceptor for details presentation layer
+// Click Listeners interceptor to navigate to dedicated product page
 function wireCardClickListeners() {
     document.querySelectorAll('.product-item').forEach(card => {
-        const viewBtn = card.querySelector('.view-details-btn');
-        if(viewBtn) {
-            viewBtn.addEventListener('click', (e) => {
-                e.stopPropagation();
-                const productId = card.getAttribute('data-id');
-                const targetProduct = allProducts.find(p => p._id === productId);
-                if (targetProduct) openProductDetailPanel(targetProduct);
-            });
-        }
+        const slug = card.getAttribute('data-slug');
 
-        // Clicking the card itself also opens the detail panel
-        card.addEventListener('click', () => {
-            const productId = card.getAttribute('data-id');
-            const targetProduct = allProducts.find(p => p._id === productId);
-            if (targetProduct) openProductDetailPanel(targetProduct);
+        // Clicking the product card or image navigates directly to dedicated product page
+        card.addEventListener('click', (e) => {
+            // Prevent navigation if user clicked wishlist button or add to bag button
+            if (e.target.closest('.wishlist-heart-btn') || e.target.closest('.add-cart-btn')) {
+                return;
+            }
+            if (slug) {
+                window.location.href = `product/${slug}.html`;
+            }
         });
 
         // Wishlist heart toggle
@@ -692,60 +723,8 @@ function wireCardClickListeners() {
                 heartBtn.classList.toggle('active');
             });
         }
-
-        // Flavor dropdown: open/close, option select, and live search
-        const flavorDropdown = card.querySelector('.flavor-dropdown');
-        if (flavorDropdown) {
-            const trigger = flavorDropdown.querySelector('.flavor-dropdown-trigger');
-            const panel = flavorDropdown.querySelector('.flavor-dropdown-panel');
-            const label = flavorDropdown.querySelector('.flavor-dropdown-label');
-            const searchInput = flavorDropdown.querySelector('.flavor-dropdown-search');
-            const emptyState = flavorDropdown.querySelector('.flavor-dropdown-empty');
-
-            // Prevent any click inside the dropdown from bubbling up to
-            // the card (which opens the product detail modal).
-            flavorDropdown.addEventListener('click', (e) => e.stopPropagation());
-
-            trigger.addEventListener('click', () => {
-                const willOpen = panel.classList.contains('hidden');
-                closeAllFlavorDropdowns();
-                if (willOpen) {
-                    panel.classList.remove('hidden');
-                    trigger.setAttribute('aria-expanded', 'true');
-                    trigger.classList.add('open');
-                    if (searchInput) searchInput.focus();
-                }
-            });
-
-            flavorDropdown.querySelectorAll('.flavor-dropdown-option').forEach(option => {
-                option.addEventListener('click', () => {
-                    flavorDropdown.querySelectorAll('.flavor-dropdown-option').forEach(o => o.classList.remove('selected'));
-                    option.classList.add('selected');
-                    label.textContent = option.getAttribute('data-flavor');
-                    label.classList.add('flavor-chosen');
-                    closeAllFlavorDropdowns();
-                });
-            });
-
-            if (searchInput) {
-                searchInput.addEventListener('click', (e) => e.stopPropagation());
-                searchInput.addEventListener('input', () => {
-                    const query = searchInput.value.trim().toLowerCase();
-                    const options = flavorDropdown.querySelectorAll('.flavor-dropdown-option');
-                    let visibleCount = 0;
-                    options.forEach(option => {
-                        const matches = option.getAttribute('data-flavor').toLowerCase().includes(query);
-                        option.classList.toggle('hidden', !matches);
-                        if (matches) visibleCount++;
-                    });
-                    if (emptyState) emptyState.classList.toggle('hidden', visibleCount !== 0);
-                });
-            }
-        }
     });
 
-    // BUGFIX: this listener previously only lived inside a dead nested
-    // function inside renderStorefront() and was never attached.
     document.querySelectorAll('.add-cart-btn').forEach(btn => {
         btn.addEventListener('click', (e) => {
             e.stopPropagation();
@@ -754,54 +733,11 @@ function wireCardClickListeners() {
     });
 }
 
-// Portable Detail Overlay Modal Parser Injector Engine
+// Navigates directly to the dedicated product page
 function openProductDetailPanel(product) {
-    const modal = document.getElementById('product-detail-modal');
-    if (!modal) return;
-
-    // Inline SVG fallback so a missing/broken image never shows the
-    // browser's ugly "alt text on a broken image icon" — it shows a
-    // clean placeholder instead.
-    const IMAGE_FALLBACK = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 400'%3E%3Crect width='400' height='400' fill='%23f0f0f0'/%3E%3Cg fill='%23bbb'%3E%3Ccircle cx='200' cy='160' r='45'/%3E%3Cpath d='M100 320c0-60 45-100 100-100s100 40 100 100z'/%3E%3C/g%3E%3C/svg%3E";
-
-    let imageUrl = IMAGE_FALLBACK;
-    if (product.image && product.image.asset && product.image.asset._ref) {
-        imageUrl = `https://cdn.sanity.io/images/${SANITY_PROJECT_ID}/${SANITY_DATASET}/${product.image.asset._ref.replace('image-', '').replace('-png', '.png').replace('-jpg', '.jpg')}`;
-    }
-    
-    const modalImg = document.getElementById('modal-product-image');
-    const modalName = document.getElementById('modal-product-name');
-    const modalBrand = document.getElementById('modal-product-brand');
-    const modalPuffs = document.getElementById('modal-product-puffs');
-    const modalPrice = document.getElementById('modal-product-price');
-    const modalDesc = document.getElementById('modal-product-description');
-
-    if (modalImg) {
-        modalImg.src = imageUrl;
-        // Safety net: if the Sanity CDN URL itself 404s (bad ref, wrong
-        // extension, etc.) fall back to the inline placeholder instead
-        // of leaving a broken image / alt text visible.
-        modalImg.onerror = () => {
-            modalImg.onerror = null;
-            modalImg.src = IMAGE_FALLBACK;
-        };
-    }
-    if(modalName) modalName.textContent = product.name;
-    if(modalBrand) modalBrand.textContent = product.brand || 'Premium Selection';
-    if(modalPuffs) modalPuffs.textContent = product.puffs ? `${product.puffs} Puffs` : `In Stock: ${product.stock || 0} units`;
-    if(modalPrice) modalPrice.textContent = `KES ${Number(product.price || 0).toLocaleString('en-KE')}`;
-    
-    if (modalDesc) {
-        if (product.description && Array.isArray(product.description)) {
-            modalDesc.innerHTML = product.description.map(block => `<p>${block.children.map(c => c.text).join('')}</p>`).join('');
-        } else if (product.description) {
-            modalDesc.innerHTML = `<p>${product.description}</p>`;
-        } else {
-            modalDesc.innerHTML = '<p>Premium electronic nicotine device engineered for ultra-pure firing accuracy and structural balance.</p>';
-        }
-    }
-
-    modal.classList.remove('hidden');
+    if (!product) return;
+    const slug = getProductSlug(product);
+    window.location.href = `product/${slug}.html`;
 }
 
 // --- Delivery distance + pricing helpers -----------------------------
@@ -994,12 +930,25 @@ function setupCartListeners() {
     const modal = document.getElementById('product-detail-modal');
     const closeDetailBtn = document.getElementById('close-detail-btn');
     
+    const closeModal = () => {
+        if (modal) modal.classList.add('hidden');
+        if (window.history && window.history.replaceState) {
+            window.history.replaceState(null, '', window.location.pathname);
+        }
+    };
+
     if(closeDetailBtn && modal) {
-        closeDetailBtn.addEventListener('click', () => modal.classList.add('hidden'));
+        closeDetailBtn.addEventListener('click', closeModal);
     }
     
     window.addEventListener('click', (e) => {
-        if (modal && e.target === modal) modal.classList.add('hidden');
+        if (modal && e.target === modal) closeModal();
+    });
+
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && modal && !modal.classList.contains('hidden')) {
+            closeModal();
+        }
     });
 
     // BUGFIX: clicking the Bag icon had no listener at all, so nothing

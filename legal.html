@@ -3,7 +3,50 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>JVapes Kenya | Legal Hub & Regulatory Disclosures</title>
+    <title>Legal Disclosures &amp; Compliance Policy — JVAPES Kenya</title>
+    <meta name="description" content="Legal framework, age verification policy (18+), privacy policy, and regulatory disclosures for JVAPES Kenya. Fully compliant with Kenyan statutory laws.">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://jvapes.store/legal.html">
+    <link rel="icon" type="image/png" href="favicon.png">
+    <link rel="apple-touch-icon" href="favicon.png">
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Legal Disclosures &amp; Compliance Policy — JVAPES Kenya">
+    <meta property="og:description" content="Legal framework, 18+ age verification, data protection, and regulatory disclosures for JVAPES Kenya.">
+    <meta property="og:url" content="https://jvapes.store/legal.html">
+    <meta property="og:site_name" content="JVAPES">
+    <meta property="og:image" content="https://jvapes.store/favicon.png">
+    <meta property="og:image:width" content="512">
+    <meta property="og:image:height" content="512">
+    <meta property="og:locale" content="en_KE">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Legal Policy — JVAPES Kenya">
+    <meta name="twitter:description" content="Age verification, privacy policy, and regulatory disclosures for JVAPES Kenya.">
+    <meta name="twitter:image" content="https://jvapes.store/favicon.png">
+
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+            { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://jvapes.store/" },
+            { "@type": "ListItem", "position": 2, "name": "Legal Policy", "item": "https://jvapes.store/legal.html" }
+        ]
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebPage",
+        "name": "Legal Disclosures & Compliance Policy",
+        "url": "https://jvapes.store/legal.html",
+        "description": "Legal framework, age verification policy (18+), privacy policy, and regulatory disclosures for JVAPES Kenya."
+    }
+    </script>
     <style>
         :root {
             --bg-color: #0a0b0e;
@@ -30,135 +73,145 @@
             font-family: 'Inter', system-ui, -apple-system, sans-serif;
             background-color: var(--bg-color);
             color: var(--text-primary);
-            line-height: 1.75;
-            overflow-x: hidden;
+            line-height: 1.7;
+            padding-bottom: 80px;
         }
 
-        /* Luxury Ambient Glow Layers */
-        .ambient-glow-top {
-            position: absolute;
-            top: 0;
-            right: 15%;
-            width: 600px;
-            height: 600px;
+        .ambient-glow-1 {
+            position: fixed;
+            top: -100px;
+            right: 0;
+            width: 500px;
+            height: 500px;
             background: radial-gradient(circle, var(--glow) 0%, transparent 70%);
             z-index: -1;
             pointer-events: none;
         }
 
-        .ambient-glow-bottom {
+        .ambient-glow-2 {
             position: fixed;
-            bottom: -10%;
-            left: 5%;
-            width: 500px;
-            height: 500px;
+            bottom: 0;
+            left: 0;
+            width: 600px;
+            height: 600px;
             background: radial-gradient(circle, rgba(255, 255, 255, 0.01) 0%, transparent 60%);
             z-index: -1;
             pointer-events: none;
         }
 
-        .legal-wrapper {
-            max-width: 1100px;
-            margin: 60px auto;
-            padding: 0 24px;
+        .main-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 24px;
         }
 
-        /* Glassmorphism Header Hub */
-        .legal-hub-header {
+        /* Top Navigation */
+        .legal-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0 30px;
+        }
+
+        .legal-nav a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 14px;
+            transition: color 0.3s;
+        }
+
+        .legal-nav a:hover {
+            color: var(--gold);
+        }
+
+        .legal-nav .logo {
+            font-size: 20px;
+            font-weight: 700;
+            color: #fff;
+            letter-spacing: 1px;
+        }
+
+        /* Hero Header Module */
+        .legal-header {
             background: var(--surface-glass);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
             border: 1px solid var(--border-glass);
-            border-radius: 24px;
+            border-radius: 20px;
             padding: 60px 40px;
             text-align: center;
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
             margin-bottom: 40px;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
         }
 
-        .hub-tag {
-            font-size: 12px;
+        .header-tag {
+            font-size: 11px;
             text-transform: uppercase;
-            letter-spacing: 4px;
+            letter-spacing: 3px;
             color: var(--gold);
             font-weight: 700;
             margin-bottom: 12px;
             display: inline-block;
         }
 
-        .legal-hub-header h1 {
+        .legal-header h1 {
             font-size: 38px;
-            font-weight: 800;
-            letter-spacing: -0.5px;
+            font-weight: 700;
             color: #ffffff;
             margin-bottom: 16px;
+            letter-spacing: -0.5px;
         }
 
-        .legal-hub-header p {
+        .legal-header p {
             color: var(--text-secondary);
+            font-size: 15.5px;
             max-width: 700px;
-            margin: 0 auto 30px auto;
-            font-size: 16px;
+            margin: 0 auto;
         }
 
-        /* Quick Navigation Tiles */
-        .hub-nav-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 16px;
-        }
-
-        .nav-tile {
-            background: rgba(255, 255, 255, 0.02);
-            border: 1px solid var(--border-subtle);
-            border-radius: 12px;
-            padding: 16px;
-            color: var(--text-primary);
-            text-decoration: none;
-            font-size: 14px;
-            font-weight: 600;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            text-align: left;
+        /* Fast Anchor Matrix */
+        .nav-matrix {
             display: flex;
-            align-items: center;
-            justify-content: space-between;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 30px;
         }
 
-        .nav-tile:hover {
+        .matrix-pill {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border-subtle);
+            color: var(--text-primary);
+            padding: 8px 16px;
+            border-radius: 10px;
+            font-size: 13px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+
+        .matrix-pill:hover {
             border-color: var(--gold);
-            background: rgba(214, 175, 55, 0.03);
-            transform: translateY(-2px);
+            background: rgba(214, 175, 55, 0.05);
             color: var(--gold-bright);
         }
 
-        .nav-tile span::after {
-            content: ' →';
-            color: var(--gold);
-            opacity: 0;
-            transition: opacity 0.3s;
-        }
-
-        .nav-tile:hover span::after {
-            opacity: 1;
-        }
-
-        /* Main Structured Document Canvas */
+        /* Document Canvas Base */
         .legal-canvas {
             background: var(--surface-glass);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
             border: 1px solid var(--border-glass);
             border-radius: 24px;
-            padding: 60px 50px;
-            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4);
+            padding: 50px 40px;
+            backdrop-filter: blur(30px);
+            -webkit-backdrop-filter: blur(30px);
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.6);
         }
 
         .canvas-section {
-            scroll-margin-top: 40px;
-            margin-bottom: 60px;
+            margin-bottom: 50px;
         }
 
-        .canvas-section:last-of-type {
+        .canvas-section:last-child {
             margin-bottom: 0;
         }
 
@@ -168,154 +221,152 @@
             letter-spacing: 2px;
             color: var(--gold);
             font-weight: 700;
-            margin-bottom: 8px;
+            display: block;
+            margin-bottom: 4px;
         }
 
         .canvas-section h2 {
-            font-size: 24px;
-            font-weight: 700;
+            font-size: 26px;
             color: #ffffff;
+            font-weight: 700;
             margin-bottom: 20px;
-            letter-spacing: -0.3px;
+            letter-spacing: -0.5px;
         }
 
         .canvas-section h3 {
-            font-size: 16px;
-            font-weight: 600;
+            font-size: 18px;
             color: #ffffff;
-            margin: 24px 0 12px 0;
+            font-weight: 600;
+            margin: 24px 0 10px 0;
         }
 
         .canvas-section p {
+            color: var(--text-secondary);
             font-size: 15px;
-            color: var(--text-primary);
-            margin-bottom: 18px;
+            margin-bottom: 14px;
             text-align: justify;
         }
 
         .canvas-section ul, .canvas-section ol {
-            padding-left: 24px;
-            margin-bottom: 20px;
-            font-size: 15px;
+            padding-left: 20px;
+            color: var(--text-secondary);
+            font-size: 14.5px;
+            margin-bottom: 14px;
         }
 
         .canvas-section li {
-            margin-bottom: 10px;
+            margin-bottom: 8px;
         }
 
         .canvas-section strong {
-            color: #ffffff;
+            color: var(--text-primary);
         }
 
-        /* Callout & Hazard Panels */
+        .doc-divider {
+            height: 1px;
+            background: var(--border-subtle);
+            margin: 40px 0;
+        }
+
+        /* Custom Information & Warning Alerts */
+        .compliance-badge {
+            background: rgba(214, 175, 55, 0.08);
+            border: 1px solid var(--border-glass);
+            border-radius: 8px;
+            padding: 8px 14px;
+            font-size: 12px;
+            color: var(--gold-bright);
+            display: inline-block;
+            margin-bottom: 16px;
+            font-weight: 600;
+        }
+
         .hazard-panel {
             background: var(--danger-glow);
             border: 1px solid var(--danger-border);
-            border-radius: 16px;
-            padding: 24px;
-            margin: 30px 0;
+            border-radius: 12px;
+            padding: 20px;
+            margin: 20px 0;
         }
 
         .hazard-panel h4 {
             color: #ef4444;
-            font-size: 15px;
+            font-size: 14px;
             text-transform: uppercase;
             letter-spacing: 1px;
-            margin-bottom: 8px;
-            font-weight: 700;
+            margin-bottom: 6px;
         }
 
         .hazard-panel p {
-            margin-bottom: 0;
-            font-size: 14px;
             color: #fca5a5;
+            font-size: 13.5px;
+            margin-bottom: 0;
+            text-align: left;
         }
 
-        .compliance-badge {
-            display: inline-flex;
-            align-items: center;
-            background: rgba(34, 197, 94, 0.1);
-            border: 1px solid rgba(34, 197, 94, 0.2);
-            color: #4ade80;
-            padding: 4px 12px;
-            border-radius: 9999px;
-            font-size: 12px;
-            font-weight: 600;
-            margin-bottom: 20px;
-        }
-
-        /* Institutional Corporate Footer block inside canvas */
+        /* Structured Corporate Footer */
         .hub-corporate-footer {
             border-top: 1px solid var(--border-subtle);
             margin-top: 60px;
-            padding-top: 40px;
+            padding-top: 30px;
         }
 
         .corporate-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 24px;
+            gap: 20px;
+            text-align: center;
         }
 
         .corp-node h5 {
-            font-size: 11px;
+            font-size: 12px;
             text-transform: uppercase;
-            letter-spacing: 1.5px;
-            color: var(--text-secondary);
-            margin-bottom: 6px;
+            letter-spacing: 1px;
+            color: var(--gold);
+            margin-bottom: 4px;
         }
 
         .corp-node p {
-            font-size: 14px;
-            color: #ffffff;
+            font-size: 13.5px;
+            color: var(--text-secondary);
             margin-bottom: 0;
-        }
-
-        /* Seamless Back to Top Indicator Layout */
-        .doc-divider {
-            height: 1px;
-            background: linear-gradient(90deg, transparent, var(--border-glass), transparent);
-            margin: 40px 0;
-        }
-
-        /* Responsive Mechanics */
-        @media (max-width: 768px) {
-            .legal-hub-header {
-                padding: 40px 24px;
-            }
-            .legal-hub-header h1 {
-                font-size: 28px;
-            }
-            .legal-canvas {
-                padding: 40px 24px;
-            }
-            .hub-nav-grid {
-                grid-template-columns: 1fr;
-            }
+            text-align: center;
         }
     </style>
 </head>
 <body>
 
-    <div class="ambient-glow-top"></div>
-    <div class="ambient-glow-bottom"></div>
+    <div class="ambient-glow-1"></div>
+    <div class="ambient-glow-2"></div>
 
-    <div class="legal-wrapper">
-        
-        <!-- Premium Header Navigation Matrix Hub -->
-        <header class="legal-hub-header">
-            <span class="hub-tag">Compliance Matrix</span>
-            <h1>JVapes Central Legal Hub</h1>
-            <p>Access the unified statutory disclosures, computational data frameworks, compliance mandates, and operational guidelines governing the digital interface of JVapes Kenya.</p>
-            
-            <div class="hub-nav-grid">
-                <a href="#privacy-policy" class="nav-tile"><span>Privacy Policy</span></a>
-                <a href="#cookie-policy" class="nav-tile"><span>Cookie Policy</span></a>
-                <a href="#age-verification" class="nav-tile"><span>Age Verification</span></a>
-                <a href="#disclaimers" class="nav-tile"><span>Safety Disclaimers</span></a>
-                <a href="#intellectual-property" class="nav-tile"><span>Intellectual Property</span></a>
-                <a href="#consignment- B2B" class="nav-tile"><span>Consignment Terms</span></a>
+    <div class="main-container">
+
+        <!-- Top Navigation -->
+        <div class="legal-nav">
+            <a href="index.html" class="logo">JVAPES</a>
+            <div style="display: flex; gap: 20px;">
+                <a href="index.html">Storefront</a>
+                <a href="about.html">About</a>
+                <a href="guides.html">Vape Guides</a>
+                <a href="faq.html">FAQ / Delivery</a>
+                <a href="contact.html">Contact</a>
             </div>
+        </div>
+
+        <!-- Master Legal Hub Header -->
+        <header class="legal-header">
+            <span class="header-tag">Statutory &amp; Compliance Hub</span>
+            <h1>Legal Framework &amp; Regulatory Disclosures</h1>
+            <p>Comprehensive regulatory documentation detailing data intake vectors under the Kenya Data Protection Act, age restriction policies, intellectual property ownership, and merchant consignment protocols.</p>
+            
+            <nav class="nav-matrix">
+                <a href="#privacy-policy" class="matrix-pill">Privacy Policy</a>
+                <a href="#cookie-policy" class="matrix-pill">Cookie Directives</a>
+                <a href="#age-verification" class="matrix-pill">Age Verification</a>
+                <a href="#disclaimers" class="matrix-pill">Safety Disclaimers</a>
+                <a href="#intellectual-property" class="matrix-pill">Intellectual Property</a>
+                <a href="#consignment-B2B" class="matrix-pill">B2B Consignments</a>
+            </nav>
         </header>
 
         <!-- Main Formal Document Canvas -->
@@ -332,7 +383,7 @@
                 <p>We process data categories fundamentally essential to executing trade agreements and protecting system boundary states:</p>
                 <ul>
                     <li><strong>Identified Demographics:</strong> First name, surname, numerical date of birth, and identity assertions from scanned National IDs or Passports.</li>
-                    <li><strong>Logistics Context:</strong> Complete localized physical delivery coordinates within Kilimani, Nairobi, or external nationwide destinations, operational telephone line mappings, and transactional email locations.</li>
+                    <li><strong>Logistics Context:</strong> Complete localized physical delivery coordinates within Ruiru, Nairobi, or external nationwide destinations, operational telephone line mappings, and transactional email locations.</li>
                     <li><strong>Transactional Telemetry:</strong> Systemic transaction identifiers generated via Lipa na M-Pesa protocols, cart value logs, and historical product access trends.</li>
                 </ul>
 
@@ -371,7 +422,7 @@
                 <ul>
                     <li><strong>Digital Gateway Intercept:</strong> A front-facing interactive verification wall that locks out core asset rendering until chronological parameters are verified.</li>
                     <li><strong>Mobile Identity Cross-Reference:</strong> Validation layers that verify registration attributes against mobile money verification vectors during the checkout process.</li>
-                    <li><strong>Visual Document Attestation:</strong> Logistics riders are strictly prohibited from dropping products at unattended destinations. At the point of physical delivery within Kilimani or any nationwide location, the recipient must provide a physical National Identification Card or Passport matching the customer system parameters. Failure to produce a matching ID results in immediate cancellation and delivery fee forfeiture.</li>
+                    <li><strong>Visual Document Attestation:</strong> Logistics riders are strictly prohibited from dropping products at unattended destinations. At the point of physical delivery within Ruiru, Nairobi, or any nationwide location, the recipient must provide a physical National Identification Card or Passport matching the customer system parameters. Failure to produce a matching ID results in immediate cancellation and delivery fee forfeiture.</li>
                 </ul>
             </section>
 
@@ -404,7 +455,7 @@
             <div class="doc-divider"></div>
 
             <!-- CONSIGNMENT & B2B SECTION -->
-            <section id="consignment- B2B" class="canvas-section">
+            <section id="consignment-B2B" class="canvas-section">
                 <span class="section-meta">Directive 06 / Commercial Distribution</span>
                 <h2>Consignment Inventory Framework (B2B)</h2>
                 <p>These terms govern all inventory placements, stock movements, and merchant supply lines established between third-party vendors and JVapes on a consignment layout:</p>
@@ -428,7 +479,7 @@
                     </div>
                     <div class="corp-node">
                         <h5>Corporate Domicile</h5>
-                        <p>Kilimani, Nairobi, Kenya</p>
+                        <p>Ruiru Central Dispatch Hub, Kiambu County (Covering Nairobi &amp; Nationwide)</p>
                     </div>
                 </div>
             </footer>

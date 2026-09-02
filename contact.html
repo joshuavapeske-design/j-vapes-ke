@@ -3,7 +3,76 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>JVapes Kenya | Contact Concierge Desk</title>
+    <title>Contact JVAPES — Support &amp; Same-Day Dispatch in Ruiru &amp; Nairobi</title>
+    <meta name="description" content="Contact JVAPES Kenya. Call, WhatsApp, or email our support desk in Ruiru for instant order checking, device diagnostics, and same-day delivery dispatch. 18+ only.">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://jvapes.store/contact.html">
+    <link rel="icon" type="image/png" href="favicon.png">
+    <link rel="apple-touch-icon" href="favicon.png">
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Contact JVAPES — Support &amp; Delivery Dispatch in Ruiru &amp; Nairobi">
+    <meta property="og:description" content="Reach our support and dispatch team for rapid order fulfillment across Ruiru, Nairobi, and countrywide.">
+    <meta property="og:url" content="https://jvapes.store/contact.html">
+    <meta property="og:site_name" content="JVAPES">
+    <meta property="og:image" content="https://jvapes.store/favicon.png">
+    <meta property="og:image:width" content="512">
+    <meta property="og:image:height" content="512">
+    <meta property="og:locale" content="en_KE">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Contact JVAPES — Vape Support in Kenya">
+    <meta name="twitter:description" content="Direct call and WhatsApp support for vape delivery in Ruiru &amp; Nairobi. 18+ only.">
+    <meta name="twitter:image" content="https://jvapes.store/favicon.png">
+
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+            { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://jvapes.store/" },
+            { "@type": "ListItem", "position": 2, "name": "Contact Us", "item": "https://jvapes.store/contact.html" }
+        ]
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "ContactPage",
+        "name": "Contact JVAPES",
+        "url": "https://jvapes.store/contact.html",
+        "description": "Contact channels for JVAPES Kenya customer support and delivery fulfillment.",
+        "mainEntity": {
+            "@type": ["Store", "LocalBusiness"],
+            "name": "JVAPES",
+            "url": "https://jvapes.store/",
+            "telephone": "+254741658556",
+            "email": "joshuavapes@gmail.com",
+            "address": {
+                "@type": "PostalAddress",
+                "streetAddress": "Ruiru Central Dispatch Hub",
+                "addressLocality": "Ruiru",
+                "addressRegion": "Kiambu County",
+                "addressCountry": "KE"
+            },
+            "geo": {
+                "@type": "GeoCoordinates",
+                "latitude": -1.1462,
+                "longitude": 36.9610
+            },
+            "areaServed": [
+                "Ruiru",
+                "Nairobi CBD",
+                "Kilimani",
+                "Westlands",
+                "Thika Road"
+            ]
+        }
+    }
+    </script>
     <style>
         :root {
             --ios-bg: #000000;
@@ -62,7 +131,7 @@
         .main-container {
             max-width: 1100px;
             margin: 0 auto;
-            padding: 80px 24px 0 24px;
+            padding: 40px 24px 0 24px;
         }
 
         /* iOS Header Hub Module */
@@ -72,7 +141,7 @@
             -webkit-backdrop-filter: blur(35px);
             border: 1px solid var(--ios-gold-border);
             border-radius: 28px;
-            padding: 60px 40px;
+            padding: 50px 40px;
             text-align: center;
             box-shadow: 0 40px 100px rgba(0, 0, 0, 0.7), inset 0 1px 1px rgba(255,255,255,0.05);
             margin-bottom: 40px;
@@ -98,30 +167,31 @@
 
         .contact-header p {
             color: var(--text-secondary);
-            font-size: 17px;
+            font-size: 16px;
             max-width: 650px;
             margin: 0 auto;
+            line-height: 1.6;
         }
 
-        /* Dual Column Dynamic Split Canvas */
+        /* Split Workspace Content Columns */
         .split-layout {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+            grid-template-columns: 1fr 1fr;
             gap: 30px;
-            align-items: start;
+            margin-bottom: 60px;
         }
 
-        @media (max-width: 600px) {
+        @media (max-width: 860px) {
             .split-layout {
                 grid-template-columns: 1fr;
             }
         }
 
-        /* Left Side: iOS Fast Contact Panel Cards */
+        /* Direct Info Panel Nodes */
         .info-panel-stack {
             display: flex;
             flex-direction: column;
-            gap: 20px;
+            gap: 16px;
         }
 
         .glass-node {
@@ -130,56 +200,54 @@
             -webkit-backdrop-filter: blur(30px);
             border: 1px solid var(--ios-border);
             border-radius: 22px;
-            padding: 30px;
-            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4);
-            transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+            padding: 24px 28px;
             display: flex;
+            align-items: center;
             gap: 20px;
-            align-items: flex-start;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
         .glass-node:hover {
             border-color: rgba(255, 255, 255, 0.2);
-            background: var(--ios-glass-bright);
             transform: translateY(-2px);
         }
 
-        .icon-box {
-            width: 46px;
-            height: 46px;
-            border-radius: 12px;
-            background: rgba(255, 255, 255, 0.03);
+        .node-icon-wrapper {
+            width: 48px;
+            height: 48px;
+            border-radius: 14px;
+            background: var(--ios-glass-bright);
             border: 1px solid var(--ios-border);
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 20px;
             flex-shrink: 0;
+            color: var(--gold-accent);
         }
 
         .node-details h3 {
-            font-size: 18px;
+            font-size: 17px;
             font-weight: 600;
             color: #ffffff;
-            margin-bottom: 6px;
-            letter-spacing: -0.3px;
+            margin-bottom: 4px;
         }
 
         .node-details p {
-            font-size: 14.5px;
+            font-size: 13.5px;
             color: var(--text-secondary);
-            margin-bottom: 12px;
+            margin-bottom: 8px;
+            line-height: 1.5;
         }
 
         .action-link {
-            display: inline-flex;
-            align-items: center;
+            font-size: 13px;
+            font-weight: 600;
             color: var(--gold-accent);
             text-decoration: none;
-            font-size: 14px;
-            font-weight: 600;
-            transition: color 0.3s;
+            display: inline-flex;
+            align-items: center;
             gap: 4px;
+            transition: color 0.2s;
         }
 
         .action-link:hover {
@@ -189,20 +257,16 @@
         .action-link.whatsapp {
             color: var(--ios-green);
         }
-        
-        .action-link.whatsapp:hover {
-            color: #5edc80;
-        }
 
-        /* Right Side: Luxury iOS Input Form Canvas */
+        /* Interactive iOS Message Form */
         .form-canvas {
             background: var(--ios-glass-bg);
-            backdrop-filter: blur(30px);
-            -webkit-backdrop-filter: blur(30px);
+            backdrop-filter: blur(35px);
+            -webkit-backdrop-filter: blur(35px);
             border: 1px solid var(--ios-border);
-            border-radius: 24px;
-            padding: 40px;
-            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4);
+            border-radius: 26px;
+            padding: 36px 32px;
+            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.6);
         }
 
         .form-canvas h2 {
@@ -214,7 +278,7 @@
         }
 
         .form-group {
-            margin-bottom: 20px;
+            margin-bottom: 18px;
         }
 
         .form-group label {
@@ -225,58 +289,55 @@
             letter-spacing: 1px;
             color: var(--text-secondary);
             margin-bottom: 8px;
-            padding-left: 4px;
         }
 
         .ios-input, .ios-textarea {
             width: 100%;
-            background: rgba(0, 0, 0, 0.3);
+            background: rgba(255, 255, 255, 0.03);
             border: 1px solid var(--ios-border);
             border-radius: 12px;
             padding: 14px 16px;
+            font-size: 14.5px;
             color: #ffffff;
-            font-size: 15px;
-            transition: all 0.3s ease;
             outline: none;
+            transition: all 0.3s;
         }
 
         .ios-input:focus, .ios-textarea:focus {
             border-color: var(--gold-accent);
-            background: rgba(255, 255, 255, 0.02);
-            box-shadow: 0 0 0 3px rgba(229, 193, 88, 0.15);
+            background: rgba(255, 255, 255, 0.05);
+            box-shadow: 0 0 15px rgba(229, 193, 88, 0.15);
         }
 
         .ios-textarea {
             resize: vertical;
-            min-height: 120px;
+            min-height: 110px;
         }
 
         .ios-submit-btn {
             width: 100%;
-            background: linear-gradient(180deg, #ffffff 0%, #e5c158 100%);
-            border: none;
-            border-radius: 12px;
             padding: 16px;
+            border-radius: 14px;
+            background: linear-gradient(135deg, var(--gold-accent) 0%, #b89737 100%);
+            border: none;
             color: #000000;
             font-size: 15px;
             font-weight: 700;
+            letter-spacing: 0.5px;
             cursor: pointer;
-            transition: opacity 0.3s, transform 0.2s;
-            box-shadow: 0 10px 20px rgba(229, 193, 88, 0.15);
+            transition: all 0.3s;
+            box-shadow: 0 8px 25px rgba(229, 193, 88, 0.25);
+            margin-top: 10px;
         }
 
         .ios-submit-btn:hover {
-            opacity: 0.95;
-            transform: translateY(-1px);
+            transform: translateY(-2px);
+            box-shadow: 0 12px 30px rgba(229, 193, 88, 0.4);
+            filter: brightness(1.05);
         }
 
-        .ios-submit-btn:active {
-            transform: translateY(1px);
-        }
-
-        /* Apple Clean Footer */
+        /* Apple Clean Footer Parameter */
         .contact-footer {
-            margin-top: 80px;
             border-top: 1px solid var(--ios-border);
             padding-top: 30px;
             text-align: center;
@@ -292,11 +353,22 @@
 
     <div class="main-container">
 
+        <!-- Header navigation back to storefront -->
+        <nav style="display: flex; justify-content: space-between; align-items: center; padding: 10px 0 20px;">
+            <a href="index.html" style="font-size: 20px; font-weight: 700; color: #fff; text-decoration: none; letter-spacing: 1px;">JVAPES</a>
+            <div style="display: flex; gap: 20px; font-size: 14px;">
+                <a href="index.html" style="color: var(--text-secondary); text-decoration: none;">Storefront</a>
+                <a href="about.html" style="color: var(--text-secondary); text-decoration: none;">About</a>
+                <a href="guides.html" style="color: var(--text-secondary); text-decoration: none;">Vape Guides</a>
+                <a href="faq.html" style="color: var(--text-secondary); text-decoration: none;">FAQ / Delivery</a>
+            </div>
+        </nav>
+
         <!-- Header Communication Context Hub -->
         <header class="contact-header">
             <span class="header-tag">Concierge Matrix</span>
             <h1>Connect With JVapes</h1>
-            <p>Reach our Kilimani desk directly. Whether verifying multi-brand bulk stock, querying M-Pesa clearing parameters, or managing consignment contracts, we respond promptly.</p>
+            <p>Reach our central dispatch and customer desk directly. Whether verifying multi-brand stock, querying M-Pesa clearing parameters, or coordinating delivery routes across Ruiru and Nairobi, we respond promptly.</p>
         </header>
 
         <!-- Main Canvas Content Layout Split -->
@@ -310,8 +382,8 @@
                 
                     <div class="node-details">
                         <h3>Direct Calling Desk</h3>
-                        <p>Call our localized Kilimani support desk for instant order checking, device diagnostics, or stock status.</p>
-                        <a href="tel:+254741658556" class="action-link">Dial +254 741 658 556 →</a>
+                        <p>Call our localized support desk for instant order checking, device diagnostics, or stock status.</p>
+                        <a href="tel:+254741658556" class="action-link">Dial +254 741 658 556 &rarr;</a>
                     </div>
                 </section>
 
@@ -321,7 +393,7 @@
                     <div class="node-details">
                         <h3>WhatsApp Secure Chat</h3>
                         <p>Instantly message our team for live updates, photo verifications of devices, or instant delivery location dropping pins.</p>
-                        <a href="https://wa.me/254741658556" target="_blank" class="action-link whatsapp">Launch WhatsApp Chat →</a>
+                        <a href="https://wa.me/254741658556" target="_blank" class="action-link whatsapp">Launch WhatsApp Chat &rarr;</a>
                     </div>
                 </section>
 
@@ -330,8 +402,8 @@
                     
                     <div class="node-details">
                         <h3>Authorized Control Email</h3>
-                        <p>Send B2B consignment reconciliations, technical warranty logs, or data erasure audit requests to our primary controller.</p>
-                        <a href="mailto:joshuavapes@gmail.com" class="action-link">Write to joshuavapes@gmail.com →</a>
+                        <p>Send B2B consignment reconciliations, technical warranty logs, or support queries directly to our primary inbox.</p>
+                        <a href="mailto:joshuavapes@gmail.com" class="action-link">Write to joshuavapes@gmail.com &rarr;</a>
                     </div>
                 </section>
 
@@ -339,9 +411,9 @@
                 <section class="glass-node">
                 
                     <div class="node-details">
-                        <h3>Operational Base</h3>
-                        <p>All premium disposables, closed pods, and starter kits are fully authenticated and dispatched directly from our hub.</p>
-                        <p style="color: #ffffff; font-weight: 500; margin-bottom: 0;">Kilimani, Nairobi, Kenya</p>
+                        <h3>Operational Dispatch Hub</h3>
+                        <p>All premium disposables, closed pods, and starter kits are fully authenticated and dispatched directly from our central base.</p>
+                        <p style="color: #ffffff; font-weight: 500; margin-bottom: 0;">Ruiru Central Dispatch Hub, Kiambu County (Covering Nairobi Metro &amp; Countrywide)</p>
                     </div>
                 </section>
 
@@ -349,9 +421,9 @@
                 <section class="glass-node">
                  
                     <div class="node-details">
-                        <h3>Operational Matrix Hours</h3>
-                        <p style="margin-bottom: 4px;"><strong>Monday – Saturday:</strong> 08:00 AM – 08:00 PM</p>
-                        <p style="margin-bottom: 0;"><strong>Sunday:</strong> Closed (Fulfillment Channels Paused)</p>
+                        <h3>Operational Fulfillment Hours</h3>
+                        <p style="margin-bottom: 4px;"><strong>Monday – Sunday:</strong> 08:00 AM – 11:00 PM</p>
+                        <p style="margin-bottom: 0;"><strong>Same-Day Dispatch:</strong> Active every day</p>
                     </div>
                 </section>
 

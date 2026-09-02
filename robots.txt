@@ -1,4 +1,8 @@
 User-agent: *
 Allow: /
+Disallow: /jvapes-staging-studio/
+Disallow: /scripts/
+Disallow: /schemas/
+Disallow: /templates/
 
 Sitemap: https://jvapes.store/sitemap.xml
