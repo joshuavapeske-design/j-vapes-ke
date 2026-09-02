@@ -292,6 +292,14 @@ Blend-in battery & e-liquid display
                 </div>
                 <button id="whatsapp-checkout-btn" class="btn btn-whatsapp">Checkout via WhatsApp</button>
                 <button id="cod-checkout-btn" class="btn btn-primary">Pay via M-Pesa / Cash on Delivery</button>
+
+                <div class="mpesa-till-box" style="margin-top: 12px; background: rgba(52, 199, 89, 0.08); border: 1px solid rgba(52, 199, 89, 0.25); border-radius: 10px; padding: 10px 14px; display: flex; align-items: center; justify-content: space-between; gap: 10px;">
+                    <div style="display: flex; align-items: center; gap: 8px;">
+                        <span style="background: #34c759; color: #000000; font-weight: 800; font-size: 11px; padding: 2px 7px; border-radius: 4px; letter-spacing: 0.5px; text-transform: uppercase;">M-PESA TILL</span>
+                        <span style="color: #f5f5f7; font-weight: 700; font-size: 15px; letter-spacing: 1px;">1131829</span>
+                    </div>
+                    <button type="button" class="copy-till-btn" onclick="navigator.clipboard.writeText('1131829'); if(typeof showToast==='function') showToast('Till No. 1131829 copied!');" style="background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15); color: #e4e4e7; font-size: 11px; font-weight: 600; padding: 5px 10px; border-radius: 6px; cursor: pointer; transition: all 0.2s ease;">Copy Till</button>
+                </div>
             </div>
         </div>
     </div>
