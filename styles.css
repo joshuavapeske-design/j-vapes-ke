@@ -2964,3 +2964,76 @@ body.age-gate-active {
 .close-lightbox-btn:hover {
     background: rgba(255, 255, 255, 0.3) !important;
 }
+
+/* --- Static Dedicated Product Pages Layout & Image Guarantee --- */
+.product-detail-static-card {
+    padding: 30px !important;
+    border-radius: 20px !important;
+    margin-bottom: 40px !important;
+    overflow: visible !important;
+    max-height: none !important;
+}
+
+.product-detail-static-card .modal-layout-split {
+    display: flex !important;
+    flex-direction: row !important;
+    gap: 40px !important;
+    align-items: flex-start !important;
+    max-height: none !important;
+    overflow: visible !important;
+}
+
+.product-detail-static-card .modal-image-pane {
+    flex: 1 !important;
+    text-align: center !important;
+    overflow: visible !important;
+    aspect-ratio: auto !important;
+    max-height: none !important;
+}
+
+.product-detail-static-card .modal-image-pane img {
+    max-width: 100% !important;
+    height: auto !important;
+    max-height: 440px !important;
+    object-fit: contain !important;
+    border-radius: 16px !important;
+    display: block !important;
+    margin: 0 auto !important;
+}
+
+@media (max-width: 768px) {
+    .product-detail-static-card {
+        padding: 16px !important;
+        border-radius: 16px !important;
+    }
+
+    .product-detail-static-card .modal-layout-split {
+        flex-direction: column !important;
+        gap: 20px !important;
+        max-height: none !important;
+        overflow: visible !important;
+    }
+
+    .product-detail-static-card .modal-image-pane {
+        width: 100% !important;
+        max-width: 100% !important;
+        height: auto !important;
+        aspect-ratio: auto !important;
+        text-align: center !important;
+        margin-bottom: 10px !important;
+        overflow: visible !important;
+    }
+
+    .product-detail-static-card .modal-image-pane img {
+        width: 100% !important;
+        max-width: 320px !important;
+        height: auto !important;
+        max-height: 360px !important;
+        object-fit: contain !important;
+        margin: 0 auto !important;
+        display: block !important;
+        border-radius: 16px !important;
+        background: rgba(255, 255, 255, 0.03) !important;
+        border: 1px solid rgba(255, 255, 255, 0.08) !important;
+    }
+}
