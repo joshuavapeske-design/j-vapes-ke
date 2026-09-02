@@ -645,10 +645,12 @@ function generateProductCard(product) {
         puffsSnippet = `<span class="product-puffs-badge">${Number(product.puffs).toLocaleString('en-KE')} Puffs</span>`;
     }
 
+    const slug = getProductSlug(product);
+
     let stockActionHtml = `
-        <button class="btn btn-primary add-cart-btn" data-id="${product._id}" style="width:100%;">
-            Add to Bag
-        </button>
+        <a href="product/${slug}.html" class="btn btn-secondary view-details-card-btn" style="width:100%; text-decoration:none; text-align:center; display:block; padding: 10px 14px;">
+            Details
+        </a>
     `;
     if (product.stock === 0 || product.stock === undefined) {
         stockActionHtml = `<button class="btn btn-secondary disabled-stock" style="width:100%; cursor:not-allowed;" disabled>Out of Stock</button>`;
@@ -665,8 +667,6 @@ function generateProductCard(product) {
             imageUrl = `https://cdn.sanity.io/images/${SANITY_PROJECT_ID}/${SANITY_DATASET}/${base}.${ext}`;
         }
     }
-
-    const slug = getProductSlug(product);
 
     return `
         <div class="product-item" data-id="${product._id}" data-slug="${slug}" data-name="${(product.name || '').toLowerCase()}" data-brand="${product.brand || ''}" data-price="${product.price || 0}" data-flavor="${(product.flavors || []).join(',').toLowerCase()}">

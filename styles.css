@@ -878,7 +878,7 @@ body {
     -webkit-text-fill-color: #fff !important;
 }
 body {
-    padding-top: 80px;
+    padding-top: 0;
 }
 @media (max-width: 768px) {
 
@@ -2251,7 +2251,7 @@ h1, h2, h3, h4, h5, h6, p, span, a, li, label {
 /* --- Hero Section (Dark Luxury) --- */
 .hero-section {
     position: relative;
-    padding: 70px 20px 40px 20px !important;
+    padding: 24px 20px 30px 20px !important;
     display: flex;
     flex-direction: column;
     justify-content: center;
