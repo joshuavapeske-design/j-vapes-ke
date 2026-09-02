@@ -120,19 +120,30 @@ async function generate() {
     }
 
     const generatedUrls = [];
-    const seenSlugs = new Map();
 
-    products.forEach((p) => {
-        let baseSlug = (p.slug && p.slug.current) ? p.slug.current : slugify(p.name || 'item');
+    // Pre-calculate base slug frequencies to guarantee matching URLs between client & pre-renderer
+    const slugCounts = new Map();
+    products.forEach(p => {
+        let base = (p.slug && p.slug.current) ? p.slug.current.toLowerCase().trim() : slugify(p.name || 'item');
+        slugCounts.set(base, (slugCounts.get(base) || 0) + 1);
+    });
+
+    const slugTracker = new Map();
+    products.forEach(p => {
+        let baseSlug = (p.slug && p.slug.current) ? p.slug.current.toLowerCase().trim() : slugify(p.name || 'item');
         let slug = baseSlug;
-        if (seenSlugs.has(baseSlug)) {
-            const count = seenSlugs.get(baseSlug) + 1;
-            seenSlugs.set(baseSlug, count);
-            slug = `${baseSlug}-${count}`;
-        } else {
-            seenSlugs.set(baseSlug, 1);
+        if (slugCounts.get(baseSlug) > 1) {
+            const count = (slugTracker.get(baseSlug) || 0) + 1;
+            slugTracker.set(baseSlug, count);
+            if (count > 1) {
+                slug = `${baseSlug}-${count}`;
+            }
         }
         p.assignedSlug = slug;
+    });
+
+    products.forEach((p) => {
+        const slug = p.assignedSlug;
 
         const prodName = p.name || 'Vape Device';
         const brand = p.brand || 'JVAPES';

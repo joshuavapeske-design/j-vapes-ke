@@ -397,6 +397,27 @@ async function fetchStorefrontData() {
             return (a.name || '').localeCompare(b.name || '');
         });
 
+        // Pre-calculate deterministic slugs matching static pre-renderer URLs
+        const slugCounts = new Map();
+        allProducts.forEach(p => {
+            let base = (p.slug && p.slug.current) ? p.slug.current.toLowerCase().trim() : (p.name ? p.name.toLowerCase().trim().replace(/\s+/g, '-').replace(/[^\w\-]+/g, '').replace(/\-\-+/g, '') : p._id);
+            slugCounts.set(base, (slugCounts.get(base) || 0) + 1);
+        });
+
+        const slugTracker = new Map();
+        allProducts.forEach(p => {
+            let baseSlug = (p.slug && p.slug.current) ? p.slug.current.toLowerCase().trim() : (p.name ? p.name.toLowerCase().trim().replace(/\s+/g, '-').replace(/[^\w\-]+/g, '').replace(/\-\-+/g, '') : p._id);
+            let slug = baseSlug;
+            if (slugCounts.get(baseSlug) > 1) {
+                const count = (slugTracker.get(baseSlug) || 0) + 1;
+                slugTracker.set(baseSlug, count);
+                if (count > 1) {
+                    slug = `${baseSlug}-${count}`;
+                }
+            }
+            p.assignedSlug = slug;
+        });
+
         (result.promoCodes || []).forEach(pc => {
             if (pc.code) promoCodes[pc.code.toUpperCase()] = pc.discountPercentage;
         });
@@ -414,8 +435,9 @@ async function fetchStorefrontData() {
 }
 
 function getProductSlug(product) {
-    if (product.slug && product.slug.current) return product.slug.current;
-    if (product.name) {
+    if (product && product.assignedSlug) return product.assignedSlug;
+    if (product && product.slug && product.slug.current) return product.slug.current.toLowerCase().trim();
+    if (product && product.name) {
         return product.name
             .toLowerCase()
             .trim()
@@ -425,7 +447,7 @@ function getProductSlug(product) {
             .replace(/^-+/, '')
             .replace(/-+$/, '');
     }
-    return product._id;
+    return product ? product._id : 'item';
 }
 
 function injectProductStructuredData(products) {
