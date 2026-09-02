@@ -84,7 +84,7 @@ async function generate() {
         fs.mkdirSync(outputDir, { recursive: true });
     }
 
-    const groqQuery = `*[_type == "product"]{
+    const groqQuery = `*[_type == "product"] | order(coalesce(displayOrder, 999) asc, name asc){
         _id,
         name,
         slug,
@@ -93,6 +93,7 @@ async function generate() {
         stock,
         sku,
         productType,
+        displayOrder,
         category->{
             name,
             slug

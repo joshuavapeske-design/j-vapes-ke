@@ -69,6 +69,12 @@ export const product = defineType({
       initialValue: 10,
     }),
     defineField({
+      name: 'displayOrder',
+      title: 'Display Order / Priority',
+      type: 'number',
+      description: 'Lower numbers display first (e.g. 1 for Vapengin, 99 for Bugatti). Leave blank for default sorting.',
+    }),
+    defineField({
       name: 'description',
       title: 'Description (Rich Text Specification)',
       type: 'array',

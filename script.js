@@ -356,7 +356,7 @@ async function fetchStorefrontData() {
     if (errorMsg) errorMsg.classList.add('hidden');
 
     const groqQuery = encodeURIComponent(`{
-"products": *[_type=="product"]{
+"products": *[_type=="product"] | order(coalesce(displayOrder, 999) asc, name asc){
  _id,
  name,
  slug,
@@ -368,6 +368,7 @@ async function fetchStorefrontData() {
  image,
  description,
  puffs,
+ displayOrder,
  seoTitle,
  metaDescription,
  canonicalUrl
@@ -388,6 +389,13 @@ async function fetchStorefrontData() {
 
         activePromos = result.promos || [];
         allProducts = result.products || [];
+
+        allProducts.sort((a, b) => {
+            const orderA = a.displayOrder !== undefined && a.displayOrder !== null ? a.displayOrder : 999;
+            const orderB = b.displayOrder !== undefined && b.displayOrder !== null ? b.displayOrder : 999;
+            if (orderA !== orderB) return orderA - orderB;
+            return (a.name || '').localeCompare(b.name || '');
+        });
 
         (result.promoCodes || []).forEach(pc => {
             if (pc.code) promoCodes[pc.code.toUpperCase()] = pc.discountPercentage;
