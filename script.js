@@ -292,7 +292,7 @@ function setupBrandStrip() {
     });
 }
 
-// Age Gate Verification — Prompted on Every Site Visit
+// Age Gate Verification — Prompted on Every Site Visit & Locks Page Scroll
 function initAgeGate() {
     const ageGate = document.getElementById('age-gate');
     const verifyBtn = document.getElementById('verify-btn');
@@ -301,11 +301,19 @@ function initAgeGate() {
 
     if (ageGate) {
         ageGate.classList.remove('hidden');
+        document.body.classList.add('age-gate-active');
+
+        ageGate.addEventListener('touchmove', (e) => {
+            if (!e.target.closest('.age-gate-card')) {
+                e.preventDefault();
+            }
+        }, { passive: false });
     }
 
     if (verifyBtn) {
         verifyBtn.addEventListener('click', () => {
             if (ageGate) ageGate.classList.add('hidden');
+            document.body.classList.remove('age-gate-active');
         });
     }
 

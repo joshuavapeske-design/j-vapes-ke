@@ -2621,10 +2621,19 @@ h1, h2, h3, h4, h5, h6, p, span, a, li, label {
 }
 
 .age-gate-btn.verify-btn {
-    background: #d4af37 !important;
+    background: #ffffff !important;
     color: #000000 !important;
-    border: 1px solid #d4af37 !important;
-    box-shadow: 0 4px 14px rgba(212, 175, 55, 0.35) !important;
+    border: 1px solid #ffffff !important;
+    box-shadow: 0 4px 14px rgba(255, 255, 255, 0.35) !important;
+}
+
+/* Strict Scroll Lock when Age Gate Modal is Active */
+body.age-gate-active {
+    overflow: hidden !important;
+    height: 100vh !important;
+    touch-action: none !important;
+    position: fixed !important;
+    width: 100vw !important;
 }
 
 .hero-mobile-badge {
