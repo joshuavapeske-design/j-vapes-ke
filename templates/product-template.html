@@ -265,10 +265,18 @@
     <script src="../analytics.js"></script>
     <script src="../script.js"></script>
     <script>
-        // Wire multi-flavor selection & add-to-cart button
+        // Wire multi-flavor selection & toast notifications
         document.querySelectorAll('.flavor-pill-btn').forEach(btn => {
             btn.addEventListener('click', function() {
-                this.classList.toggle('active');
+                const isSelected = this.classList.toggle('active');
+                const flavorName = this.getAttribute('data-flavor');
+                if (typeof showToast === 'function') {
+                    if (isSelected) {
+                        showToast(`${flavorName} selected`);
+                    } else {
+                        showToast(`${flavorName} deselected`);
+                    }
+                }
             });
         });
 

@@ -189,7 +189,7 @@
                 <div style="margin-bottom: 24px;" class="flavor-selection-block">
                     <label style="display: block; font-size: 13px; font-weight: 600; margin-bottom: 10px; color: #a1a1aa; text-transform: uppercase; letter-spacing: 0.5px;">Choose Flavor(s) / Option (Select 1 or more):</label>
                     <div class="flavor-pills-container" style="display: flex; flex-wrap: wrap; gap: 8px;">
-                        <button type="button" class="flavor-pill-btn active" data-flavor="COOL MINT ">COOL MINT </button><button type="button" class="flavor-pill-btn" data-flavor="STRAWBERRY DRAGON FRUIT">STRAWBERRY DRAGON FRUIT</button><button type="button" class="flavor-pill-btn" data-flavor="STRAWBERRY WATERMELON ">STRAWBERRY WATERMELON </button><button type="button" class="flavor-pill-btn" data-flavor="KIWI PASSION FRUIT GUAVA ">KIWI PASSION FRUIT GUAVA </button><button type="button" class="flavor-pill-btn" data-flavor="WHITE PEACH ">WHITE PEACH </button><button type="button" class="flavor-pill-btn" data-flavor="BLUEBERRY RASPBERRY ICE ">BLUEBERRY RASPBERRY ICE </button><button type="button" class="flavor-pill-btn" data-flavor="CHERRY LIME CLASSIC ">CHERRY LIME CLASSIC </button><button type="button" class="flavor-pill-btn" data-flavor="BLACKBERRY ICE ">BLACKBERRY ICE </button><button type="button" class="flavor-pill-btn" data-flavor="SPEARMINT ">SPEARMINT </button><button type="button" class="flavor-pill-btn" data-flavor="RASPBERRY DRAGON FRUIT ICE ">RASPBERRY DRAGON FRUIT ICE </button><button type="button" class="flavor-pill-btn" data-flavor="SOUR GREEN APPLE ">SOUR GREEN APPLE </button><button type="button" class="flavor-pill-btn" data-flavor="CLASSICO ICE ">CLASSICO ICE </button><button type="button" class="flavor-pill-btn" data-flavor="GUAVA ICE ">GUAVA ICE </button><button type="button" class="flavor-pill-btn" data-flavor="POMEGRANATE ICE ">POMEGRANATE ICE </button><button type="button" class="flavor-pill-btn" data-flavor="ALOE GRAPE ICE ">ALOE GRAPE ICE </button><button type="button" class="flavor-pill-btn" data-flavor="WATERMELON ICE ">WATERMELON ICE </button><button type="button" class="flavor-pill-btn" data-flavor="MANGO PEACH ">MANGO PEACH </button><button type="button" class="flavor-pill-btn" data-flavor="TRIPLE MANGO ">TRIPLE MANGO </button><button type="button" class="flavor-pill-btn" data-flavor="BLUEBERRY RASPBERRY PEACH ">BLUEBERRY RASPBERRY PEACH </button>
+                        <button type="button" class="flavor-pill-btn" data-flavor="COOL MINT ">COOL MINT </button><button type="button" class="flavor-pill-btn" data-flavor="STRAWBERRY DRAGON FRUIT">STRAWBERRY DRAGON FRUIT</button><button type="button" class="flavor-pill-btn" data-flavor="STRAWBERRY WATERMELON ">STRAWBERRY WATERMELON </button><button type="button" class="flavor-pill-btn" data-flavor="KIWI PASSION FRUIT GUAVA ">KIWI PASSION FRUIT GUAVA </button><button type="button" class="flavor-pill-btn" data-flavor="WHITE PEACH ">WHITE PEACH </button><button type="button" class="flavor-pill-btn" data-flavor="BLUEBERRY RASPBERRY ICE ">BLUEBERRY RASPBERRY ICE </button><button type="button" class="flavor-pill-btn" data-flavor="CHERRY LIME CLASSIC ">CHERRY LIME CLASSIC </button><button type="button" class="flavor-pill-btn" data-flavor="BLACKBERRY ICE ">BLACKBERRY ICE </button><button type="button" class="flavor-pill-btn" data-flavor="SPEARMINT ">SPEARMINT </button><button type="button" class="flavor-pill-btn" data-flavor="RASPBERRY DRAGON FRUIT ICE ">RASPBERRY DRAGON FRUIT ICE </button><button type="button" class="flavor-pill-btn" data-flavor="SOUR GREEN APPLE ">SOUR GREEN APPLE </button><button type="button" class="flavor-pill-btn" data-flavor="CLASSICO ICE ">CLASSICO ICE </button><button type="button" class="flavor-pill-btn" data-flavor="GUAVA ICE ">GUAVA ICE </button><button type="button" class="flavor-pill-btn" data-flavor="POMEGRANATE ICE ">POMEGRANATE ICE </button><button type="button" class="flavor-pill-btn" data-flavor="ALOE GRAPE ICE ">ALOE GRAPE ICE </button><button type="button" class="flavor-pill-btn" data-flavor="WATERMELON ICE ">WATERMELON ICE </button><button type="button" class="flavor-pill-btn" data-flavor="MANGO PEACH ">MANGO PEACH </button><button type="button" class="flavor-pill-btn" data-flavor="TRIPLE MANGO ">TRIPLE MANGO </button><button type="button" class="flavor-pill-btn" data-flavor="BLUEBERRY RASPBERRY PEACH ">BLUEBERRY RASPBERRY PEACH </button>
                     </div>
                 </div>
             
@@ -322,10 +322,18 @@
     <script src="../analytics.js"></script>
     <script src="../script.js"></script>
     <script>
-        // Wire multi-flavor selection & add-to-cart button
+        // Wire multi-flavor selection & toast notifications
         document.querySelectorAll('.flavor-pill-btn').forEach(btn => {
             btn.addEventListener('click', function() {
-                this.classList.toggle('active');
+                const isSelected = this.classList.toggle('active');
+                const flavorName = this.getAttribute('data-flavor');
+                if (typeof showToast === 'function') {
+                    if (isSelected) {
+                        showToast(`${flavorName} selected`);
+                    } else {
+                        showToast(`${flavorName} deselected`);
+                    }
+                }
             });
         });
 

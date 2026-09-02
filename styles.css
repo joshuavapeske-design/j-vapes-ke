@@ -2598,7 +2598,8 @@ h1, h2, h3, h4, h5, h6, p, span, a, li, label {
     font-size: 0.85rem !important;
     font-weight: 500 !important;
     cursor: pointer !important;
-    transition: all 0.2s ease !important;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    user-select: none !important;
 }
 
 .flavor-pill-btn:hover {
@@ -2611,7 +2612,8 @@ h1, h2, h3, h4, h5, h6, p, span, a, li, label {
     color: #000000 !important;
     border-color: #d4af37 !important;
     font-weight: 700 !important;
-    box-shadow: 0 4px 14px rgba(212, 175, 55, 0.35) !important;
+    box-shadow: 0 4px 16px rgba(212, 175, 55, 0.45) !important;
+    transform: scale(1.04) !important;
 }
 
 /* ==========================================

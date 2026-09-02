@@ -180,7 +180,7 @@ async function generate() {
                 <div style="margin-bottom: 24px;" class="flavor-selection-block">
                     <label style="display: block; font-size: 13px; font-weight: 600; margin-bottom: 10px; color: #a1a1aa; text-transform: uppercase; letter-spacing: 0.5px;">Choose Flavor(s) / Option (Select 1 or more):</label>
                     <div class="flavor-pills-container" style="display: flex; flex-wrap: wrap; gap: 8px;">
-                        ${p.flavors.map((f, idx) => `<button type="button" class="flavor-pill-btn${idx === 0 ? ' active' : ''}" data-flavor="${f}">${f}</button>`).join('')}
+                        ${p.flavors.map(f => `<button type="button" class="flavor-pill-btn" data-flavor="${f}">${f}</button>`).join('')}
                     </div>
                 </div>
             `;

@@ -189,7 +189,7 @@
                 <div style="margin-bottom: 24px;" class="flavor-selection-block">
                     <label style="display: block; font-size: 13px; font-weight: 600; margin-bottom: 10px; color: #a1a1aa; text-transform: uppercase; letter-spacing: 0.5px;">Choose Flavor(s) / Option (Select 1 or more):</label>
                     <div class="flavor-pills-container" style="display: flex; flex-wrap: wrap; gap: 8px;">
-                        <button type="button" class="flavor-pill-btn active" data-flavor="APPLE MANGO KIWI">APPLE MANGO KIWI</button><button type="button" class="flavor-pill-btn" data-flavor="BLUEBERRY RASPBERRY">BLUEBERRY RASPBERRY</button><button type="button" class="flavor-pill-btn" data-flavor="CHERRY LEMONADE">CHERRY LEMONADE</button><button type="button" class="flavor-pill-btn" data-flavor="CHERRY STRAWBERRY ">CHERRY STRAWBERRY </button><button type="button" class="flavor-pill-btn" data-flavor="DOUBLE MINT">DOUBLE MINT</button><button type="button" class="flavor-pill-btn" data-flavor="GRAPE RASPBERRY">GRAPE RASPBERRY</button><button type="button" class="flavor-pill-btn" data-flavor="PASSION FRUIT RASPBERRY GRAPE">PASSION FRUIT RASPBERRY GRAPE</button><button type="button" class="flavor-pill-btn" data-flavor="PEACH BERRIES ">PEACH BERRIES </button><button type="button" class="flavor-pill-btn" data-flavor="PEACH WATERMELON">PEACH WATERMELON</button><button type="button" class="flavor-pill-btn" data-flavor="PINEAPPLE MANGO WATERMELON">PINEAPPLE MANGO WATERMELON</button><button type="button" class="flavor-pill-btn" data-flavor="SAKURA GRAPE">SAKURA GRAPE</button><button type="button" class="flavor-pill-btn" data-flavor="STRAWBERRY GRAPE">STRAWBERRY GRAPE</button><button type="button" class="flavor-pill-btn" data-flavor="STRAWBERRY KIWI WATERMELON">STRAWBERRY KIWI WATERMELON</button><button type="button" class="flavor-pill-btn" data-flavor="WATERMELON ICE">WATERMELON ICE</button>
+                        <button type="button" class="flavor-pill-btn" data-flavor="APPLE MANGO KIWI">APPLE MANGO KIWI</button><button type="button" class="flavor-pill-btn" data-flavor="BLUEBERRY RASPBERRY">BLUEBERRY RASPBERRY</button><button type="button" class="flavor-pill-btn" data-flavor="CHERRY LEMONADE">CHERRY LEMONADE</button><button type="button" class="flavor-pill-btn" data-flavor="CHERRY STRAWBERRY ">CHERRY STRAWBERRY </button><button type="button" class="flavor-pill-btn" data-flavor="DOUBLE MINT">DOUBLE MINT</button><button type="button" class="flavor-pill-btn" data-flavor="GRAPE RASPBERRY">GRAPE RASPBERRY</button><button type="button" class="flavor-pill-btn" data-flavor="PASSION FRUIT RASPBERRY GRAPE">PASSION FRUIT RASPBERRY GRAPE</button><button type="button" class="flavor-pill-btn" data-flavor="PEACH BERRIES ">PEACH BERRIES </button><button type="button" class="flavor-pill-btn" data-flavor="PEACH WATERMELON">PEACH WATERMELON</button><button type="button" class="flavor-pill-btn" data-flavor="PINEAPPLE MANGO WATERMELON">PINEAPPLE MANGO WATERMELON</button><button type="button" class="flavor-pill-btn" data-flavor="SAKURA GRAPE">SAKURA GRAPE</button><button type="button" class="flavor-pill-btn" data-flavor="STRAWBERRY GRAPE">STRAWBERRY GRAPE</button><button type="button" class="flavor-pill-btn" data-flavor="STRAWBERRY KIWI WATERMELON">STRAWBERRY KIWI WATERMELON</button><button type="button" class="flavor-pill-btn" data-flavor="WATERMELON ICE">WATERMELON ICE</button>
                     </div>
                 </div>
             
@@ -338,10 +338,18 @@ Mega intelligent screen
     <script src="../analytics.js"></script>
     <script src="../script.js"></script>
     <script>
-        // Wire multi-flavor selection & add-to-cart button
+        // Wire multi-flavor selection & toast notifications
         document.querySelectorAll('.flavor-pill-btn').forEach(btn => {
             btn.addEventListener('click', function() {
-                this.classList.toggle('active');
+                const isSelected = this.classList.toggle('active');
+                const flavorName = this.getAttribute('data-flavor');
+                if (typeof showToast === 'function') {
+                    if (isSelected) {
+                        showToast(`${flavorName} selected`);
+                    } else {
+                        showToast(`${flavorName} deselected`);
+                    }
+                }
             });
         });
 

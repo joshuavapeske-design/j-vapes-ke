@@ -189,7 +189,7 @@
                 <div style="margin-bottom: 24px;" class="flavor-selection-block">
                     <label style="display: block; font-size: 13px; font-weight: 600; margin-bottom: 10px; color: #a1a1aa; text-transform: uppercase; letter-spacing: 0.5px;">Choose Flavor(s) / Option (Select 1 or more):</label>
                     <div class="flavor-pills-container" style="display: flex; flex-wrap: wrap; gap: 8px;">
-                        <button type="button" class="flavor-pill-btn active" data-flavor="APPLE PEACH ICE">APPLE PEACH ICE</button><button type="button" class="flavor-pill-btn" data-flavor="BLUEBERRY RASPBERRY">BLUEBERRY RASPBERRY</button><button type="button" class="flavor-pill-btn" data-flavor="DRAGON FRUIT LEMON">DRAGON FRUIT LEMON</button><button type="button" class="flavor-pill-btn" data-flavor="JADE MINT">JADE MINT</button><button type="button" class="flavor-pill-btn" data-flavor="JUICY PEACH">JUICY PEACH</button><button type="button" class="flavor-pill-btn" data-flavor="KIWI LIME">KIWI LIME</button><button type="button" class="flavor-pill-btn" data-flavor="MANGO PINEAPPLE">MANGO PINEAPPLE</button><button type="button" class="flavor-pill-btn" data-flavor="SAKURA GRAPE">SAKURA GRAPE</button><button type="button" class="flavor-pill-btn" data-flavor="STRAWBERRY WATERMELON ICE">STRAWBERRY WATERMELON ICE</button><button type="button" class="flavor-pill-btn" data-flavor="TRIPLE MELON ICE">TRIPLE MELON ICE</button><button type="button" class="flavor-pill-btn" data-flavor="WATERMELON ICE">WATERMELON ICE</button>
+                        <button type="button" class="flavor-pill-btn" data-flavor="APPLE PEACH ICE">APPLE PEACH ICE</button><button type="button" class="flavor-pill-btn" data-flavor="BLUEBERRY RASPBERRY">BLUEBERRY RASPBERRY</button><button type="button" class="flavor-pill-btn" data-flavor="DRAGON FRUIT LEMON">DRAGON FRUIT LEMON</button><button type="button" class="flavor-pill-btn" data-flavor="JADE MINT">JADE MINT</button><button type="button" class="flavor-pill-btn" data-flavor="JUICY PEACH">JUICY PEACH</button><button type="button" class="flavor-pill-btn" data-flavor="KIWI LIME">KIWI LIME</button><button type="button" class="flavor-pill-btn" data-flavor="MANGO PINEAPPLE">MANGO PINEAPPLE</button><button type="button" class="flavor-pill-btn" data-flavor="SAKURA GRAPE">SAKURA GRAPE</button><button type="button" class="flavor-pill-btn" data-flavor="STRAWBERRY WATERMELON ICE">STRAWBERRY WATERMELON ICE</button><button type="button" class="flavor-pill-btn" data-flavor="TRIPLE MELON ICE">TRIPLE MELON ICE</button><button type="button" class="flavor-pill-btn" data-flavor="WATERMELON ICE">WATERMELON ICE</button>
                     </div>
                 </div>
             
@@ -335,10 +335,18 @@ Soft TPU mouthpiece
     <script src="../analytics.js"></script>
     <script src="../script.js"></script>
     <script>
-        // Wire multi-flavor selection & add-to-cart button
+        // Wire multi-flavor selection & toast notifications
         document.querySelectorAll('.flavor-pill-btn').forEach(btn => {
             btn.addEventListener('click', function() {
-                this.classList.toggle('active');
+                const isSelected = this.classList.toggle('active');
+                const flavorName = this.getAttribute('data-flavor');
+                if (typeof showToast === 'function') {
+                    if (isSelected) {
+                        showToast(`${flavorName} selected`);
+                    } else {
+                        showToast(`${flavorName} deselected`);
+                    }
+                }
             });
         });
 

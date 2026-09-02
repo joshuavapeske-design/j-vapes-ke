@@ -189,7 +189,7 @@
                 <div style="margin-bottom: 24px;" class="flavor-selection-block">
                     <label style="display: block; font-size: 13px; font-weight: 600; margin-bottom: 10px; color: #a1a1aa; text-transform: uppercase; letter-spacing: 0.5px;">Choose Flavor(s) / Option (Select 1 or more):</label>
                     <div class="flavor-pills-container" style="display: flex; flex-wrap: wrap; gap: 8px;">
-                        <button type="button" class="flavor-pill-btn active" data-flavor="Blueberry ice ">Blueberry ice </button><button type="button" class="flavor-pill-btn" data-flavor="Blueberry Raspberry ">Blueberry Raspberry </button><button type="button" class="flavor-pill-btn" data-flavor="Grape Ice">Grape Ice</button><button type="button" class="flavor-pill-btn" data-flavor="Double Mango">Double Mango</button><button type="button" class="flavor-pill-btn" data-flavor="Grape cherry ">Grape cherry </button><button type="button" class="flavor-pill-btn" data-flavor="Peach ice ">Peach ice </button><button type="button" class="flavor-pill-btn" data-flavor="Watermelon Ice ">Watermelon Ice </button><button type="button" class="flavor-pill-btn" data-flavor="Watermelon bubblegum">Watermelon bubblegum</button><button type="button" class="flavor-pill-btn" data-flavor="Strawberry Grape ">Strawberry Grape </button><button type="button" class="flavor-pill-btn" data-flavor="Kiwi Guava Passion ">Kiwi Guava Passion </button>
+                        <button type="button" class="flavor-pill-btn" data-flavor="Blueberry ice ">Blueberry ice </button><button type="button" class="flavor-pill-btn" data-flavor="Blueberry Raspberry ">Blueberry Raspberry </button><button type="button" class="flavor-pill-btn" data-flavor="Grape Ice">Grape Ice</button><button type="button" class="flavor-pill-btn" data-flavor="Double Mango">Double Mango</button><button type="button" class="flavor-pill-btn" data-flavor="Grape cherry ">Grape cherry </button><button type="button" class="flavor-pill-btn" data-flavor="Peach ice ">Peach ice </button><button type="button" class="flavor-pill-btn" data-flavor="Watermelon Ice ">Watermelon Ice </button><button type="button" class="flavor-pill-btn" data-flavor="Watermelon bubblegum">Watermelon bubblegum</button><button type="button" class="flavor-pill-btn" data-flavor="Strawberry Grape ">Strawberry Grape </button><button type="button" class="flavor-pill-btn" data-flavor="Kiwi Guava Passion ">Kiwi Guava Passion </button>
                     </div>
                 </div>
             
@@ -322,10 +322,18 @@
     <script src="../analytics.js"></script>
     <script src="../script.js"></script>
     <script>
-        // Wire multi-flavor selection & add-to-cart button
+        // Wire multi-flavor selection & toast notifications
         document.querySelectorAll('.flavor-pill-btn').forEach(btn => {
             btn.addEventListener('click', function() {
-                this.classList.toggle('active');
+                const isSelected = this.classList.toggle('active');
+                const flavorName = this.getAttribute('data-flavor');
+                if (typeof showToast === 'function') {
+                    if (isSelected) {
+                        showToast(`${flavorName} selected`);
+                    } else {
+                        showToast(`${flavorName} deselected`);
+                    }
+                }
             });
         });
 

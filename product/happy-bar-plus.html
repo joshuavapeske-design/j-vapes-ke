@@ -189,7 +189,7 @@
                 <div style="margin-bottom: 24px;" class="flavor-selection-block">
                     <label style="display: block; font-size: 13px; font-weight: 600; margin-bottom: 10px; color: #a1a1aa; text-transform: uppercase; letter-spacing: 0.5px;">Choose Flavor(s) / Option (Select 1 or more):</label>
                     <div class="flavor-pills-container" style="display: flex; flex-wrap: wrap; gap: 8px;">
-                        <button type="button" class="flavor-pill-btn active" data-flavor="PURPLE RAIN ">PURPLE RAIN </button><button type="button" class="flavor-pill-btn" data-flavor="MANGO ICE ">MANGO ICE </button><button type="button" class="flavor-pill-btn" data-flavor="COOL MINT ">COOL MINT </button><button type="button" class="flavor-pill-btn" data-flavor="LUSH ICE ">LUSH ICE </button><button type="button" class="flavor-pill-btn" data-flavor="KIWI GUAVA PASSION ">KIWI GUAVA PASSION </button><button type="button" class="flavor-pill-btn" data-flavor="STRAWBERRY WATERMELON ">STRAWBERRY WATERMELON </button><button type="button" class="flavor-pill-btn" data-flavor="BLUE RAZZ ICE ">BLUE RAZZ ICE </button><button type="button" class="flavor-pill-btn" data-flavor="BLACKBERRY ICE ">BLACKBERRY ICE </button><button type="button" class="flavor-pill-btn" data-flavor="PINEAPPLE ICE ">PINEAPPLE ICE </button><button type="button" class="flavor-pill-btn" data-flavor="STRAWBERRY ICE ">STRAWBERRY ICE </button><button type="button" class="flavor-pill-btn" data-flavor="GUANABANA ICE ">GUANABANA ICE </button><button type="button" class="flavor-pill-btn" data-flavor="STRAWBERRY BLUEBERRY ">STRAWBERRY BLUEBERRY </button><button type="button" class="flavor-pill-btn" data-flavor="BLACK MAMBA ">BLACK MAMBA </button><button type="button" class="flavor-pill-btn" data-flavor="TROPICAL FRUITS ">TROPICAL FRUITS </button><button type="button" class="flavor-pill-btn" data-flavor="GRAPE ICE ">GRAPE ICE </button><button type="button" class="flavor-pill-btn" data-flavor="PASSION LEMONADE ">PASSION LEMONADE </button>
+                        <button type="button" class="flavor-pill-btn" data-flavor="PURPLE RAIN ">PURPLE RAIN </button><button type="button" class="flavor-pill-btn" data-flavor="MANGO ICE ">MANGO ICE </button><button type="button" class="flavor-pill-btn" data-flavor="COOL MINT ">COOL MINT </button><button type="button" class="flavor-pill-btn" data-flavor="LUSH ICE ">LUSH ICE </button><button type="button" class="flavor-pill-btn" data-flavor="KIWI GUAVA PASSION ">KIWI GUAVA PASSION </button><button type="button" class="flavor-pill-btn" data-flavor="STRAWBERRY WATERMELON ">STRAWBERRY WATERMELON </button><button type="button" class="flavor-pill-btn" data-flavor="BLUE RAZZ ICE ">BLUE RAZZ ICE </button><button type="button" class="flavor-pill-btn" data-flavor="BLACKBERRY ICE ">BLACKBERRY ICE </button><button type="button" class="flavor-pill-btn" data-flavor="PINEAPPLE ICE ">PINEAPPLE ICE </button><button type="button" class="flavor-pill-btn" data-flavor="STRAWBERRY ICE ">STRAWBERRY ICE </button><button type="button" class="flavor-pill-btn" data-flavor="GUANABANA ICE ">GUANABANA ICE </button><button type="button" class="flavor-pill-btn" data-flavor="STRAWBERRY BLUEBERRY ">STRAWBERRY BLUEBERRY </button><button type="button" class="flavor-pill-btn" data-flavor="BLACK MAMBA ">BLACK MAMBA </button><button type="button" class="flavor-pill-btn" data-flavor="TROPICAL FRUITS ">TROPICAL FRUITS </button><button type="button" class="flavor-pill-btn" data-flavor="GRAPE ICE ">GRAPE ICE </button><button type="button" class="flavor-pill-btn" data-flavor="PASSION LEMONADE ">PASSION LEMONADE </button>
                     </div>
                 </div>
             
@@ -322,10 +322,18 @@
     <script src="../analytics.js"></script>
     <script src="../script.js"></script>
     <script>
-        // Wire multi-flavor selection & add-to-cart button
+        // Wire multi-flavor selection & toast notifications
         document.querySelectorAll('.flavor-pill-btn').forEach(btn => {
             btn.addEventListener('click', function() {
-                this.classList.toggle('active');
+                const isSelected = this.classList.toggle('active');
+                const flavorName = this.getAttribute('data-flavor');
+                if (typeof showToast === 'function') {
+                    if (isSelected) {
+                        showToast(`${flavorName} selected`);
+                    } else {
+                        showToast(`${flavorName} deselected`);
+                    }
+                }
             });
         });
 
