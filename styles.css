@@ -1774,12 +1774,7 @@ body {
     cursor: not-allowed;
 }
 
-/* ==========================================
-   ROUND 2 — header icons, brand strip, wishlist,
-   black/gold product modal, black Add-to-Bag, cart polish
-   ========================================== */
-
-/* --- Header icon cluster (wishlist heart + cart) --- */
+/* Header Actions & Icons */
 .header-actions {
     display: flex;
     align-items: center;
@@ -2196,12 +2191,10 @@ body {
     }
 
     #product-detail-modal h2 {
-        font-size: 1.5/* ==========================================================
-   ROUND 5 — LUXURY DARK CINEMATIC REDESIGN
-   Dark obsidian palette (#050505 / #111111), high-contrast warm
-   off-white typography, cinematic hero video layer, clean dark
-   product cards with puff counts, and restrained luxury accents.
-   ========================================================== */
+        font-size: 1.5rem;
+    }
+
+/* Theme Variables & Layout Base */
 
 :root {
     --bg-dark: #050505;
@@ -2616,9 +2609,7 @@ h1, h2, h3, h4, h5, h6, p, span, a, li, label {
     transform: scale(1.04) !important;
 }
 
-/* ==========================================
-   MOBILE UI RESPONSIVE POLISH & ULTRA COMPACT HERO
-   ========================================== */
+/* Mobile Responsive Layout & Adjustments */
 @media (max-width: 992px) {
     /* Simplified Mobile Header */
     .header-container {
