@@ -914,9 +914,15 @@ body {
    HAMBURGER & SIDEBAR NAVIGATION
 =========================== */
 
-/* Prevent scrolling when menu open */
+/* Prevent scrolling when menu open & eliminate header backdrop-filter blur */
 body.menu-open {
     overflow: hidden !important;
+}
+
+body.menu-open .main-header {
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    z-index: 99990 !important;
 }
 
 /* Hamburger button */
@@ -971,14 +977,16 @@ body.menu-open {
         opacity: 0;
         visibility: hidden;
         transition: opacity 0.3s ease, visibility 0.3s ease;
+        pointer-events: none;
     }
 
     .nav-backdrop.active {
         opacity: 1;
         visibility: visible;
+        pointer-events: auto;
     }
 
-    /* Left Sidebar Drawer Container */
+    /* Left Sidebar Drawer Container — 100% Sharp & Crisp on Mobile */
     .nav-links {
         position: fixed;
         top: 0;
@@ -997,21 +1005,28 @@ body.menu-open {
         margin: 0;
         box-shadow: 12px 0 35px rgba(0, 0, 0, 0.7);
         transform: translate3d(-100%, 0, 0);
-        will-change: transform;
+        -webkit-transform: translate3d(-100%, 0, 0);
         transition: transform 0.32s cubic-bezier(0.16, 1, 0.3, 1);
         overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
         border-right: 1px solid rgba(255, 255, 255, 0.1);
         border-bottom: none !important;
 
-        /* Fix blurry sidebar: clear all backdrop-filter inheritance */
+        /* Complete fix for blurry sidebar: remove filter inheritance and enforce sharp rendering */
         backdrop-filter: none !important;
         -webkit-backdrop-filter: none !important;
         filter: none !important;
         isolation: isolate !important;
+        -webkit-font-smoothing: antialiased !important;
+        -moz-osx-font-smoothing: grayscale !important;
+        text-rendering: optimizeLegibility !important;
+        backface-visibility: hidden;
+        -webkit-backface-visibility: hidden;
     }
 
     .nav-links.active {
         transform: translate3d(0, 0, 0) !important;
+        -webkit-transform: translate3d(0, 0, 0) !important;
     }
 
     .nav-links *,
@@ -1022,6 +1037,8 @@ body.menu-open {
         filter: none !important;
         backdrop-filter: none !important;
         -webkit-backdrop-filter: none !important;
+        -webkit-font-smoothing: antialiased !important;
+        -moz-osx-font-smoothing: grayscale !important;
     }
 
     /* Left Sidebar Header */
@@ -2560,74 +2577,102 @@ h1, h2, h3, h4, h5, h6, p, span, a, li, label {
     display: none !important;
 }
 
-.age-gate-card {
+.age-gate-card,
+#age-gate .modal-content {
     background: #111113 !important;
-    border: 1px solid rgba(255, 255, 255, 0.15) !important;
-    border-radius: 16px !important;
-    padding: 32px 24px !important;
-    max-width: 440px !important;
+    border: 1px solid rgba(255, 255, 255, 0.12) !important;
+    border-radius: 18px !important;
+    padding: 36px 28px !important;
+    max-width: 450px !important;
     width: 100% !important;
     text-align: center !important;
-    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.9), 0 0 30px rgba(212, 175, 55, 0.15) !important;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.9) !important;
 }
 
-.age-gate-badge {
-    display: inline-block !important;
-    background: rgba(212, 175, 55, 0.15) !important;
-    color: #d4af37 !important;
-    border: 1px solid rgba(212, 175, 55, 0.3) !important;
-    padding: 4px 14px !important;
-    border-radius: 20px !important;
-    font-weight: 800 !important;
-    font-size: 0.9rem !important;
-    letter-spacing: 1px !important;
-    margin-bottom: 14px !important;
-}
-
-.age-gate-title {
+.age-gate-badge,
+#age-gate .warning-tag {
+    display: block !important;
+    background: transparent !important;
     color: #ffffff !important;
-    font-size: 1.2rem !important;
+    border: none !important;
+    padding: 0 !important;
+    font-weight: 500 !important;
+    font-size: 0.95rem !important;
+    letter-spacing: 0.5px !important;
+    margin-bottom: 8px !important;
+}
+
+.age-gate-title,
+#age-gate h2 {
+    color: #ffffff !important;
+    font-size: 1.5rem !important;
     font-weight: 700 !important;
-    letter-spacing: 1px !important;
+    letter-spacing: -0.2px !important;
     margin-bottom: 12px !important;
-    text-transform: uppercase !important;
+    text-transform: none !important;
+    font-family: var(--font-stack) !important;
 }
 
-.age-gate-text {
-    color: #a1a1aa !important;
-    font-size: 0.88rem !important;
+.age-gate-text,
+#age-gate p:not(.age-gate-note) {
+    color: #d1d5db !important;
+    font-size: 0.95rem !important;
     line-height: 1.5 !important;
-    margin-bottom: 20px !important;
+    margin-bottom: 24px !important;
 }
 
-.age-gate-buttons {
+.age-gate-buttons,
+#age-gate .modal-buttons {
     display: flex !important;
     gap: 12px !important;
     justify-content: center !important;
+    align-items: center !important;
 }
 
-.age-gate-btn {
+.age-gate-btn,
+#age-gate .btn {
     flex: 1 !important;
-    padding: 12px 18px !important;
-    font-weight: 700 !important;
-    font-size: 0.85rem !important;
+    padding: 12px 20px !important;
+    font-weight: 600 !important;
+    font-size: 0.95rem !important;
     border-radius: 10px !important;
     cursor: pointer !important;
     transition: all 0.2s ease !important;
-    letter-spacing: 0.5px !important;
+    letter-spacing: 0.2px !important;
+    font-family: inherit !important;
+    text-align: center !important;
+    display: inline-flex !important;
+    justify-content: center !important;
+    align-items: center !important;
 }
 
-.age-gate-btn.exit-btn {
-    background: rgba(255, 255, 255, 0.08) !important;
-    color: #f4f4f5 !important;
-    border: 1px solid rgba(255, 255, 255, 0.15) !important;
+.age-gate-btn.exit-btn,
+#age-gate .btn-secondary {
+    background: #1c1c20 !important;
+    color: #ffffff !important;
+    border: 1px solid rgba(255, 255, 255, 0.16) !important;
+    box-shadow: none !important;
 }
 
-.age-gate-btn.verify-btn {
+.age-gate-btn.exit-btn:hover,
+#age-gate .btn-secondary:hover {
+    background: #27272e !important;
+    border-color: rgba(255, 255, 255, 0.28) !important;
+}
+
+.age-gate-btn.verify-btn,
+#age-gate .btn-primary {
     background: #ffffff !important;
     color: #000000 !important;
     border: 1px solid #ffffff !important;
-    box-shadow: 0 4px 14px rgba(255, 255, 255, 0.35) !important;
+    font-weight: 700 !important;
+    box-shadow: 0 4px 14px rgba(255, 255, 255, 0.2) !important;
+}
+
+.age-gate-btn.verify-btn:hover,
+#age-gate .btn-primary:hover {
+    background: #e4e4e7 !important;
+    color: #000000 !important;
 }
 
 /* Strict Scroll Lock when Age Gate Modal is Active */

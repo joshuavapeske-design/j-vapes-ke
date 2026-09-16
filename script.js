@@ -93,6 +93,28 @@ function setupMobileNav() {
         document.body.appendChild(backdrop);
     }
 
+    // Move nav-links to body on mobile so it escapes the sticky header's
+    // backdrop-filter blur containing block and stacking context.
+    function handleNavPlacement() {
+        const headerContainer = document.querySelector('.header-container');
+        if (window.innerWidth <= 768) {
+            if (nav.parentElement !== document.body) {
+                document.body.appendChild(nav);
+            }
+        } else {
+            if (headerContainer && nav.parentElement !== headerContainer) {
+                const actions = headerContainer.querySelector('.header-actions');
+                if (actions) {
+                    headerContainer.insertBefore(nav, actions);
+                } else {
+                    headerContainer.appendChild(nav);
+                }
+            }
+        }
+    }
+    handleNavPlacement();
+    window.addEventListener('resize', handleNavPlacement);
+
     const closeBtn = document.getElementById('nav-close-btn');
 
     function openNav() {
@@ -304,7 +326,7 @@ function initAgeGate() {
         document.body.classList.add('age-gate-active');
 
         ageGate.addEventListener('touchmove', (e) => {
-            if (!e.target.closest('.age-gate-card')) {
+            if (!e.target.closest('.age-gate-card, .modal-content')) {
                 e.preventDefault();
             }
         }, { passive: false });
